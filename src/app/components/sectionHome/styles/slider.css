@@ -1,0 +1,12 @@
+.swiper-button-prev {
+    left: -50px !important;
+    color: white !important;
+}
+
+.swiper-button-next {
+    right: -50px !important;
+    color: white !important;
+}
+.swiper {
+    position: initial !important;
+}
