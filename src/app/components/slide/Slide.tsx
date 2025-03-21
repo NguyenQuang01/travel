@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Carousel } from "antd";
 import Image from "next/image";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -60,6 +60,8 @@ const data = {
     },
 };
 const Slider: React.FC = () => {
+    const [showSteps, setShowSteps] = useState(false);
+
     const onChange = (currentSlide: number) => {
         console.log(currentSlide);
     };
@@ -72,12 +74,14 @@ const Slider: React.FC = () => {
         <div className="relative after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/25 after:to-black after:from-85%">
             <Carousel
                 afterChange={onChange}
-                autoplay={true}
+                // autoplay={true}
                 autoplaySpeed={5000}
             >
-                {" "}
                 {imgs?.map((src, index) => (
-                    <div key={index} style={contentStyle}>
+                    <div
+                        key={index}
+                        className="m-0 h-[100vh] text-white leading-[77vh] text-center bg-[#364d79]"
+                    >
                         <Image
                             src={src}
                             alt={`Slide ${index + 1}`}
@@ -85,20 +89,20 @@ const Slider: React.FC = () => {
                             height={777}
                             priority={true}
                             loading="eager"
-                            style={imgStyle}
+                            className="w-full h-full object-cover"
                         />
                     </div>
                 ))}
             </Carousel>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10">
-                <p className="text-[2.3rem] font-normal text-shadow-md">
+                <p className="text-[1.6rem] md:text-[2.3rem] font-normal text-shadow-md text-center">
                     {data.subtitle}
                 </p>
-                <h1 className="text-[4rem] font-bold mb-4 text-shadow-md">
+                <h1 className="text-[2.6rem] md:text-[4rem] font-bold mb-4 text-shadow-md">
                     {data.title}
                 </h1>
-                <div className="rounded-md bg-black/55 p-8 mb-8 mt-20">
-                    <p className="text-[2rem] font-normal drop-shadow-md text-center">
+                <div className="rounded-md md:bg-black/55 p-8 mb-8 md:mt-20 mt-4">
+                    <p className="text-[1.4rem] md:text-[2.2rem] font-normal drop-shadow-md text-center">
                         {data.subtitle}
                     </p>
                     <div className="flex items-center justify-center ">
@@ -108,53 +112,64 @@ const Slider: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-center gap-1 mt-4 text-lg cursor-pointer hover:text-gray-300 mb-3">
+                    <div
+                        className="flex items-center justify-center gap-1 mt-4 text-lg cursor-pointer hover:text-gray-300 mb-3"
+                        onClick={() => setShowSteps(!showSteps)}
+                    >
                         How it works
-                        <ExpandMoreIcon className="ml-0.5" />
+                        <ExpandMoreIcon
+                            className={`ml-0.5 transform ${
+                                showSteps ? "rotate-180" : ""
+                            }`}
+                        />
                     </div>
-                    <div className=" flex flex-col items-center justify-center bg-white text-black rounded-md w-[520px]">
-                        <div className="p-6">
-                            <div className="flex items-center justify-center text-[#333] leading-[24px] text-left mb-3">
-                                <div>
-                                    <MessageIcon fontSize="large" />
+                    {showSteps && (
+                        <div className="flex flex-col items-center justify-center bg-white text-black rounded-md md:w-[520px]">
+                            <div className="p-2 md:p-6">
+                                <div className="flex items-center justify-center text-[#333] leading-[24px] text-left mb-3">
+                                    <div className="hidden md:block">
+                                        <MessageIcon fontSize="large" />
+                                    </div>
+                                    <div className="ml-5 md:text-[16px] text-[14px]">
+                                        {" "}
+                                        <span className="font-bold ">
+                                            1. Tell us about your next dream
+                                            trip:{" "}
+                                        </span>
+                                        where you want to go, how you want to
+                                        travel ~5 minutes
+                                    </div>
                                 </div>
-                                <div className="ml-5 text-[16px]">
-                                    {" "}
-                                    <span className="font-bold ">
-                                        1. Tell us about your next dream trip:{" "}
-                                    </span>
-                                    where you want to go, how you want to travel
-                                    ~5 minutes
+                                <div className="flex items-center justify-center text-[#333] leading-[24px] text-left mb-3">
+                                    <div className="hidden md:block">
+                                        <ContentPasteIcon fontSize="large" />
+                                    </div>
+                                    <div className="ml-5 md:text-[16px] text-[14px]">
+                                        {" "}
+                                        <span className="font-bold ">
+                                            2. Get a draft itinerary
+                                        </span>
+                                        of your trip based on our extensive
+                                        database of places and experiences
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex items-center justify-center text-[#333] leading-[24px] text-left mb-3">
-                                <div>
-                                    <ContentPasteIcon fontSize="large" />
-                                </div>
-                                <div className="ml-5 text-[16px]">
-                                    {" "}
-                                    <span className="font-bold ">
-                                        2. Get a draft itinerary
-                                    </span>
-                                    of your trip based on our extensive database
-                                    of places and experiences
-                                </div>
-                            </div>
-                            <div className="flex items-center justify-center text-[#333] leading-[24px] text-left">
-                                <div>
-                                    <FavoriteIcon fontSize="large" />
-                                </div>
-                                <div className="ml-5 text-[16px]">
-                                    {" "}
-                                    <span className="font-bold ">
-                                        3. Revise and Book
-                                    </span>
-                                    based on your feedback, local expert revises
-                                    the itinerary and books if you choose
+                                <div className="flex items-center justify-center text-[#333] leading-[24px] text-left">
+                                    <div className="hidden md:block">
+                                        <FavoriteIcon fontSize="large" />
+                                    </div>
+                                    <div className="ml-5 md:text-[16px] text-[14px]">
+                                        {" "}
+                                        <span className="font-bold ">
+                                            3. Revise and Book
+                                        </span>
+                                        based on your feedback, local expert
+                                        revises the itinerary and books if you
+                                        choose
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
