@@ -8,15 +8,11 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 import { Box, Rating } from "@mui/material";
-
+import { StarTwoTone } from "@ant-design/icons";
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
-const imgStyle: React.CSSProperties = {
-    width: "323px",
-    height: "323px",
-    objectFit: "cover",
-};
+
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const { expand: _expand, ...other } = props;
     return <IconButton {...other} />;
@@ -50,25 +46,17 @@ export default function CardReview(prop: CardData) {
             <Image
                 src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
                 alt="img"
-                width={323}
-                height={323}
+                width={200}
+                height={200}
                 priority={true}
                 loading="eager"
-                style={imgStyle}
+                className="w-full h-[173px] md:h-[323px] h-[200px] object-cover"
             />
-            <Box className="p-[1.5rem] pb-0">
+            <Box className="p-2 md:p-[1.5rem] pb-0">
                 <Box>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            lineHeight: "18px",
-                            fontSize: "18px",
-                            fontWeight: "600",
-                        }}
-                        className="text-lg font-bold leading-[18px] truncate"
-                    >
+                    <p className="text-sm md:text-base font-bold leading-[16px] truncate">
                         {prop.title}
-                    </Typography>
+                    </p>
                     <Box className="flex items-center justify-between my-2">
                         <Box
                             sx={{
@@ -78,9 +66,9 @@ export default function CardReview(prop: CardData) {
                             }}
                             className="rounded-full mr-[8px]"
                         ></Box>
-                        <Typography variant="body2" color="text.secondary">
+                        <p className="text-sm md:text-base truncate">
                             {prop.tourTypes}
-                        </Typography>
+                        </p>
                     </Box>
                 </Box>
                 <Box className="flex justify-between">
@@ -94,14 +82,15 @@ export default function CardReview(prop: CardData) {
                     onClick={handleExpandClick}
                     aria-expanded={expanded}
                     aria-label="show more"
+                    className="h-5"
                 >
                     <ExpandMoreIcon />
                 </ExpandMore>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <Box className="flex justify-between p-[1.5rem] pt-0">
+                <Box className="flex justify-between p-[1rem] pt-0">
                     <Box>
-                        <Rating name="simple-controlled" value={prop.start} />
+                        <StarTwoTone twoToneColor="#FFD700" />
                     </Box>
                     <Box sx={{ pl: "10px" }}>
                         <Typography

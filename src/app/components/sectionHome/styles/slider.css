@@ -7,6 +7,15 @@
     right: -50px !important;
     color: white !important;
 }
+
 .swiper {
     position: initial !important;
+}
+@media screen and (max-width: 768px) {
+    .swiper-button-prev {
+        left: -32px !important;
+    }
+    .swiper-button-next {
+        right: -32px !important;
+    }
 }

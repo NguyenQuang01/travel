@@ -31,11 +31,20 @@ body {
     left: 0 !important;
     max-width: 100% !important;
 }
-
 .card {
     position: relative;
     width: 350px;
     height: 350px;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --swiper-navigation-size: 27px !important;
+    }
+    .card {
+        width: 165px;
+        height: 165px;
+    }
 }
 
 .face {

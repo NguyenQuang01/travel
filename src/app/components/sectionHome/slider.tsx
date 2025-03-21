@@ -15,26 +15,24 @@ const imgStyle: React.CSSProperties = {
 
 const Slider = () => {
     return (
-        <div
-            className="bg-black flex items-center justify-center"
-            style={{
-                backgroundColor: "#000",
-                color: "#333",
-                lineHeight: "24px",
-                margin: "0px 0px 118px",
-                padding: "30px 0px 40px",
-                height: 444,
-            }}
-        >
+        <div className="bg-black flex items-center justify-center text-[#333] leading-6 my-0 mb-[118px] py-[30px] pb-10 md:h-[444px] h-[344px]">
             <div>
                 <p className="text-[1.8rem] font-bold text-shadow-md text-[#fff] text-center mb-[80px]">
                     Choose your travel style
                 </p>
-                <div className="mx-auto w-[70vw] max-w-[126rem] h-full relative -mb-[11.8rem]">
+                <div className="mx-auto md:w-[70vw]  w-[83vw] max-w-[126rem] h-full relative md:-mb-[11.8rem] -mb-[14.8rem]">
                     <Swiper
                         modules={[Navigation, Pagination, Autoplay]}
-                        spaceBetween={30}
-                        slidesPerView={4}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 3,
+                                spaceBetween: 10,
+                            },
+                            768: {
+                                slidesPerView: 4,
+                                spaceBetween: 30,
+                            },
+                        }}
                         navigation
                         autoplay={{
                             delay: 3000,

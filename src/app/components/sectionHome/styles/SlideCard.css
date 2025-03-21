@@ -10,3 +10,11 @@
 .swiper {
     position: initial !important;
 }
+@media screen and (max-width: 768px) {
+    .swiper-button-prev {
+        left: -31px !important;
+    }
+    .swiper-button-next {
+        right: -31px !important;
+    }
+}

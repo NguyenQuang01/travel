@@ -71,20 +71,19 @@ const Slider = () => {
                 <p className="text-[1.8rem] font-bold text-shadow-md  mb-[20px]">
                     Find trips that move you
                 </p>
-                <div
-                    style={{
-                        margin: "auto",
-                        width: "70vw",
-                        maxWidth: "126rem",
-                        height: "100%",
-                        position: "relative",
-                        marginBottom: "-11.8rem",
-                    }}
-                >
+                <div className="mx-auto md:w-[70vw]  w-[83vw] max-w-[126rem] h-full relative -mb-[11.8rem]">
                     <Swiper
-                        modules={[Navigation, Pagination, Autoplay]}
-                        spaceBetween={30}
-                        slidesPerView={4}
+                        modules={[Navigation, Pagination]}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 2,
+                                spaceBetween: 5,
+                            },
+                            768: {
+                                slidesPerView: 4,
+                                spaceBetween: 30,
+                            },
+                        }}
                         navigation
                         autoplay={{
                             delay: 3000,
