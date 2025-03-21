@@ -2,7 +2,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 
 // Create instance
 const apiConfig = axios.create({
-    baseURL: process.env["API_BASE_URL"],
+    baseURL: "http://202.92.7.92:8080/api/",
     headers: {
         "Content-Type": "application/json",
     },
@@ -36,7 +36,7 @@ apiConfig.interceptors.response.use(
 );
 
 const apiServices = {
-    async post(urlApi: string, params?: Record<string, unknown>) {
+    async post(urlApi: string, params?: any) {
         try {
             return await apiConfig.post(urlApi, params);
         } catch (error) {
@@ -73,7 +73,7 @@ const apiServices = {
     },
     async postMultipart(urlApi: string, params?: FormData, urlParam?: string) {
         const instance = axios.create({
-            baseURL: urlParam || process.env["API_BASE_URL"],
+            baseURL: "http://202.92.7.92:8080/api/",
             headers: {
                 "Content-Type": "multipart/form-data",
             },

@@ -18,7 +18,7 @@ const imgStyle: React.CSSProperties = {
     objectFit: "cover",
 };
 const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { ...other } = props;
+    const { expand: _expand, ...other } = props;
     return <IconButton {...other} />;
 })(({ theme, expand }) => ({
     marginLeft: "auto",

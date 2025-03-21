@@ -30,16 +30,7 @@ const Slider = () => {
                 <p className="text-[1.8rem] font-bold text-shadow-md text-[#fff] text-center mb-[80px]">
                     Choose your travel style
                 </p>
-                <div
-                    style={{
-                        margin: "auto",
-                        width: "70vw",
-                        maxWidth: "126rem",
-                        height: "100%",
-                        position: "relative",
-                        marginBottom: "-11.8rem",
-                    }}
-                >
+                <div className="mx-auto w-[70vw] max-w-[126rem] h-full relative -mb-[11.8rem]">
                     <Swiper
                         modules={[Navigation, Pagination, Autoplay]}
                         spaceBetween={30}
