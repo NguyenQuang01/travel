@@ -1,3 +1,4 @@
+"use client";
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { getMyCustomTrip } from "../hook";
