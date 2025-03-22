@@ -10,6 +10,7 @@ import {
 import { Button, Layout, Menu, theme } from "antd";
 import ThemeStyle from "./components/ThemeStyle";
 import Trading from "./components/Treding";
+import MyCustomTrip from "@/app/admin/my-custom-trip/page";
 
 const { Header, Sider, Content } = Layout;
 
@@ -75,7 +76,8 @@ const Manage: React.FC = () => {
                     }}
                 >
                     {/* <ThemeStyle /> */}
-                    <Trading />
+                    {/* <Trading /> */}
+                    <MyCustomTrip />
                 </Content>
             </Layout>
         </Layout>
