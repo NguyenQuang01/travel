@@ -18,6 +18,8 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ListSubheader from "@mui/material/ListSubheader";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import Link from "next/link";
+import { Modal } from "antd";
 const pages = [
     {
         name: "Destinations",
@@ -85,9 +87,11 @@ function HeaderClient() {
         null
     );
     const [open, setOpen] = React.useState(true);
-
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isModalOpenStyle, setIsModalOpenStyle] = React.useState(false);
     const handleClick = () => {
         setOpen(!open);
+        setIsModalOpen(true);
     };
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -96,27 +100,270 @@ function HeaderClient() {
     //     setAnchorElUser(event.currentTarget);
     // };
 
-    const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = (page?: any) => {
         setAnchorElNav(null);
+        console.log(page, "Destinations");
+
+        page.name === "Destinations"
+            ? setIsModalOpen(true)
+            : setIsModalOpenStyle(true);
     };
 
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+    const handleOkStyle = () => {
+        setIsModalOpenStyle(false);
+    };
+
+    const handleCancelStyle = () => {
+        setIsModalOpenStyle(false);
+    };
     return (
         <div>
+            <Modal
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                width={1000}
+                footer={null}
+            >
+                <div className=" rounded-lg p-2  mx-auto">
+                    <div className="grid grid-cols-6 gap-4">
+                        <div className="bg-green-100 p-4 rounded-md">
+                            <h3 className="font-bold text-lg mb-2">Trending</h3>
+                            <ul className="space-y-1 text-gray-700">
+                                <li>Ha Long Bay</li>
+                                <li>Sapa Rice Terraces</li>
+                                <li>Hoi An Ancient Town</li>
+                                <li>Mekong Delta</li>
+                                <li>Phong Nha Caves</li>
+                                <li>Ho Chi Minh City</li>
+                                <li>Hue Imperial City</li>
+                                <li>Phu Quoc Island</li>
+                                <li>Hanoi Old Quarter</li>
+                                <li>Nha Trang Beaches</li>
+                                <li className="text-green-600">See all &gt;</li>
+                            </ul>
+                        </div>
+
+                        {[
+                            {
+                                title: "Vietnam Destinations",
+                                places: [
+                                    "Ha Long Bay",
+                                    "Hanoi",
+                                    "Ho Chi Minh City",
+                                    "Hoi An",
+                                    "Da Nang",
+                                    "Sapa",
+                                    "Mekong Delta",
+                                    "Phu Quoc",
+                                    "Hue",
+                                ],
+                            },
+                            {
+                                title: "Vietnam Experiences",
+                                places: [
+                                    "Food & Cuisine",
+                                    "Cultural Heritage",
+                                    "Beach Resorts",
+                                    "Mountain Trekking",
+                                    "Historical Sites",
+                                    "Local Markets",
+                                    "Rice Terraces",
+                                    "Buddhist Temples",
+                                    "River Cruises",
+                                ],
+                            },
+                            {
+                                title: "Best Time to Visit",
+                                places: [
+                                    "Spring (Feb-Apr)",
+                                    "Summer (May-Jul)",
+                                    "Fall (Aug-Oct)",
+                                    "Winter (Nov-Jan)",
+                                    "Tet Holiday",
+                                    "Monsoon Season",
+                                    "Festival Times",
+                                    "Peak Season",
+                                    "Off-Peak Deals",
+                                ],
+                            },
+                            {
+                                title: "Travel Styles",
+                                places: [
+                                    "Luxury Tours",
+                                    "Adventure Travel",
+                                    "Family Trips",
+                                    "Backpacking",
+                                    "Photography Tours",
+                                    "Culinary Tours",
+                                    "Eco Tourism",
+                                    "Cultural Tours",
+                                    "Beach Holidays",
+                                ],
+                            },
+                            {
+                                title: "Practical Info",
+                                places: [
+                                    "Visa Guide",
+                                    "Transportation",
+                                    "Accommodations",
+                                ],
+                            },
+                        ].map((section, index) => (
+                            <div key={index}>
+                                <h3 className="font-bold text-lg mb-2">
+                                    {section.title}
+                                </h3>
+                                <ul className="space-y-1 text-gray-700">
+                                    {section.places.map((place, i) => (
+                                        <li key={i}>{place}</li>
+                                    ))}
+                                    <li className="text-green-600">
+                                        See all &gt;
+                                    </li>
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </Modal>{" "}
+            <Modal
+                open={isModalOpenStyle}
+                onOk={handleOkStyle}
+                onCancel={handleCancelStyle}
+                width={1000}
+                footer={null}
+            >
+                <div className=" rounded-lg p-2  mx-auto">
+                    <div className="grid grid-cols-6 gap-4">
+                        <div className="bg-green-100 p-4 rounded-md">
+                            <h3 className="font-bold text-lg mb-2">
+                                Popular Themes
+                            </h3>
+                            <ul className="space-y-1 text-gray-700">
+                                <li>Adventure Travel</li>
+                                <li>Cultural Tours</li>
+                                <li>Wildlife Safaris</li>
+                                <li>Food & Wine</li>
+                                <li>Beach Holidays</li>
+                                <li>Luxury Escapes</li>
+                                <li>Family Vacations</li>
+                                <li>Photography Tours</li>
+                                <li>Hiking & Trekking</li>
+                                <li>River Cruises</li>
+                                <li className="text-green-600">See all &gt;</li>
+                            </ul>
+                        </div>
+
+                        {[
+                            {
+                                title: "Adventure & Active",
+                                places: [
+                                    "Hiking & Trekking",
+                                    "Mountain Climbing",
+                                    "Water Sports",
+                                    "Cycling Tours",
+                                    "Safari Adventures",
+                                    "Winter Sports",
+                                    "Extreme Sports",
+                                    "Camping",
+                                    "Desert Expeditions",
+                                ],
+                            },
+                            {
+                                title: "Cultural Experiences",
+                                places: [
+                                    "Historical Tours",
+                                    "Art & Architecture",
+                                    "Food & Wine",
+                                    "Local Festivals",
+                                    "Traditional Crafts",
+                                    "Religious Sites",
+                                    "Indigenous Culture",
+                                    "Language Learning",
+                                    "Music & Dance",
+                                ],
+                            },
+                            {
+                                title: "Relaxation & Wellness",
+                                places: [
+                                    "Spa Retreats",
+                                    "Beach Resorts",
+                                    "Yoga & Meditation",
+                                    "Hot Springs",
+                                    "Nature Escapes",
+                                    "Health & Wellness",
+                                    "Luxury Stays",
+                                    "Island Getaways",
+                                    "Mountain Retreats",
+                                ],
+                            },
+                            {
+                                title: "Special Interest",
+                                places: [
+                                    "Photography Tours",
+                                    "Wildlife Viewing",
+                                    "Cooking Classes",
+                                    "Wine Tasting",
+                                    "Bird Watching",
+                                    "Volunteer Travel",
+                                    "Educational Tours",
+                                    "Agricultural Tours",
+                                    "Astronomy Tours",
+                                ],
+                            },
+                            {
+                                title: "Travel Style",
+                                places: [
+                                    "Luxury Travel",
+                                    "Budget Travel",
+                                    "Family Friendly",
+                                    "Solo Travel",
+                                    "Group Tours",
+                                ],
+                            },
+                        ].map((section, index) => (
+                            <div key={index}>
+                                <h3 className="font-bold text-lg mb-2">
+                                    {section.title}
+                                </h3>
+                                <ul className="space-y-1 text-gray-700">
+                                    {section.places.map((place, i) => (
+                                        <li key={i}>{place}</li>
+                                    ))}
+                                    <li className="text-green-600">
+                                        See all &gt;
+                                    </li>
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </Modal>
             <AppBar position="static" sx={{ backgroundColor: "white" }}>
                 <Container maxWidth={false}>
                     <Toolbar disableGutters className="py-[15px] ">
                         <Box
                             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
                         >
-                            <Image
-                                src="https://client.travelstride.com/app/_next/static/media/travel_stride_logo.68fd2f6b.svg"
-                                alt="Logo"
-                                width={201}
-                                height={44}
-                                priority={true}
-                                className="min-w-[12.6rem] h-[44px]"
-                                loading="eager"
-                            />
+                            <Link href="/">
+                                <Image
+                                    src="https://client.travelstride.com/app/_next/static/media/travel_stride_logo.68fd2f6b.svg"
+                                    alt="Logo"
+                                    width={201}
+                                    height={44}
+                                    priority={true}
+                                    className="min-w-[12.6rem] h-[44px]"
+                                    loading="eager"
+                                />
+                            </Link>
                         </Box>
                         <Box
                             sx={{
@@ -134,21 +381,7 @@ function HeaderClient() {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            {/* {pages.map((page) => (
-                                    <MenuItem
-                                        key={page}
-                                        onClick={handleCloseNavMenu}
-                                    >
-                                        <Typography
-                                            sx={{
-                                                textAlign: "center",
-                                                color: "black",
-                                            }}
-                                        >
-                                            {page}
-                                        </Typography>
-                                    </MenuItem>
-                                ))} */}
+
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorElNav}
@@ -185,24 +418,28 @@ function HeaderClient() {
                                         </ListSubheader>
                                     }
                                 >
-                                    <Button
-                                        onClick={handleCloseNavMenu}
-                                        className="flex items-center  rounded-[45px] px-6 py-[1.1rem] text-[14px] "
-                                        sx={{
-                                            background: "#f6bb43",
-                                            color: "#333",
-                                            textTransform: "none",
-                                            fontWeight: 500,
-                                            borderRadius: "45px",
-                                            padding: "4px 1rem",
-                                            margin: "1rem 0 1rem 1rem",
-                                        }}
-                                    >
-                                        Design custom trip
-                                        <ArrowForwardIosIcon
-                                            sx={{ height: "15px" }}
-                                        />
-                                    </Button>
+                                    <Link href="client/my-custom-trip">
+                                        {" "}
+                                        <Button
+                                            // onClick={handleCloseNavMenu}
+                                            className="flex items-center  rounded-[45px] px-6 py-[1.1rem] text-[14px] "
+                                            sx={{
+                                                background: "#f6bb43",
+                                                color: "#333",
+                                                textTransform: "none",
+                                                fontWeight: 500,
+                                                borderRadius: "45px",
+                                                padding: "4px 1rem",
+                                                margin: "1rem 0 1rem 1rem",
+                                            }}
+                                        >
+                                            Design custom trip
+                                            <ArrowForwardIosIcon
+                                                sx={{ height: "15px" }}
+                                            />
+                                        </Button>
+                                    </Link>
+
                                     {pages.map((page, index) => (
                                         <div key={index}>
                                             <ListItemButton
@@ -331,7 +568,7 @@ function HeaderClient() {
                             {pages.map((page, index) => (
                                 <Button
                                     key={index}
-                                    onClick={handleCloseNavMenu}
+                                    onClick={() => handleCloseNavMenu(page)}
                                     sx={{
                                         alignItems: "center",
                                         justifyContent: "center",
@@ -353,21 +590,25 @@ function HeaderClient() {
                                     {page.name}
                                 </Button>
                             ))}
-                            <Button
-                                onClick={handleCloseNavMenu}
-                                className="flex items-center  rounded-[45px]  px-6 py-[1.1rem] text-[14px]"
-                                sx={{
-                                    background: "#f6bb43",
-                                    color: "#333",
-                                    textTransform: "none",
-                                    fontWeight: 500,
-                                    borderRadius: "45px",
-                                    padding: "4px 1rem",
-                                }}
-                            >
-                                Design custom trip
-                                <ArrowForwardIosIcon sx={{ height: "15px" }} />
-                            </Button>
+                            <Link href="client/my-custom-trip">
+                                <Button
+                                    // onClick={handleCloseNavMenu}
+                                    className="flex items-center  rounded-[45px]  px-6 py-[1.1rem] text-[14px]"
+                                    sx={{
+                                        background: "#f6bb43",
+                                        color: "#333",
+                                        textTransform: "none",
+                                        fontWeight: 500,
+                                        borderRadius: "45px",
+                                        padding: "4px 1rem",
+                                    }}
+                                >
+                                    Design custom trip
+                                    <ArrowForwardIosIcon
+                                        sx={{ height: "15px" }}
+                                    />
+                                </Button>
+                            </Link>
                         </Box>
                     </Toolbar>
                 </Container>
