@@ -74,8 +74,6 @@ const MyCustomTrip = () => {
     ];
     const getData = async () => {
         const res: any = await getMyCustomTrip();
-        console.log("🚀 ~ getData ~ res:", res.data.content);
-
         const stateCustomer = res.data.content.map((item: any) => ({
             ...item,
             key: item.id,
@@ -92,7 +90,7 @@ const MyCustomTrip = () => {
             <Table
                 dataSource={dataSource}
                 columns={columns}
-                scroll={{ x: 1500 }}
+                scroll={{ x: 2000 }}
             />
         </div>
     );

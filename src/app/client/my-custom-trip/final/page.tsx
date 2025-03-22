@@ -12,6 +12,7 @@ const BudgetForm = () => {
     const { tripData, setTripData } = useStore();
     const handelFinish = () => {
         postFinish(tripData);
+        alert("Your trip request has been sent to our team!");
     };
     return (
         <Container className="mt-10">
