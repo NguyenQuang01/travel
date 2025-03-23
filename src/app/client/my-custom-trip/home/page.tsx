@@ -7,7 +7,6 @@ import useStore from "@/store/useStore";
 import { Container } from "@mui/material";
 import { Col, Row, Select } from "antd";
 import Image from "next/image";
-import { useState } from "react";
 export default function Home() {
     const { tripData, setTripData } = useStore();
     const onChange = (value: string) => {

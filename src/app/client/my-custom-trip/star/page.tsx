@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Checkbox, Button, Row, Col } from "antd";
+import { Row, Col } from "antd";
 import Image from "next/image";
 import { Container } from "@mui/material";
 import StepsComponent from "@/app/components/Steps";
@@ -66,7 +66,7 @@ export default function LodgingSelection() {
                             height={200}
                             priority={true}
                             loading="eager"
-                            className="w-[80px] h-[173px] md:h-[80px] h-[200px] object-cover rounded-full mr-5"
+                            className="w-[80px] h-[200px] md:h-[80px] object-cover rounded-full mr-5"
                         />
                         <div className="flex-1 mt-5">
                             <h2 className="text-2xl font-semibold mb-2">
