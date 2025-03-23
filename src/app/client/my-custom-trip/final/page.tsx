@@ -141,15 +141,15 @@ const BudgetForm = () => {
                                         <input
                                             type="radio"
                                             name="budget-flexibility"
-                                            value="somewhat-flexible"
+                                            value="somewhat_flexible"
                                             checked={
                                                 tripData.budgetStrictness ===
-                                                "somewhat-flexible"
+                                                "somewhat_flexible"
                                             }
                                             onChange={() =>
                                                 setTripData({
                                                     budgetStrictness:
-                                                        "somewhat-flexible",
+                                                        "somewhat_flexible",
                                                 })
                                             }
                                             className="w-5 h-5 text-green-600 accent-green-600"
