@@ -7,6 +7,7 @@ interface ButtonNextProps {
 }
 
 const ButtonPrev = ({ url = "/" }: ButtonNextProps) => {
+    console.log("🚀 ~ ButtonPrev ~ url:", url);
     const { decrease } = useStore();
     return (
         <Link href={url} replace>

@@ -27,7 +27,7 @@ const BudgetForm = () => {
     const handelFinish = async () => {
         try {
             const res: any = await postFinish(tripData);
-            if (res.data.status !== 200) {
+            if (res?.data?.status && res?.data?.status !== 200) {
                 errorAnt();
                 return;
             }

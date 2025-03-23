@@ -119,7 +119,7 @@ export default function LodgingSelection() {
                                 ))}
                             </div>
                             <div className="flex justify-between mt-6">
-                                <ButtonPrev url="/client/my-custom-trip/star" />
+                                <ButtonPrev url="/client/my-custom-trip/how" />
                                 <ButtonNext url="/client/my-custom-trip/home" />
                             </div>
                         </div>
