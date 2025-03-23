@@ -148,7 +148,7 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
 export default function MyTripSummary() {
     //lấy dữ liệu từ local storage
     const sampleData = JSON.parse(
-        localStorage.getItem("tripData") ||
+        (typeof window !== "undefined" && localStorage.getItem("tripData")) ||
             JSON.stringify({
                 homeCountry: "",
                 mainCountry: "",
