@@ -2,15 +2,17 @@
 import { Container } from "@mui/material";
 
 import Image from "next/image";
-import React from "react";
+import React, { use, useEffect } from "react";
 import BlurText from "../../components/reactbits/BlurText";
 import ButtonNext from "@/app/components/ButtonNext";
 import StepsComponent from "@/app/components/Steps";
+import useStore from "@/store/useStore";
 
 const MyCustomTrip = () => {
-    const handleAnimationComplete = () => {
-        console.log("Animation completed!");
-    };
+    const { setTo0 } = useStore();
+    useEffect(() => {
+        setTo0();
+    }, []);
     return (
         <Container className="mt-10">
             <StepsComponent />
@@ -29,10 +31,9 @@ const MyCustomTrip = () => {
                     <h2 className="font-semibold text-lg">
                         <BlurText
                             text="Hi, ready to plan your trip? Here’s how this works."
-                            delay={150}
+                            delay={50}
                             animateBy="words"
                             direction="top"
-                            onAnimationComplete={handleAnimationComplete}
                             className="text-2xl mb-8"
                         />
                     </h2>

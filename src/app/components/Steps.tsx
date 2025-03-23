@@ -1,10 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Steps } from "antd";
 import useStore from "@/store/useStore";
 const StepsComponent = () => {
     const { steps, tripData } = useStore();
-    console.log("🚀 ~ StepsComponent ~ tripData:", tripData);
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) return null;
+
     return (
         <Steps
             size="small"
