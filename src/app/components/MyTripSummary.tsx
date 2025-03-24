@@ -83,7 +83,8 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
         },
         {
             label: "Contact Name",
-            values: [`${data.firstName} ${data.lastName}`].filter(Boolean),
+            values:
+                [`${data.firstName} ${data.lastName}`].filter(Boolean) || "",
         },
         {
             label: "Email",
@@ -110,6 +111,7 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
             values: [data.description || ""],
         },
     ];
+    console.log("🚀 ~ summaryItems:", summaryItems);
 
     return (
         <div className=" p-6 rounded-lg shadow-lg max-w-sm">
@@ -119,7 +121,10 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
             <div className="bg-white p-4 rounded-b-lg">
                 {summaryItems.map(
                     (item, index) =>
-                        item.values.some((value) => value !== "") && (
+                        item.values.some(
+                            (value) =>
+                                value && value.trim() !== "" && value !== " - "
+                        ) && (
                             <div
                                 key={index}
                                 className="mb-3 flex justify-between"
@@ -127,7 +132,7 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
                                 <span className="text-gray-500">
                                     {item.label}
                                 </span>
-                                <div className="flex ">
+                                <div className="flex">
                                     {item?.values.map((value, idx) => (
                                         <div
                                             key={idx}
