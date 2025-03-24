@@ -24,17 +24,54 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     transform: expand ? "rotate(180deg)" : "rotate(0deg)",
 }));
 
-interface CardData {
-    title: string;
-    tourTypes: string;
-    color: string;
-    numberDay: string;
-    price: string;
-    start: number;
-    numberReview: number;
+interface Image {
+    id: number;
+    url: string;
+    tourId: number;
 }
 
-export default function CardReview(prop: CardData) {
+interface Review {
+    avgTransportation: number;
+    avgActivities: number;
+    avgMeals: number;
+    avgGuide: number;
+    reviewCount: number;
+    avgValue: number;
+    avgOverall: number;
+    tourId: number;
+    avgLodging: number;
+}
+
+interface Tour {
+    id: number;
+    tripId: string;
+    name: string;
+    lodgingLevel: string;
+    video: string;
+    totalDay: number;
+    tripType: string;
+    physicalLevel: string;
+    tripPace: string;
+    highlights: string;
+    tripAbout: string;
+    itineraryFocus: string;
+    groupSize: string;
+    ageRange: string;
+    minGroupSize: number;
+    maxGroupSize: number;
+    attractions: string;
+    destinations: string;
+    isTrending: number;
+    oldPrice?: number;
+}
+
+interface TourData {
+    images: Image[];
+    review: Review;
+    tour: Tour;
+}
+
+export default function CardReview(prop: TourData) {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -55,26 +92,32 @@ export default function CardReview(prop: CardData) {
             <Box className="p-2 md:p-[1rem] pb-0">
                 <Box>
                     <p className="text-sm md:text-base font-bold leading-[16px] truncate">
-                        {prop.title}
+                        {prop.tour.name}
                     </p>
-                    <Box className="flex items-center justify-between my-2">
+                    <Box className="flex items-center my-2">
                         <Box
                             sx={{
                                 height: "12px",
                                 width: "12px",
-                                background: prop.color,
+                                background: "#000",
                                 borderRadius: "10%",
                             }}
                             className=" mr-[8px]"
                         ></Box>
                         <p className="text-sm md:text-base truncate">
-                            {prop.tourTypes}
+                            {prop.tour?.tripType}
                         </p>
                     </Box>
                 </Box>
                 <Box className="flex justify-between">
-                    <Typography>{prop.numberDay} Days</Typography>
-                    <Typography>{prop.price}</Typography>
+                    <Typography>{prop.tour.totalDay} Days</Typography>
+                    <div className="flex items-center">
+                        <p className="text-sm mr-2">From:</p>
+                        <span className="text-2xl">
+                            {" "}
+                            {prop.tour.oldPrice || 0}
+                        </span>
+                    </div>
                 </Box>
             </Box>
             <CardActions disableSpacing>
@@ -91,7 +134,8 @@ export default function CardReview(prop: CardData) {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Box className="flex justify-between p-[1rem] pt-0">
                     <Box>
-                        <StarTwoTone twoToneColor="#FFD700" />
+                        <StarTwoTone twoToneColor="#FFD700" />{" "}
+                        {prop.review.avgOverall}/5 Excellent
                     </Box>
                     <Box sx={{ pl: "10px" }}>
                         <Typography
@@ -101,7 +145,7 @@ export default function CardReview(prop: CardData) {
                                 lineHeight: "21px",
                             }}
                         >
-                            {prop.numberReview} Reviews
+                            {prop.review.reviewCount} Reviews
                         </Typography>
                     </Box>
                 </Box>

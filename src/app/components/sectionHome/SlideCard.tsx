@@ -17,61 +17,111 @@ interface CardData {
     numberReview: number;
 }
 
-const data: CardData[] = [
-    {
-        title: "Find trips that move you",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4,
-        numberReview: 100,
-    },
-    {
-        title: "Find trips that move you 00",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4.5,
-        numberReview: 100,
-    },
-    {
-        title: "Find trips that move you 00",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4.5,
-        numberReview: 100,
-    },
-    {
-        title: "Find trips that move you 00",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4.5,
-        numberReview: 100,
-    },
-    {
-        title: "Find trips that move you 00",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4.5,
-        numberReview: 100,
-    },
-];
-const Slider = () => {
+// const data: CardData[] = [
+//     {
+//         title: "Find trips that move you",
+//         tourTypes: "Self-Guided / Independent Tour",
+//         color: "#333",
+//         numberDay: "7",
+//         price: "$1,000",
+//         start: 4,
+//         numberReview: 100,
+//     },
+//     {
+//         title: "Find trips that move you 00",
+//         tourTypes: "Self-Guided / Independent Tour",
+//         color: "#333",
+//         numberDay: "7",
+//         price: "$1,000",
+//         start: 4.5,
+//         numberReview: 100,
+//     },
+//     {
+//         title: "Find trips that move you 00",
+//         tourTypes: "Self-Guided / Independent Tour",
+//         color: "#333",
+//         numberDay: "7",
+//         price: "$1,000",
+//         start: 4.5,
+//         numberReview: 100,
+//     },
+//     {
+//         title: "Find trips that move you 00",
+//         tourTypes: "Self-Guided / Independent Tour",
+//         color: "#333",
+//         numberDay: "7",
+//         price: "$1,000",
+//         start: 4.5,
+//         numberReview: 100,
+//     },
+//     {
+//         title: "Find trips that move you 00",
+//         tourTypes: "Self-Guided / Independent Tour",
+//         color: "#333",
+//         numberDay: "7",
+//         price: "$1,000",
+//         start: 4.5,
+//         numberReview: 100,
+//     },
+// ];
+interface Image {
+    id: number;
+    url: string;
+    tourId: number;
+}
+
+interface Review {
+    avgTransportation: number;
+    avgActivities: number;
+    avgMeals: number;
+    avgGuide: number;
+    reviewCount: number;
+    avgValue: number;
+    avgOverall: number;
+    tourId: number;
+    avgLodging: number;
+}
+
+interface Tour {
+    id: number;
+    tripId: string;
+    name: string;
+    lodgingLevel: string;
+    video: string;
+    totalDay: number;
+    tripType: string;
+    physicalLevel: string;
+    tripPace: string;
+    highlights: string;
+    tripAbout: string;
+    itineraryFocus: string;
+    groupSize: string;
+    ageRange: string;
+    minGroupSize: number;
+    maxGroupSize: number;
+    attractions: string;
+    destinations: string;
+    isTrending: number;
+}
+
+interface TourData {
+    images: Image[];
+    review: Review;
+    tour: Tour;
+}
+
+interface SliderProps {
+    data: TourData[];
+}
+
+const Slider = (prop: any) => {
     return (
-        <div className=" flex items-center justify-center mt-20">
+        <div className="flex items-center justify-center mt-20">
             <div>
-                <p className="text-[1.8rem] font-bold text-shadow-md  mb-[20px]">
+                <p className="text-[1.8rem] font-bold text-shadow-md mb-[20px]">
                     Find trips that move you
                 </p>
-                <div className="mx-auto md:w-[70vw]  w-[83vw] max-w-[126rem] h-full relative -mb-[11.8rem]">
+                <div className="mx-auto md:w-[70vw] w-[83vw] max-w-[126rem] h-full relative -mb-[11.8rem]">
                     <Swiper
                         modules={[Navigation, Pagination]}
                         breakpoints={{
@@ -92,7 +142,7 @@ const Slider = () => {
                         loop={true}
                         className="h-full"
                     >
-                        {data?.map((item, index) => (
+                        {prop.data?.map((item: any, index: any) => (
                             <SwiperSlide key={index} className="p-1">
                                 <CardReview {...item} />
                             </SwiperSlide>

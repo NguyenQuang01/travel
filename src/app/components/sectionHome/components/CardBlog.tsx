@@ -24,17 +24,17 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     transform: expand ? "rotate(180deg)" : "rotate(0deg)",
 }));
 
-interface CardData {
+interface Blog {
+    id: number;
     title: string;
-    tourTypes: string;
-    color: string;
-    numberDay: string;
-    price: string;
-    start: number;
-    numberReview: number;
+    coverImage: string;
+    types: string;
+    contentHtml: string;
+    publishDate: string;
+    isShow: boolean;
 }
 
-export default function CardBlog(prop: CardData) {
+export default function CardBlog(prop: Blog) {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -44,7 +44,7 @@ export default function CardBlog(prop: CardData) {
     return (
         <div>
             <Image
-                src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
+                src={prop.coverImage}
                 alt="img"
                 width={200}
                 height={200}
@@ -52,7 +52,7 @@ export default function CardBlog(prop: CardData) {
                 loading="eager"
                 className="w-full h-[173px] md:h-[290px] h-[200px] object-cover"
             />
-            <Box className="p-2 md:pt-[1rem] pb-2 bg-gray-100">
+            <Box className="py-2 md:pt-[1rem] pb-2 bg-gray-100">
                 <Box>
                     <p className="text-sm md:text-2xl font-bold leading-[24px] ">
                         {prop.title}

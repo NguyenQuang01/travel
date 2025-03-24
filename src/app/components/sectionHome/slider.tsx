@@ -13,7 +13,14 @@ const imgStyle: React.CSSProperties = {
     objectFit: "cover",
 };
 
-const Slider = () => {
+interface SliderItem {
+    id: number;
+    name: string;
+    imageUrl: string;
+    description: string | null;
+}
+
+const Slider = (prop: { data: SliderItem[] }) => {
     return (
         <div className="bg-black flex items-center justify-center text-[#333] leading-6 my-0 mb-[118px] py-[30px] pb-10 md:h-[444px] h-[344px]">
             <div>
@@ -41,16 +48,16 @@ const Slider = () => {
                         loop={true}
                         className="h-full"
                     >
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
-                            <SwiperSlide>
+                        {prop.data.map((item) => (
+                            <SwiperSlide key={item.id}>
                                 <div className="flex items-center justify-center h-full">
                                     <div className="card">
-                                        <h1 className="text-h1 w-full">
-                                            Guided Group
-                                        </h1>{" "}
+                                        {/* <h1 className="text-h1 w-full">
+                                            {item.name}
+                                        </h1> */}
                                         <Image
-                                            src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
-                                            alt="Logo"
+                                            src={`http://202.92.7.92:3082${item.imageUrl}`}
+                                            alt={item.name}
                                             width={201}
                                             height={44}
                                             priority={true}
@@ -60,13 +67,11 @@ const Slider = () => {
                                         />
                                         <div className="intro">
                                             <h2 className="text-h2">
-                                                Guided Group
+                                                {item.name}
                                             </h2>
                                             <p className="text-p">
-                                                Groups of 25-60 provide
-                                                flexibility, savings up to 40%,
-                                                and often include meals and
-                                                optional activities.
+                                                {item.description ||
+                                                    "No description available"}
                                             </p>
                                         </div>
                                     </div>

@@ -64,14 +64,24 @@ const data: CardData[] = [
         numberReview: 100,
     },
 ];
-const SlideBlog = () => {
+interface Blog {
+    id: number;
+    title: string;
+    coverImage: string;
+    types: string;
+    contentHtml: string;
+    publishDate: string;
+    isShow: boolean;
+}
+
+const SlideBlog = (prop: { data: Blog[] }) => {
     return (
-        <div className="bg-gray-100  flex items-center justify-center mt-80 py-20">
+        <div className="bg-gray-100 flex items-center justify-center mt-80 py-20">
             <div>
-                <p className="text-[1.8rem] font-bold text-shadow-md  mb-[20px]">
+                <p className="text-[1.8rem] font-bold text-shadow-md mb-[20px]">
                     Travel Guides and Tips
                 </p>
-                <div className="mx-auto md:w-[70vw]  w-[83vw] max-w-[126rem] h-full relative ">
+                <div className="mx-auto md:w-[70vw] w-[83vw] max-w-[126rem] h-full relative">
                     <Swiper
                         modules={[Navigation, Pagination]}
                         breakpoints={{
@@ -92,7 +102,7 @@ const SlideBlog = () => {
                         loop={true}
                         className="h-full"
                     >
-                        {data?.map((item, index) => (
+                        {prop.data?.map((item, index) => (
                             <SwiperSlide key={index} className="p-1">
                                 <CardBlog {...item} />
                             </SwiperSlide>

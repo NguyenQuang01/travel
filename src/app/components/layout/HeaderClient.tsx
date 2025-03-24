@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { use, useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -22,6 +22,13 @@ import Link from "next/link";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Modal } from "antd";
 import ButtonGreen from "../ButtonGreen";
+import {
+    getActivities,
+    getInterests,
+    getStyles,
+    getDestinations,
+    getTrending,
+} from "./hook";
 const pages = [
     {
         name: "Trending",
@@ -108,7 +115,50 @@ const pages = [
         children: null,
     },
 ];
+interface Destination {
+    id: number;
+    destination: string;
+    continentId: number;
+    imageUrl: string;
+    description: string | null;
+    isShow: boolean;
+    show: boolean;
+}
 
+interface Continent {
+    continentId: number;
+    continentName: string;
+    imageUrl: string;
+    description: string;
+}
+
+interface DestinationData {
+    continent: Continent;
+    destinations: Destination[];
+}
+interface Trip {
+    id: number;
+    tripId: string;
+    name: string;
+    lodgingLevel: string;
+    video: string;
+    totalDay: number;
+    tripType: string;
+    physicalLevel: string;
+    tripPace: string;
+    highlights: string;
+    tripAbout: string;
+    itineraryFocus: string;
+    groupSize: string;
+    ageRange: string;
+    minGroupSize: number;
+    maxGroupSize: number;
+    attractions: string;
+    destinations: string;
+    isTrending: number;
+    price: string;
+    oldPrice: string;
+}
 function HeaderClient() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
@@ -117,6 +167,56 @@ function HeaderClient() {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [isModalTrending, setIsModalTrending] = React.useState(false);
     const [isModalOpenStyle, setIsModalOpenStyle] = React.useState(false);
+
+    const [destinations, setDestinations] = useState<DestinationData[]>();
+
+    const [activities, setActivities] =
+        useState<{ id: number; activity: string }[]>();
+    const [styles, setStyles] = useState<{ id: number; name: string }[]>();
+    const [Interests, setInterests] =
+        useState<{ id: number; name: string }[]>();
+
+    const [trending, setTrending] = useState<Trip[]>();
+    const getMenuActivities = async () => {
+        const res: any = await getActivities();
+        if (res) {
+            setActivities(res.data);
+        }
+    };
+    const getMenuStyles = async () => {
+        const res: any = await getStyles();
+        if (res) {
+            setStyles(res.data);
+        }
+    };
+    const getMenuInterests = async () => {
+        const res: any = await getInterests();
+        if (res) {
+            setInterests(res.data);
+        }
+    };
+    const getMenuDestinations = async () => {
+        const res: any = await getDestinations();
+        if (res) {
+            console.log("🚀 ~ getMenuDestinations ~ res:", res.data);
+            setDestinations(res.data);
+        }
+    };
+    const getMenuTrending = async () => {
+        const res: any = await getTrending();
+        console.log("🚀 ~ getMenuTrending ~ res:", res.data);
+        if (res) {
+            setTrending(res.data);
+        }
+    };
+    useEffect(() => {
+        getMenuActivities();
+        getMenuStyles();
+        getMenuInterests();
+        getMenuDestinations();
+        getMenuTrending();
+    }, []);
+
     const handleClick = () => {
         setOpen(!open);
         setIsModalOpen(true);
@@ -124,9 +224,6 @@ function HeaderClient() {
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-    // const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    //     setAnchorElUser(event.currentTarget);
-    // };
 
     const handleCloseNavMenu = (page?: any) => {
         setAnchorElNav(null);
@@ -164,23 +261,19 @@ function HeaderClient() {
                 open={isModalTrending}
                 onOk={handleOkTrending}
                 onCancel={handleCancelTrending}
-                width={1000}
+                width={850}
                 footer={null}
             >
                 <div className=" rounded-lg p-2  mx-auto">
-                    <div className=" gap-4">
-                        <ul className="space-y-1 text-gray-700 flex flex-wrap gap-4">
-                            <li>Ha Long Bay</li>
-                            <li>Sapa Rice Terraces</li>
-                            <li>Hoi An Ancient Town</li>
-                            <li>Mekong Delta</li>
-                            <li>Phong Nha Caves</li>
-                            <li>Ho Chi Minh City</li>
-                            <li>Hue Imperial City</li>
-                            <li>Phu Quoc Island</li>
-                            <li>Hanoi Old Quarter</li>
-                            <li>Nha Trang Beaches</li>
-                        </ul>
+                    <div className="flex flex-wrap gap-5">
+                        {trending?.map((trip, index) => (
+                            <h3
+                                key={index}
+                                className="space-y-1 text-gray-700 text-center whitespace-normal"
+                            >
+                                {trip.name}
+                            </h3>
+                        ))}{" "}
                     </div>
                 </div>
             </Modal>{" "}
@@ -188,105 +281,20 @@ function HeaderClient() {
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                width={1000}
+                width={850}
                 footer={null}
             >
                 <div className=" rounded-lg p-2  mx-auto">
-                    <div className="grid grid-cols-6 gap-4">
-                        {/* <div className="bg-green-100 p-4 rounded-md">
-                            <h3 className="font-bold text-lg mb-2">Trending</h3>
-                            <ul className="space-y-1 text-gray-700">
-                                <li>Ha Long Bay</li>
-                                <li>Sapa Rice Terraces</li>
-                                <li>Hoi An Ancient Town</li>
-                                <li>Mekong Delta</li>
-                                <li>Phong Nha Caves</li>
-                                <li>Ho Chi Minh City</li>
-                                <li>Hue Imperial City</li>
-                                <li>Phu Quoc Island</li>
-                                <li>Hanoi Old Quarter</li>
-                                <li>Nha Trang Beaches</li>
-                                <li className="text-green-600">See all &gt;</li>
-                            </ul>
-                        </div> */}
-
-                        {[
-                            {
-                                title: "Vietnam Destinations",
-                                places: [
-                                    "Ha Long Bay",
-                                    "Hanoi",
-                                    "Ho Chi Minh City",
-                                    "Hoi An",
-                                    "Da Nang",
-                                    "Sapa",
-                                    "Mekong Delta",
-                                    "Phu Quoc",
-                                    "Hue",
-                                ],
-                            },
-                            {
-                                title: "Vietnam Experiences",
-                                places: [
-                                    "Food & Cuisine",
-                                    "Cultural Heritage",
-                                    "Beach Resorts",
-                                    "Mountain Trekking",
-                                    "Historical Sites",
-                                    "Local Markets",
-                                    "Rice Terraces",
-                                    "Buddhist Temples",
-                                    "River Cruises",
-                                ],
-                            },
-                            {
-                                title: "Best Time to Visit",
-                                places: [
-                                    "Spring (Feb-Apr)",
-                                    "Summer (May-Jul)",
-                                    "Fall (Aug-Oct)",
-                                    "Winter (Nov-Jan)",
-                                    "Tet Holiday",
-                                    "Monsoon Season",
-                                    "Festival Times",
-                                    "Peak Season",
-                                    "Off-Peak Deals",
-                                ],
-                            },
-                            {
-                                title: "Travel Styles",
-                                places: [
-                                    "Luxury Tours",
-                                    "Adventure Travel",
-                                    "Family Trips",
-                                    "Backpacking",
-                                    "Photography Tours",
-                                    "Culinary Tours",
-                                    "Eco Tourism",
-                                    "Cultural Tours",
-                                    "Beach Holidays",
-                                ],
-                            },
-                            {
-                                title: "Practical Info",
-                                places: [
-                                    "Visa Guide",
-                                    "Transportation",
-                                    "Accommodations",
-                                ],
-                            },
-                        ].map((section, index) => (
+                    <div className="flex justify-between">
+                        {destinations?.map((section, index) => (
                             <div key={index}>
                                 <h3 className="font-bold text-lg mb-2">
-                                    {section.title}
+                                    {section.continent.continentName}
                                 </h3>
                                 <ul className="space-y-1 text-gray-700">
-                                    {section.places.map((place, i) => (
-                                        <li key={i}>{place}</li>
+                                    {section.destinations.map((place, i) => (
+                                        <li key={i}>{place.destination}</li>
                                     ))}
-                                    <li className="text-green-600">
-                                        See all &gt;
-                                    </li>
                                 </ul>
                             </div>
                         ))}
@@ -297,93 +305,33 @@ function HeaderClient() {
                 open={isModalOpenStyle}
                 onOk={handleOkStyle}
                 onCancel={handleCancelStyle}
-                width={1000}
+                width={850}
                 footer={null}
             >
-                <div className=" rounded-lg p-2  mx-auto">
-                    <div className="grid grid-cols-6 gap-4">
-                        {[
-                            {
-                                title: "Adventure & Active",
-                                places: [
-                                    "Hiking & Trekking",
-                                    "Mountain Climbing",
-                                    "Water Sports",
-                                    "Cycling Tours",
-                                    "Safari Adventures",
-                                    "Winter Sports",
-                                    "Extreme Sports",
-                                    "Camping",
-                                    "Desert Expeditions",
-                                ],
-                            },
-                            {
-                                title: "Cultural Experiences",
-                                places: [
-                                    "Historical Tours",
-                                    "Art & Architecture",
-                                    "Food & Wine",
-                                    "Local Festivals",
-                                    "Traditional Crafts",
-                                    "Religious Sites",
-                                    "Indigenous Culture",
-                                    "Language Learning",
-                                    "Music & Dance",
-                                ],
-                            },
-                            {
-                                title: "Relaxation & Wellness",
-                                places: [
-                                    "Spa Retreats",
-                                    "Beach Resorts",
-                                    "Yoga & Meditation",
-                                    "Hot Springs",
-                                    "Nature Escapes",
-                                    "Health & Wellness",
-                                    "Luxury Stays",
-                                    "Island Getaways",
-                                    "Mountain Retreats",
-                                ],
-                            },
-                            {
-                                title: "Special Interest",
-                                places: [
-                                    "Photography Tours",
-                                    "Wildlife Viewing",
-                                    "Cooking Classes",
-                                    "Wine Tasting",
-                                    "Bird Watching",
-                                    "Volunteer Travel",
-                                    "Educational Tours",
-                                    "Agricultural Tours",
-                                    "Astronomy Tours",
-                                ],
-                            },
-                            {
-                                title: "Travel Style",
-                                places: [
-                                    "Luxury Travel",
-                                    "Budget Travel",
-                                    "Family Friendly",
-                                    "Solo Travel",
-                                    "Group Tours",
-                                ],
-                            },
-                        ].map((section, index) => (
-                            <div key={index}>
-                                <h3 className="font-bold text-lg mb-2">
-                                    {section.title}
-                                </h3>
-                                <ul className="space-y-1 text-gray-700">
-                                    {section.places.map((place, i) => (
-                                        <li key={i}>{place}</li>
-                                    ))}
-                                    <li className="text-green-600">
-                                        See all &gt;
-                                    </li>
-                                </ul>
-                            </div>
-                        ))}
+                <div className=" rounded-lg p-2  mx-auto flex gap-10 justify-between">
+                    <div>
+                        <h3 className="font-bold text-lg mb-2">Adventure</h3>
+                        <ul className="space-y-1 text-gray-700">
+                            {activities?.map((activity, index) => (
+                                <li key={activity.id}>{activity.activity}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-lg mb-2">Styles</h3>
+                        <ul className="space-y-1 text-gray-700">
+                            {styles?.map((style, index) => (
+                                <li key={style.id}>{style.name}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-lg mb-2">Interests</h3>
+                        <ul className="space-y-1 text-gray-700">
+                            {Interests?.map((interest, index) => (
+                                <li key={interest.id}>{interest.name}</li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </Modal>
