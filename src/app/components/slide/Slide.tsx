@@ -85,6 +85,7 @@ const Slider: React.FC = () => {
                 afterChange={onChange}
                 autoplay={true}
                 autoplaySpeed={5000}
+                dots={false}
             >
                 {imgs?.map((src, index) => (
                     <div
