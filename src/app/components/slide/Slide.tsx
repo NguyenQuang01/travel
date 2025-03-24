@@ -102,8 +102,8 @@ const Slider: React.FC = () => {
                     {data.title}
                 </h1>
                 <div className="rounded-md md:bg-black/55 p-8 mb-8 md:mt-20 mt-4">
-                    <p className="text-[1.4rem] md:text-[2.2rem] font-normal drop-shadow-md text-center">
-                        {data.subtitle}
+                    <p className="text-[1.4rem] md:text-[1.4rem] font-normal drop-shadow-md text-center">
+                        {data.Box.title}
                     </p>
                     <div className="flex items-center justify-center ">
                         {" "}
