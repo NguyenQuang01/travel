@@ -50,9 +50,9 @@ export default function CardReview(prop: CardData) {
                 height={200}
                 priority={true}
                 loading="eager"
-                className="w-full h-[173px] md:h-[323px] h-[200px] object-cover"
+                className="w-full h-[173px] md:h-[290px] h-[200px] object-cover"
             />
-            <Box className="p-2 md:p-[1.5rem] pb-0">
+            <Box className="p-2 md:p-[1rem] pb-0">
                 <Box>
                     <p className="text-sm md:text-base font-bold leading-[16px] truncate">
                         {prop.title}
@@ -60,11 +60,12 @@ export default function CardReview(prop: CardData) {
                     <Box className="flex items-center justify-between my-2">
                         <Box
                             sx={{
-                                height: "8px",
-                                width: "8px",
+                                height: "12px",
+                                width: "12px",
                                 background: prop.color,
+                                borderRadius: "10%",
                             }}
-                            className="rounded-full mr-[8px]"
+                            className=" mr-[8px]"
                         ></Box>
                         <p className="text-sm md:text-base truncate">
                             {prop.tourTypes}

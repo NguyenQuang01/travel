@@ -2,10 +2,18 @@
 import React, { useState } from "react";
 import { Carousel } from "antd";
 import Image from "next/image";
+import "@/app/components/style.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MessageIcon from "@mui/icons-material/Message";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Input } from "antd";
+import type { GetProps } from "antd";
+type SearchProps = GetProps<typeof Input.Search>;
+
+const { Search } = Input;
+const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
+    console.log(info?.source, value);
 const contentStyle: React.CSSProperties = {
     margin: 0,
     height: "77vh",
@@ -74,7 +82,7 @@ const Slider: React.FC = () => {
         <div className="relative after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/25 after:to-black after:from-85%">
             <Carousel
                 afterChange={onChange}
-                // autoplay={true}
+                autoplay={true}
                 autoplaySpeed={5000}
             >
                 {imgs?.map((src, index) => (
@@ -106,7 +114,6 @@ const Slider: React.FC = () => {
                         {data.Box.title}
                     </p>
                     <div className="flex items-center justify-center ">
-                        {" "}
                         <div className="inline-block bg-[#177a68] rounded text-white fill-white font-roboto text-[25px] font-bold leading-6 mt-5 py-6 px-4 text-center">
                             Design custom trip
                         </div>
@@ -170,6 +177,15 @@ const Slider: React.FC = () => {
                             </div>
                         </div>
                     )}
+                </div>
+                <div className="search-bar w-[300px] md:w-[484px]">
+                    <Search
+                        placeholder="Explore tours, cruises, pre-crafted itineraries & more"
+                        allowClear
+                        onSearch={onSearch}
+                        style={{ width: "100%" }}
+                        size="large"
+                    />
                 </div>
             </div>
         </div>

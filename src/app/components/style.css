@@ -1,0 +1,7 @@
+.search-bar .ant-input-affix-wrapper,
+.search-bar .ant-input-search-button {
+    height: 60px !important;
+}
+.search-bar .ant-input-search-button {
+    width: 60px !important;
+}

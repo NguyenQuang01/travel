@@ -22,7 +22,7 @@ const Slider = () => {
                 </p>
                 <div className="mx-auto md:w-[70vw]  w-[83vw] max-w-[126rem] h-full relative md:-mb-[11.8rem] -mb-[14.8rem]">
                     <Swiper
-                        modules={[Navigation, Pagination, Autoplay]}
+                        modules={[Navigation, Pagination]}
                         breakpoints={{
                             320: {
                                 slidesPerView: 3,
@@ -41,10 +41,13 @@ const Slider = () => {
                         loop={true}
                         className="h-full"
                     >
-                        <SwiperSlide>
-                            <div className="flex items-center justify-center h-full">
-                                <div className="card">
-                                    <div className="face front">
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+                            <SwiperSlide>
+                                <div className="flex items-center justify-center h-full">
+                                    <div className="card">
+                                        <h1 className="text-h1 w-full">
+                                            Guided Group
+                                        </h1>{" "}
                                         <Image
                                             src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
                                             alt="Logo"
@@ -55,147 +58,21 @@ const Slider = () => {
                                             loading="eager"
                                             style={imgStyle}
                                         />
-                                        <h1 className="text-h1">Custom</h1>
-                                    </div>
-
-                                    <div className="face back">
-                                        <h2 className="text-h2 mb-5">Custom</h2>
-                                        <p className="text-p">
-                                            Lorem ipsum, dolor sit amet
-                                            consectetur adipisicing elit. Harum
-                                            repellat maiores aperiam nemo
-                                            officia, praesentium suscipit? Eum
-                                            voluptate fuga eius accusamus harum
-                                            cum unde natus.
-                                        </p>
+                                        <div className="intro">
+                                            <h2 className="text-h2">
+                                                Guided Group
+                                            </h2>
+                                            <p className="text-p">
+                                                Groups of 25-60 provide
+                                                flexibility, savings up to 40%,
+                                                and often include meals and
+                                                optional activities.
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </SwiperSlide>{" "}
-                        <SwiperSlide>
-                            <div className="flex items-center justify-center h-full">
-                                <div className="card">
-                                    <div className="face front">
-                                        <Image
-                                            src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
-                                            alt="Logo"
-                                            width={201}
-                                            height={44}
-                                            priority={true}
-                                            className="min-w-[12.6rem] h-[44px]"
-                                            loading="eager"
-                                            style={imgStyle}
-                                        />
-                                        <h1 className="text-h1">Custom</h1>
-                                    </div>
-
-                                    <div className="face back">
-                                        <h2 className="text-h2 mb-5">Custom</h2>
-                                        <p className="text-p">
-                                            Lorem ipsum, dolor sit amet
-                                            consectetur adipisicing elit. Harum
-                                            repellat maiores aperiam nemo
-                                            officia, praesentium suscipit? Eum
-                                            voluptate fuga eius accusamus harum
-                                            cum unde natus.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </SwiperSlide>{" "}
-                        <SwiperSlide>
-                            <div className="flex items-center justify-center h-full">
-                                <div className="card">
-                                    <div className="face front">
-                                        <Image
-                                            src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
-                                            alt="Logo"
-                                            width={201}
-                                            height={44}
-                                            priority={true}
-                                            className="min-w-[12.6rem] h-[44px]"
-                                            loading="eager"
-                                            style={imgStyle}
-                                        />
-                                        <h1 className="text-h1">Custom</h1>
-                                    </div>
-
-                                    <div className="face back">
-                                        <h2 className="text-h2 mb-5">Custom</h2>
-                                        <p className="text-p">
-                                            Lorem ipsum, dolor sit amet
-                                            consectetur adipisicing elit. Harum
-                                            repellat maiores aperiam nemo
-                                            officia, praesentium suscipit? Eum
-                                            voluptate fuga eius accusamus harum
-                                            cum unde natus.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </SwiperSlide>{" "}
-                        <SwiperSlide>
-                            <div className="flex items-center justify-center h-full">
-                                <div className="card">
-                                    <div className="face front">
-                                        <Image
-                                            src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
-                                            alt="Logo"
-                                            width={201}
-                                            height={44}
-                                            priority={true}
-                                            className="min-w-[12.6rem] h-[44px]"
-                                            loading="eager"
-                                            style={imgStyle}
-                                        />
-                                        <h1 className="text-h1">Custom</h1>
-                                    </div>
-
-                                    <div className="face back">
-                                        <h2 className="text-h2 mb-5">Custom</h2>
-                                        <p className="text-p">
-                                            Lorem ipsum, dolor sit amet
-                                            consectetur adipisicing elit. Harum
-                                            repellat maiores aperiam nemo
-                                            officia, praesentium suscipit? Eum
-                                            voluptate fuga eius accusamus harum
-                                            cum unde natus.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </SwiperSlide>{" "}
-                        <SwiperSlide>
-                            <div className="flex items-center justify-center h-full">
-                                <div className="card">
-                                    <div className="face front">
-                                        <Image
-                                            src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
-                                            alt="Logo"
-                                            width={201}
-                                            height={44}
-                                            priority={true}
-                                            className="min-w-[12.6rem] h-[44px]"
-                                            loading="eager"
-                                            style={imgStyle}
-                                        />
-                                        <h1 className="text-h1">Custom</h1>
-                                    </div>
-
-                                    <div className="face back">
-                                        <h2 className="text-h2 mb-5">Custom</h2>
-                                        <p className="text-p">
-                                            Lorem ipsum, dolor sit amet
-                                            consectetur adipisicing elit. Harum
-                                            repellat maiores aperiam nemo
-                                            officia, praesentium suscipit? Eum
-                                            voluptate fuga eius accusamus harum
-                                            cum unde natus.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </SwiperSlide>
+                            </SwiperSlide>
+                        ))}
                     </Swiper>
                 </div>
             </div>
