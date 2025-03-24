@@ -18,7 +18,7 @@ export default function Home() {
     };
 
     return (
-        <Container className="mt-10">
+        <Container className="my-10">
             <StepsComponent />
             <Row gutter={[16, 16]} className="mt-10">
                 <Col span={16}>

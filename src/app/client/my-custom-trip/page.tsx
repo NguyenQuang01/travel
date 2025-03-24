@@ -14,7 +14,7 @@ const MyCustomTrip = () => {
         setTo0();
     }, []);
     return (
-        <Container className="mt-10">
+        <Container className="my-10">
             <StepsComponent />
             <div className="flex items-start p-6 bg-white rounded-2xl shadow-lg  mt-10">
                 <Image

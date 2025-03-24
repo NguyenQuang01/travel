@@ -31,36 +31,34 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
     const summaryItems = [
         {
             label: "Main Destination",
-            values: [data.mainCountry || "Not specified"],
+            values: [data.mainCountry || ""],
         },
         {
             label: "Additional Destinations",
-            values: [data.additionalCountries || "Not specified"],
+            values: [data.additionalCountries || ""],
         },
         {
             label: "Number of Travelers",
-            values: [data.numTravelers || "Not specified"],
+            values: [data.numTravelers || ""],
         },
         {
             label: "Companions' Ages",
-            values: [data.companionsAges || "Not specified"],
+            values: [data.companionsAges || ""],
         },
         {
             label: "Trip Type",
-            values: [data.tripType || "Not specified"],
+            values: [data.tripType || ""],
         },
         {
             label: "Lodging Type",
-            values: [
-                data.lodgingType ? `${data.lodgingType}-Star` : "Not specified",
-            ],
+            values: [data.lodgingType ? `${data.lodgingType}-Star` : ""],
         },
         {
             label: "Budget per Person",
             values: [
                 data.budgetPerPerson
                     ? `${data.currency || "$"} ${data.budgetPerPerson}`
-                    : "Not specified",
+                    : "",
             ],
         },
         {
@@ -68,20 +66,20 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
             values: [
                 data.budgetStrictness
                     ? data.budgetStrictness.replace("-", " ")
-                    : "Not specified",
+                    : "",
             ],
         },
         {
             label: "Trip Duration",
-            values: [data.totalDate || "Not specified"],
+            values: [data.totalDate || ""],
         },
         {
             label: "Planned Date",
-            values: [data.whenDate || "Not specified"],
+            values: [data.whenDate || ""],
         },
         {
             label: "Home Country",
-            values: [data.homeCountry || "Not specified"],
+            values: [data.homeCountry || ""],
         },
         {
             label: "Contact Name",
@@ -89,29 +87,27 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
         },
         {
             label: "Email",
-            values: [data.email || "Not specified"],
+            values: [data.email || ""],
         },
         {
             label: "Phone Number",
-            values: [data.phoneNumber || "Not specified"],
+            values: [data.phoneNumber || ""],
         },
         {
             label: "Preferred Contact Method",
-            values: [data.contactMethod || "Not specified"],
+            values: [data.contactMethod || ""],
         },
         {
             label: "Trip Dates",
             values: [
                 data.dateType === "approximate"
                     ? "Approximate dates"
-                    : `${data.startDate || "Not set"} - ${
-                          data.endDate || "Not set"
-                      }`,
+                    : `${data.startDate || ""} - ${data.endDate || ""}`,
             ],
         },
         {
             label: "Additional Details",
-            values: [data.description || "Not specified"],
+            values: [data.description || ""],
         },
     ];
 
@@ -121,23 +117,31 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
                 My Trip Summary
             </div>
             <div className="bg-white p-4 rounded-b-lg">
-                {summaryItems.map((item, index) => (
-                    <div key={index} className="mb-3 flex justify-between">
-                        <span className="text-gray-500">{item.label}</span>
-                        <div className="flex ">
-                            {item.values.map((value, idx) => (
-                                <div
-                                    key={idx}
-                                    className="flex items-center gap-2"
-                                >
-                                    <span className="font-semibold">
-                                        {value}
-                                    </span>
+                {summaryItems.map(
+                    (item, index) =>
+                        item.values.some((value) => value !== "") && (
+                            <div
+                                key={index}
+                                className="mb-3 flex justify-between"
+                            >
+                                <span className="text-gray-500">
+                                    {item.label}
+                                </span>
+                                <div className="flex ">
+                                    {item?.values.map((value, idx) => (
+                                        <div
+                                            key={idx}
+                                            className="flex items-center gap-2"
+                                        >
+                                            <span className="font-semibold">
+                                                {value}
+                                            </span>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                ))}
+                            </div>
+                        )
+                )}
             </div>
         </div>
     );

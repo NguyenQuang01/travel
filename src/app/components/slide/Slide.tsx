@@ -9,6 +9,7 @@ import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Input } from "antd";
 import type { GetProps } from "antd";
+import Link from "next/link";
 type SearchProps = GetProps<typeof Input.Search>;
 
 const { Search } = Input;
@@ -114,9 +115,12 @@ const Slider: React.FC = () => {
                         {data.Box.title}
                     </p>
                     <div className="flex items-center justify-center ">
-                        <div className="inline-block bg-[#177a68] rounded text-white fill-white font-roboto text-[25px] font-bold leading-6 mt-5 py-6 px-4 text-center">
-                            Design custom trip
-                        </div>
+                        {/* */}
+                        <Link href="client/my-custom-trip">
+                            <div className="inline-block bg-[#177a68] rounded text-white fill-white font-roboto text-[25px] font-bold leading-6 mt-5 py-6 px-4 text-center">
+                                Design custom trip
+                            </div>
+                        </Link>
                     </div>
 
                     <div

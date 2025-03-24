@@ -38,7 +38,7 @@ const BudgetForm = () => {
         }
     };
     return (
-        <Container className="mt-10">
+        <Container className="my-10">
             {" "}
             <StepsComponent />
             {contextHolder}

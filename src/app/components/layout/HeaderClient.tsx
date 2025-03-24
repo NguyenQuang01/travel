@@ -19,8 +19,35 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import ListSubheader from "@mui/material/ListSubheader";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Link from "next/link";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Modal } from "antd";
+import ButtonGreen from "../ButtonGreen";
 const pages = [
+    {
+        name: "Trending",
+        children: [
+            {
+                name: "Asia",
+                children: ["Japan", "China", "Vietnam", "Thailand"],
+            },
+            {
+                name: "Europe",
+                children: null,
+            },
+            {
+                name: "Africa",
+                children: ["Egypt", "Kenya", "Morocco", "South Africa"],
+            },
+            {
+                name: "North America",
+                children: null,
+            },
+            {
+                name: "South America",
+                children: ["Brazil", "Argentina", "Peru", "Chile"],
+            },
+        ],
+    },
     {
         name: "Destinations",
         children: [
@@ -88,6 +115,7 @@ function HeaderClient() {
     );
     const [open, setOpen] = React.useState(true);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isModalTrending, setIsModalTrending] = React.useState(false);
     const [isModalOpenStyle, setIsModalOpenStyle] = React.useState(false);
     const handleClick = () => {
         setOpen(!open);
@@ -104,9 +132,9 @@ function HeaderClient() {
         setAnchorElNav(null);
         console.log(page, "Destinations");
 
-        page.name === "Destinations"
-            ? setIsModalOpen(true)
-            : setIsModalOpenStyle(true);
+        if (page.name === "Destinations") setIsModalOpen(true);
+        if (page.name === "Trip Themes & Styles") setIsModalOpenStyle(true);
+        if (page.name === "Trending") setIsModalTrending(true);
     };
 
     const handleOk = () => {
@@ -115,6 +143,13 @@ function HeaderClient() {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+    };
+    const handleOkTrending = () => {
+        setIsModalTrending(false);
+    };
+
+    const handleCancelTrending = () => {
+        setIsModalTrending(false);
     };
     const handleOkStyle = () => {
         setIsModalOpenStyle(false);
@@ -126,6 +161,30 @@ function HeaderClient() {
     return (
         <div>
             <Modal
+                open={isModalTrending}
+                onOk={handleOkTrending}
+                onCancel={handleCancelTrending}
+                width={1000}
+                footer={null}
+            >
+                <div className=" rounded-lg p-2  mx-auto">
+                    <div className=" gap-4">
+                        <ul className="space-y-1 text-gray-700 flex flex-wrap gap-4">
+                            <li>Ha Long Bay</li>
+                            <li>Sapa Rice Terraces</li>
+                            <li>Hoi An Ancient Town</li>
+                            <li>Mekong Delta</li>
+                            <li>Phong Nha Caves</li>
+                            <li>Ho Chi Minh City</li>
+                            <li>Hue Imperial City</li>
+                            <li>Phu Quoc Island</li>
+                            <li>Hanoi Old Quarter</li>
+                            <li>Nha Trang Beaches</li>
+                        </ul>
+                    </div>
+                </div>
+            </Modal>{" "}
+            <Modal
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -134,7 +193,7 @@ function HeaderClient() {
             >
                 <div className=" rounded-lg p-2  mx-auto">
                     <div className="grid grid-cols-6 gap-4">
-                        <div className="bg-green-100 p-4 rounded-md">
+                        {/* <div className="bg-green-100 p-4 rounded-md">
                             <h3 className="font-bold text-lg mb-2">Trending</h3>
                             <ul className="space-y-1 text-gray-700">
                                 <li>Ha Long Bay</li>
@@ -149,7 +208,7 @@ function HeaderClient() {
                                 <li>Nha Trang Beaches</li>
                                 <li className="text-green-600">See all &gt;</li>
                             </ul>
-                        </div>
+                        </div> */}
 
                         {[
                             {
@@ -243,25 +302,6 @@ function HeaderClient() {
             >
                 <div className=" rounded-lg p-2  mx-auto">
                     <div className="grid grid-cols-6 gap-4">
-                        <div className="bg-green-100 p-4 rounded-md">
-                            <h3 className="font-bold text-lg mb-2">
-                                Popular Themes
-                            </h3>
-                            <ul className="space-y-1 text-gray-700">
-                                <li>Adventure Travel</li>
-                                <li>Cultural Tours</li>
-                                <li>Wildlife Safaris</li>
-                                <li>Food & Wine</li>
-                                <li>Beach Holidays</li>
-                                <li>Luxury Escapes</li>
-                                <li>Family Vacations</li>
-                                <li>Photography Tours</li>
-                                <li>Hiking & Trekking</li>
-                                <li>River Cruises</li>
-                                <li className="text-green-600">See all &gt;</li>
-                            </ul>
-                        </div>
-
                         {[
                             {
                                 title: "Adventure & Active",
@@ -461,6 +501,7 @@ function HeaderClient() {
                                                                 : 600,
                                                     }}
                                                 />
+
                                                 {page?.children &&
                                                     (open ? (
                                                         <ExpandLess />
@@ -564,9 +605,9 @@ function HeaderClient() {
                             />
                         </Box>
 
-                        <Box className="hidden md:flex flex-grow justify-center">
+                        <Box className="hidden md:flex flex-grow justify-center items-center">
                             {pages.map((page, index) => (
-                                <Button
+                                <Box
                                     key={index}
                                     onClick={() => handleCloseNavMenu(page)}
                                     sx={{
@@ -580,35 +621,56 @@ function HeaderClient() {
                                         fill: "#333",
                                         padding: "0 0.75rem",
                                         fontWeight:
+                                            page.name === "Trending" ||
                                             page.name === "Destinations" ||
                                             page.name === "Trip Themes & Styles"
                                                 ? 600
                                                 : 500,
                                         textTransform: "none",
+                                        "&:hover": {
+                                            borderBottom:
+                                                page.name === "Destinations" ||
+                                                page.name ===
+                                                    "Trip Themes & Styles" ||
+                                                page.name === "Trending"
+                                                    ? "3px solid #22947f"
+                                                    : "",
+                                            backgroundColor: "transparent",
+                                        },
                                     }}
                                 >
-                                    {page.name}
-                                </Button>
+                                    {page.name !== "Write a Review" ? (
+                                        page.name
+                                    ) : (
+                                        <ButtonGreen name="Write a Review" />
+                                    )}
+                                    {page.name !== "Write a Review" && (
+                                        <ArrowDropDownIcon />
+                                    )}
+                                </Box>
                             ))}
-                            <Link href="client/my-custom-trip">
-                                <Button
-                                    // onClick={handleCloseNavMenu}
-                                    className="flex items-center  rounded-[45px]  px-6 py-[1.1rem] text-[14px]"
-                                    sx={{
-                                        background: "#f6bb43",
-                                        color: "#333",
-                                        textTransform: "none",
-                                        fontWeight: 500,
-                                        borderRadius: "45px",
-                                        padding: "4px 1rem",
-                                    }}
-                                >
-                                    Design custom trip
-                                    <ArrowForwardIosIcon
-                                        sx={{ height: "15px" }}
-                                    />
-                                </Button>
-                            </Link>
+
+                            {typeof window !== "undefined" &&
+                                window.location.pathname !== "/" && (
+                                    <Link href="client/my-custom-trip">
+                                        <Button
+                                            className="flex items-center  rounded-[45px]  px-6 py-[1.1rem] text-[14px]"
+                                            sx={{
+                                                background: "#f6bb43",
+                                                color: "#333",
+                                                textTransform: "none",
+                                                fontWeight: 500,
+                                                borderRadius: "45px",
+                                                padding: "4px 1rem",
+                                            }}
+                                        >
+                                            Design custom trip
+                                            <ArrowForwardIosIcon
+                                                sx={{ height: "15px" }}
+                                            />
+                                        </Button>
+                                    </Link>
+                                )}
                         </Box>
                     </Toolbar>
                 </Container>
