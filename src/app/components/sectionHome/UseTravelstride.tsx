@@ -30,7 +30,7 @@ export const UseTravelstride = () => {
         },
     };
     return (
-        <div className="bg-[#f8f7fc] pb-20 mt-60">
+        <div className="bg-[#f8f7fc] pb-20 mt-10">
             <Container>
                 <div className="text-[#333333] font-roboto text-2xl font-bold leading-9 text-center mb-16 pt-20">
                     Why use Travelstride?
