@@ -111,7 +111,6 @@ const TripSummary: React.FC<TripSummaryProps> = ({ data }) => {
             values: [data.description || ""],
         },
     ];
-    console.log("🚀 ~ summaryItems:", summaryItems);
 
     return (
         <div className=" p-6 rounded-lg shadow-lg max-w-sm">
