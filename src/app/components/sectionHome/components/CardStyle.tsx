@@ -35,7 +35,6 @@ interface CardData {
 }
 
 export default function CardStyle(prop: CardData) {
-    console.log("🚀 ~ CardStyle ~ prop:", prop);
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {

@@ -198,13 +198,11 @@ function HeaderClient() {
     const getMenuDestinations = async () => {
         const res: any = await getDestinations();
         if (res) {
-            console.log("🚀 ~ getMenuDestinations ~ res:", res.data);
             setDestinations(res.data);
         }
     };
     const getMenuTrending = async () => {
         const res: any = await getTrending();
-        console.log("🚀 ~ getMenuTrending ~ res:", res.data);
         if (res) {
             setTrending(res.data);
         }
@@ -227,8 +225,6 @@ function HeaderClient() {
 
     const handleCloseNavMenu = (page?: any) => {
         setAnchorElNav(null);
-        console.log(page, "Destinations");
-
         if (page.name === "Destinations") setIsModalOpen(true);
         if (page.name === "Trip Themes & Styles") setIsModalOpenStyle(true);
         if (page.name === "Trending") setIsModalTrending(true);
@@ -261,10 +257,10 @@ function HeaderClient() {
                 open={isModalTrending}
                 onOk={handleOkTrending}
                 onCancel={handleCancelTrending}
-                width={850}
+                width={650}
                 footer={null}
             >
-                <div className=" rounded-lg p-2  mx-auto">
+                <div className=" rounded-lg p-2  mx-auto mr-5">
                     <div className="flex flex-wrap gap-5">
                         {trending?.map((trip, index) => (
                             <h3
@@ -281,10 +277,10 @@ function HeaderClient() {
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                width={850}
+                width={650}
                 footer={null}
             >
-                <div className=" rounded-lg p-2  mx-auto">
+                <div className=" rounded-lg p-2  mx-auto  mr-5">
                     <div className="flex justify-between">
                         {destinations?.map((section, index) => (
                             <div key={index}>
@@ -305,10 +301,10 @@ function HeaderClient() {
                 open={isModalOpenStyle}
                 onOk={handleOkStyle}
                 onCancel={handleCancelStyle}
-                width={850}
+                width={650}
                 footer={null}
             >
-                <div className=" rounded-lg p-2  mx-auto flex gap-10 justify-between">
+                <div className=" rounded-lg p-2  mx-auto flex gap-10 justify-between mr-5">
                     <div>
                         <h3 className="font-bold text-lg mb-2">Adventure</h3>
                         <ul className="space-y-1 text-gray-700">

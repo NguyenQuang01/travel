@@ -1,7 +1,7 @@
 "use client";
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { getMyCustomTrip } from "../hook";
+import { getMyCustomTrip } from "../../hook";
 
 const MyCustomTrip = () => {
     const [dataSource, setDataSource] = useState([]);

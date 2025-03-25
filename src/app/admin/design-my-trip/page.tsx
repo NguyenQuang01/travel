@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import LayoutAdmin from "@/app/admin/layout";
-import MyCustomTrip from "../my-custom-trip/page";
+import MyCustomTrip from "../components/my-custom-trip/page";
 
 const Manage = () => {
     return (
