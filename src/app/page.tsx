@@ -124,7 +124,7 @@ export default function Home() {
             <UseTravelstride />
             <SlideCard data={data?.findTrips.data} />
             <GiftCard />
-            <SlideStyle />
+            <SlideStyle data={data?.destinations ?? []} />
             <SlideBlog data={data?.pots ?? []} />
         </div>
     );

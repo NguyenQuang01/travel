@@ -8,71 +8,15 @@ import "swiper/css/pagination";
 import "./styles/SlideCard.css";
 import CardReview from "./components/Card";
 import CardStyle from "./components/CardStyle";
-interface CardData {
-    title: string;
-    tourTypes: string;
-    color: string;
-    numberDay: string;
-    price: string;
-    start: number;
-    numberReview: number;
-}
 
-const data: CardData[] = [
-    {
-        title: "Find trips that move you",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4,
-        numberReview: 100,
-    },
-    {
-        title: "Find trips that move you 00",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4.5,
-        numberReview: 100,
-    },
-    {
-        title: "Find trips that move you 00",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4.5,
-        numberReview: 100,
-    },
-    {
-        title: "Find trips that move you 00",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4.5,
-        numberReview: 100,
-    },
-    {
-        title: "Find trips that move you 00",
-        tourTypes: "Self-Guided / Independent Tour",
-        color: "#333",
-        numberDay: "7",
-        price: "$1,000",
-        start: 4.5,
-        numberReview: 100,
-    },
-];
-const SlideStyle = () => {
+const SlideStyle = (props: any) => {
     return (
-        <div className=" flex items-center justify-center mt-20">
+        <div className="flex items-center justify-center mt-20">
             <div>
-                <p className="text-[1.8rem] font-bold text-shadow-md  mb-[20px]">
+                <p className="text-[1.8rem] font-bold text-shadow-md mb-[20px]">
                     Find yourself far away
                 </p>
-                <div className="mx-auto md:w-[70vw]  w-[83vw] max-w-[126rem] h-full relative -mb-[11.8rem]">
+                <div className="mx-auto md:w-[70vw] w-[83vw] max-w-[126rem] h-full relative -mb-[11.8rem]">
                     <Swiper
                         modules={[Navigation, Pagination]}
                         breakpoints={{
@@ -93,8 +37,8 @@ const SlideStyle = () => {
                         loop={true}
                         className="h-full"
                     >
-                        {data?.map((item, index) => (
-                            <SwiperSlide key={index} className="p-1">
+                        {props.data?.map((item: any) => (
+                            <SwiperSlide key={item.id} className="p-1">
                                 <CardStyle {...item} />
                             </SwiperSlide>
                         ))}

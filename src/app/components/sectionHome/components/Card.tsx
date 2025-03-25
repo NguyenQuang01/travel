@@ -72,7 +72,7 @@ interface TourData {
 }
 
 export default function CardReview(prop: TourData) {
-    console.log("🚀 ~ CardReview ~ prop:", prop);
+    console.log("🚀 ~ CardReview ~ prop:", prop.images[0]?.url);
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -82,7 +82,11 @@ export default function CardReview(prop: TourData) {
     return (
         <Card>
             <Image
-                src={`https://images.pexels.com/photos/5593515/pexels-photo-5593515.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load`}
+                src={
+                    prop?.images[0]?.url
+                        ? `http://202.92.7.92:3082${prop?.images[0]?.url}`
+                        : "https://png.pngtree.com/png-clipart/20191120/original/pngtree-error-file-icon-vectors-png-image_5053766.jpg"
+                }
                 alt="img"
                 width={200}
                 height={200}

@@ -25,20 +25,19 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 interface CardData {
-    title: string;
-    tourTypes: string;
-    color: string;
-    numberDay: string;
-    price: string;
-    start: number;
-    numberReview: number;
+    id: number;
+    destination: string;
+    continentId: number;
+    imageUrl: string;
+    description: string | null;
+    tourNumber: number;
 }
 
 export default function CardStyle(prop: CardData) {
     return (
         <Card>
             <Image
-                src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
+                src={`http://202.92.7.92:3082${prop.imageUrl}`}
                 alt="img"
                 width={200}
                 height={200}
@@ -49,11 +48,11 @@ export default function CardStyle(prop: CardData) {
             <Box className="p-2 md:pt-[1rem] pb-0">
                 <Box>
                     <p className="text-sm md:text-xl font-bold leading-[16px] truncate">
-                        {prop.title}
+                        {prop.destination}
                     </p>
                     <Box className="flex items-center justify-between my-2">
                         <p className="text-sm md:text-base truncate">
-                            343 trips
+                            {prop.tourNumber} trips
                         </p>
                     </Box>
                 </Box>
