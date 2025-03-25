@@ -90,6 +90,27 @@ body {
     color: #fff;
     overflow: hidden;
 }
+.swiper-button-prev {
+    left: -50px !important;
+    color: gray !important;
+}
+
+.swiper-button-next {
+    right: -50px !important;
+    color: gray !important;
+}
+.swiper {
+    position: initial !important;
+}
+@media screen and (max-width: 768px) {
+    .swiper-button-prev {
+        left: -31px !important;
+    }
+    .swiper-button-next {
+        right: -31px !important;
+    }
+}
+
 @media (max-width: 768px) {
     :root {
         --swiper-navigation-size: 27px !important;

@@ -599,27 +599,27 @@ function HeaderClient() {
                                 </Box>
                             ))}
 
-                            {typeof window !== "undefined" &&
-                                window.location.pathname !== "/" && (
-                                    <Link href="client/my-custom-trip">
-                                        <Button
-                                            className="flex items-center  rounded-[45px]  px-6 py-[1.1rem] text-[14px]"
-                                            sx={{
-                                                background: "#f6bb43",
-                                                color: "#333",
-                                                textTransform: "none",
-                                                fontWeight: 500,
-                                                borderRadius: "45px",
-                                                padding: "4px 1rem",
-                                            }}
-                                        >
-                                            Design custom trip
-                                            <ArrowForwardIosIcon
-                                                sx={{ height: "15px" }}
-                                            />
-                                        </Button>
-                                    </Link>
-                                )}
+                            {/* {typeof window !== "undefined" &&
+                                window.location.pathname !== "/" && ( */}
+                            <Link href="client/my-custom-trip">
+                                <Button
+                                    className="flex items-center  rounded-[45px]  px-6 py-[1.1rem] text-[14px]"
+                                    sx={{
+                                        background: "#f6bb43",
+                                        color: "#333",
+                                        textTransform: "none",
+                                        fontWeight: 500,
+                                        borderRadius: "45px",
+                                        padding: "4px 1rem",
+                                    }}
+                                >
+                                    Design custom trip
+                                    <ArrowForwardIosIcon
+                                        sx={{ height: "15px" }}
+                                    />
+                                </Button>
+                            </Link>
+                            {/* )} */}
                         </Box>
                     </Toolbar>
                 </Container>

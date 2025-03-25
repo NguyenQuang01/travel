@@ -76,7 +76,7 @@ const Slider = (prop: any) => {
                 </p>
                 <div className="mx-auto md:w-[70vw] w-[83vw] max-w-[126rem] h-full relative -mb-[11.8rem]">
                     <Swiper
-                        modules={[Navigation, Pagination]}
+                        modules={[Navigation, Pagination, Autoplay]}
                         breakpoints={{
                             320: {
                                 slidesPerView: 2,
