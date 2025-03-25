@@ -136,7 +136,10 @@ export default function CardReview(prop: TourData) {
                 <Box className="flex justify-between p-[1rem] pt-0">
                     <Box>
                         <StarTwoTone twoToneColor="#FFD700" />{" "}
-                        {prop.review.avgOverall}/5 Excellent
+                        {prop.review.avgOverall
+                            ? Number(prop.review.avgOverall).toFixed(1)
+                            : 5}{" "}
+                        / 5 Excellent
                     </Box>
                     <Box sx={{ pl: "10px" }}>
                         <Typography
