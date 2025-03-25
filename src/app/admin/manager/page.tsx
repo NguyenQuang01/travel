@@ -1,86 +1,13 @@
 "use client";
-import React, { useState } from "react";
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
-import ThemeStyle from "./components/ThemeStyle";
-import Trading from "./components/Treding";
-import MyCustomTrip from "@/app/admin/my-custom-trip/page";
+import React from "react";
+import LayoutAdmin from "@/app/admin/layout";
+import MyCustomTrip from "../my-custom-trip/page";
 
-const { Header, Sider, Content } = Layout;
-
-const Manage: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
-    const {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
-
+const Manage = () => {
     return (
-        <Layout className="h-screen">
-            <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="demo-logo-vertical" />
-                <Menu
-                    theme="dark"
-                    mode="inline"
-                    defaultSelectedKeys={["1"]}
-                    items={[
-                        {
-                            key: "1",
-                            icon: <UserOutlined />,
-                            label: "nav 1",
-                        },
-                        {
-                            key: "2",
-                            icon: <VideoCameraOutlined />,
-                            label: "nav 2",
-                        },
-                        {
-                            key: "3",
-                            icon: <UploadOutlined />,
-                            label: "nav 3",
-                        },
-                    ]}
-                />
-            </Sider>
-            <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
-                    <Button
-                        type="text"
-                        icon={
-                            collapsed ? (
-                                <MenuUnfoldOutlined />
-                            ) : (
-                                <MenuFoldOutlined />
-                            )
-                        }
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: "16px",
-                            width: 64,
-                            height: 64,
-                        }}
-                    />
-                </Header>
-                <Content
-                    style={{
-                        margin: "24px 16px",
-                        padding: 24,
-                        minHeight: 280,
-                        background: colorBgContainer,
-                        borderRadius: borderRadiusLG,
-                    }}
-                >
-                    {/* <ThemeStyle /> */}
-                    {/* <Trading /> */}
-                    <MyCustomTrip />
-                </Content>
-            </Layout>
-        </Layout>
+        <LayoutAdmin>
+            <MyCustomTrip />
+        </LayoutAdmin>
     );
 };
 

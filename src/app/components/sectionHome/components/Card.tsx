@@ -72,6 +72,7 @@ interface TourData {
 }
 
 export default function CardReview(prop: TourData) {
+    console.log("🚀 ~ CardReview ~ prop:", prop.images);
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -81,7 +82,7 @@ export default function CardReview(prop: TourData) {
     return (
         <Card>
             <Image
-                src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
+                src={`http://202.92.7.92:3082${prop.images[0].url}`}
                 alt="img"
                 width={200}
                 height={200}
