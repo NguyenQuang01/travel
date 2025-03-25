@@ -168,7 +168,7 @@ function HeaderClient() {
     const [isModalTrending, setIsModalTrending] = React.useState(false);
     const [isModalOpenStyle, setIsModalOpenStyle] = React.useState(false);
 
-    const [destinations, setDestinations] = useState<DestinationData[]>();
+    const [destinations, setDestinations] = useState<DestinationData[]>([]);
 
     const [activities, setActivities] =
         useState<{ id: number; activity: string }[]>();
@@ -282,18 +282,23 @@ function HeaderClient() {
             >
                 <div className=" rounded-lg p-2  mx-auto  mr-5">
                     <div className="flex justify-between">
-                        {destinations?.map((section, index) => (
-                            <div key={index}>
-                                <h3 className="font-bold text-lg mb-2">
-                                    {section.continent.continentName}
-                                </h3>
-                                <ul className="space-y-1 text-gray-700">
-                                    {section.destinations.map((place, i) => (
-                                        <li key={i}>{place.destination}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
+                        {destinations.length > 0 &&
+                            destinations?.map((section, index) => (
+                                <div key={index}>
+                                    <h3 className="font-bold text-lg mb-2">
+                                        {section.continent.continentName}
+                                    </h3>
+                                    <ul className="space-y-1 text-gray-700">
+                                        {section.destinations.map(
+                                            (place, i) => (
+                                                <li key={i}>
+                                                    {place.destination}
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </Modal>{" "}

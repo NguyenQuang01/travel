@@ -17,53 +17,6 @@ interface CardData {
     numberReview: number;
 }
 
-// const data: CardData[] = [
-//     {
-//         title: "Find trips that move you",
-//         tourTypes: "Self-Guided / Independent Tour",
-//         color: "#333",
-//         numberDay: "7",
-//         price: "$1,000",
-//         start: 4,
-//         numberReview: 100,
-//     },
-//     {
-//         title: "Find trips that move you 00",
-//         tourTypes: "Self-Guided / Independent Tour",
-//         color: "#333",
-//         numberDay: "7",
-//         price: "$1,000",
-//         start: 4.5,
-//         numberReview: 100,
-//     },
-//     {
-//         title: "Find trips that move you 00",
-//         tourTypes: "Self-Guided / Independent Tour",
-//         color: "#333",
-//         numberDay: "7",
-//         price: "$1,000",
-//         start: 4.5,
-//         numberReview: 100,
-//     },
-//     {
-//         title: "Find trips that move you 00",
-//         tourTypes: "Self-Guided / Independent Tour",
-//         color: "#333",
-//         numberDay: "7",
-//         price: "$1,000",
-//         start: 4.5,
-//         numberReview: 100,
-//     },
-//     {
-//         title: "Find trips that move you 00",
-//         tourTypes: "Self-Guided / Independent Tour",
-//         color: "#333",
-//         numberDay: "7",
-//         price: "$1,000",
-//         start: 4.5,
-//         numberReview: 100,
-//     },
-// ];
 interface Image {
     id: number;
     url: string;

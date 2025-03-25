@@ -35,16 +35,10 @@ interface Blog {
 }
 
 export default function CardBlog(prop: Blog) {
-    const [expanded, setExpanded] = React.useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
     return (
         <div>
             <Image
-                src={prop.coverImage}
+                src={`http://202.92.7.92:3082${prop.coverImage}`}
                 alt="img"
                 width={200}
                 height={200}

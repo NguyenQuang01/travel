@@ -35,12 +35,6 @@ interface CardData {
 }
 
 export default function CardStyle(prop: CardData) {
-    const [expanded, setExpanded] = React.useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
     return (
         <Card>
             <Image
