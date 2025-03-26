@@ -24,6 +24,22 @@ const items: MenuItem[] = [
             </Link>
         ),
     },
+  {
+    key: "trip-request",
+    label: (
+      <Link href="/admin/trip-request" replace>
+        Trip Request
+      </Link>
+    ),
+  },
+  {
+    key: "tour-reservation",
+    label: (
+      <Link href="/admin/tour-reservation" replace>
+        Tour Reservation
+      </Link>
+    ),
+  },
 ];
 const LayoutAdmin = ({ children }: any) => {
     const [current, setCurrent] = useState("");

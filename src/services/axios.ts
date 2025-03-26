@@ -1,8 +1,9 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
+import {API_INFO} from "@/constant/constant";
 
 // Create instance
 const apiConfig = axios.create({
-    baseURL: "http://202.92.7.92:3082/api/",
+    baseURL: API_INFO.URL,
     headers: {
         "Content-Type": "application/json",
     },
