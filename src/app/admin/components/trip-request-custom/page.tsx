@@ -58,8 +58,8 @@ const TripRequestCustom: () => JSX.Element = () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
-        page: page - 1,
-        size: pageSize,
+        page: (page - 1).toString(),
+        size: pageSize.toString(),
         sort: "createdAt,DESC",
         ...searchParams
       }).toString();
