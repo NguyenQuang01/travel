@@ -1,4 +1,4 @@
-import {Table, Input, Button, Modal, message, Space, DatePicker, Form} from "antd";
+import { Table, Input, Button, Modal, message, Space, DatePicker, Form } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -7,9 +7,35 @@ import Card from "@mui/material/Card";
 const { RangePicker } = DatePicker;
 const API_URL = "http://202.92.7.92:3082/api/request";
 
-const TripRequestCustom = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+interface TripRequest {
+  id: number;
+  homeCountry: string;
+  mainCountry: string;
+  additionalCountries: string;
+  companionsAges: string;
+  dateType: string;
+  startDate: string;
+  endDate: string;
+  tripType: string;
+  lodgingType: string;
+  budgetPerPerson: number;
+  budgetStrictness: string;
+  activityDetail: string;
+  firstName: string;
+  whenDate: string;
+  totalDate: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  contactMethod: string;
+  description: string;
+  concurrent: string;
+  createdAt: string;
+}
+
+const TripRequestCustom: React.FC = () => {
+  const [data, setData] = useState<TripRequest[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState({
     name: "",
     phone: "",
@@ -22,18 +48,16 @@ const TripRequestCustom = () => {
     pageSizeOptions: ["10", "20", "30"],
     total: 0,
   });
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState<TripRequest | null>(null);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-  // Fetch dữ liệu
-  const fetchData = async (page = 1, pageSize = 10, filters = {}) => {
+  const fetchData = async (page = 1, pageSize = 10) => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
         page: page.toString(),
         size: pageSize.toString(),
         sort: "createdAt,DESC",
-        ...filters,
       }).toString();
 
       const response = await axios.get(`${API_URL}?${params}`);
@@ -46,15 +70,13 @@ const TripRequestCustom = () => {
   };
 
   useEffect(() => {
-    fetchData(1, pagination.defaultPageSize, searchParams);
+    fetchData(1, pagination.defaultPageSize);
   }, [searchParams]);
 
-  // Xử lý thay đổi input search
   const handleSearchChange = (key: keyof typeof searchParams, value: string) => {
     setSearchParams((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Xử lý thay đổi date range
   const handleDateChange = (dates: [dayjs.Dayjs, dayjs.Dayjs] | null) => {
     setSearchParams((prev) => ({
       ...prev,
@@ -63,24 +85,21 @@ const TripRequestCustom = () => {
     }));
   };
 
-  // Xử lý phân trang
-  const handleTableChange = (pagination) => {
-    fetchData(pagination.current, pagination.pageSize, searchParams);
+  const handleTableChange = (pagination: any) => {
+    fetchData(pagination.current, pagination.pageSize);
   };
 
-  // Xử lý xóa item
   const handleDelete = async (id: number) => {
     try {
       await axios.delete(`${API_URL}/${id}`);
       message.success("Xóa thành công!");
-      fetchData(1, pagination.defaultPageSize, searchParams);
+      fetchData(1, pagination.defaultPageSize);
     } catch (error) {
       message.error("Lỗi khi xóa!");
     }
   };
 
-  // Hiển thị modal xem chi tiết
-  const handleView = (record) => {
+  const handleView = (record: TripRequest) => {
     setSelectedRecord(record);
     setIsModalVisible(true);
   };
@@ -96,91 +115,54 @@ const TripRequestCustom = () => {
     {
       title: "Hành động",
       key: "actions",
-      render: (_: any, record: any) => (
-        <Space>
-          <Button type="link" onClick={() => handleView(record)}>
-            Xem
-          </Button>
-          <Button type="link" danger onClick={() => handleDelete(record.id)}>
-            Xóa
-          </Button>
-        </Space>
+      render: (_: any, record: TripRequest) => (
+          <Space>
+            <Button type="link" onClick={() => handleView(record)}>
+              Xem
+            </Button>
+            <Button type="link" danger onClick={() => handleDelete(record.id)}>
+              Xóa
+            </Button>
+          </Space>
       ),
     },
   ];
 
   return (
-    <div>
-      <Space style={{ marginBottom: 16 }}>
-        <Input placeholder="Tìm theo tên" onChange={(e) => handleSearchChange("name", e.target.value)} />
-        <Input placeholder="Tìm theo SĐT" onChange={(e) => handleSearchChange("phone", e.target.value)} />
-        <RangePicker onChange={handleDateChange} defaultValue={[dayjs("2023-01-01"), dayjs("2026-12-31")]} />
-      </Space>
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowKey="id"
-        loading={loading}
-        pagination={pagination}
-        onChange={handleTableChange}
-      />
-      {/*/!* Modal xem chi tiết *!/*/}
-      {/*<Modal*/}
-      {/*  title="Chi tiết Trip Request"*/}
-      {/*  open={isModalVisible}*/}
-      {/*  onCancel={() => setIsModalVisible(false)}*/}
-      {/*  footer={null}*/}
-      {/*>*/}
-      {/*  {selectedRecord && (*/}
-      {/*    <Form layout="vertical">*/}
-      {/*      <Form.Item label="ID">*/}
-      {/*        <Input value={selectedRecord.id} disabled />*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item label="Họ">*/}
-      {/*        <Input value={selectedRecord.lastName} disabled />*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item label="Tên">*/}
-      {/*        <Input value={selectedRecord.firstName} disabled />*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item label="Email">*/}
-      {/*        <Input value={selectedRecord.email} disabled />*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item label="SĐT">*/}
-      {/*        <Input value={selectedRecord.phoneNumber} disabled />*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item label="Quốc gia">*/}
-      {/*        <Input value={selectedRecord.mainCountry} disabled />*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item label="Ngày tạo">*/}
-      {/*        <Input value={selectedRecord.createdAt} disabled />*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item label="Mô tả">*/}
-      {/*        <Input.TextArea value={selectedRecord.description} disabled />*/}
-      {/*      </Form.Item>*/}
-      {/*    </Form>*/}
-      {/*  )}*/}
-      {/*</Modal>*/}
-      {/* Modal xem chi tiết */}
-      <Modal
-        title="Chi tiết Trip Request"
-        open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        footer={null}
-      >
-        {selectedRecord && (
-          <Card>
-            <p><strong>ID:</strong> {selectedRecord.id}</p>
-            <p><strong>Họ:</strong> {selectedRecord.lastName}</p>
-            <p><strong>Tên:</strong> {selectedRecord.firstName}</p>
-            <p><strong>Email:</strong> {selectedRecord.email}</p>
-            <p><strong>SĐT:</strong> {selectedRecord.phoneNumber}</p>
-            <p><strong>Quốc gia:</strong> {selectedRecord.mainCountry}</p>
-            <p><strong>Ngày tạo:</strong> {selectedRecord.createdAt}</p>
-            <p><strong>Mô tả:</strong> {selectedRecord.description}</p>
-          </Card>
-        )}
-      </Modal>
-    </div>
+      <div>
+        <Space style={{ marginBottom: 16 }}>
+          <Input placeholder="Tìm theo tên" onChange={(e) => handleSearchChange("name", e.target.value)} />
+          <Input placeholder="Tìm theo SĐT" onChange={(e) => handleSearchChange("phone", e.target.value)} />
+          <RangePicker onChange={handleDateChange} defaultValue={[dayjs("2023-01-01"), dayjs("2026-12-31")]} />
+        </Space>
+        <Table
+            columns={columns}
+            dataSource={data}
+            rowKey="id"
+            loading={loading}
+            pagination={pagination}
+            onChange={handleTableChange}
+        />
+        <Modal
+            title="Chi tiết Trip Request"
+            open={isModalVisible}
+            onCancel={() => setIsModalVisible(false)}
+            footer={null}
+        >
+          {selectedRecord && (
+              <Card>
+                <p><strong>ID:</strong> {selectedRecord.id}</p>
+                <p><strong>Họ:</strong> {selectedRecord.lastName}</p>
+                <p><strong>Tên:</strong> {selectedRecord.firstName}</p>
+                <p><strong>Email:</strong> {selectedRecord.email}</p>
+                <p><strong>SĐT:</strong> {selectedRecord.phoneNumber}</p>
+                <p><strong>Quốc gia:</strong> {selectedRecord.mainCountry}</p>
+                <p><strong>Ngày tạo:</strong> {selectedRecord.createdAt}</p>
+                <p><strong>Mô tả:</strong> {selectedRecord.description}</p>
+              </Card>
+          )}
+        </Modal>
+      </div>
   );
 };
 

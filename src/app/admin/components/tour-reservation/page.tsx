@@ -5,8 +5,30 @@ import Card from "@mui/material/Card";
 
 const API_URL = "http://202.92.7.92:3082/api/tour-reservations/search";
 
+// Interface định nghĩa dữ liệu đặt chỗ
+interface TourReservation {
+  id: number;
+  firstName: string;
+  lastName: string;
+  nationality: string;
+  countryOfResidence: string;
+  email: string;
+  companionsAges: string;
+  primaryContact: string;
+  mobilePhone: string;
+  tourId: number;
+  departureDate: string;
+  numberOfTravelers: number;
+  singleRoom: number;
+  sharedRoom: number;
+  peoplePerRoom: number;
+  additionalContactPreferences: string;
+  totalPrices: string;
+  createdAt: string;
+}
+
 const TourReservationCustom = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<TourReservation[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
     name: "",
@@ -19,11 +41,11 @@ const TourReservationCustom = () => {
     pageSizeOptions: ["10", "20", "30"],
     total: 0,
   });
-  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [selectedRecord, setSelectedRecord] = useState<TourReservation | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Fetch dữ liệu
-  const fetchData = async (page = 1, pageSize = 10, filters = {}) => {
+  const fetchData = async (page = 1, pageSize = 10) => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
@@ -31,7 +53,6 @@ const TourReservationCustom = () => {
         size: pageSize.toString(),
         sortBy: "id",
         sortDir: "asc",
-        // ...filters,
       }).toString();
 
       const response = await axios.get(`${API_URL}?${params}`);
@@ -44,32 +65,32 @@ const TourReservationCustom = () => {
   };
 
   useEffect(() => {
-    fetchData(1, pagination.defaultPageSize, searchParams);
-  }, [searchParams]);
+    fetchData(1, pagination.defaultPageSize);
+  }, []);
 
   // Xử lý thay đổi input search
-  const handleSearchChange = (key, value) => {
+  const handleSearchChange = (key: string, value: string) => {
     setSearchParams((prev) => ({ ...prev, [key]: value }));
   };
 
   // Xử lý phân trang
-  const handleTableChange = (pagination) => {
-    fetchData(pagination.current, pagination.pageSize, searchParams);
+  const handleTableChange = (pagination: any) => {
+    fetchData(pagination.current, pagination.pageSize);
   };
 
   // Xử lý xóa item
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     try {
       await axios.delete(`${API_URL}/${id}`);
       message.success("Xóa thành công!");
-      fetchData(1, pagination.defaultPageSize, searchParams);
+      fetchData(1, pagination.defaultPageSize);
     } catch (error) {
       message.error("Lỗi khi xóa!");
     }
   };
 
   // Hiển thị modal xem chi tiết
-  const handleView = (record) => {
+  const handleView = (record: TourReservation) => {
     setSelectedRecord(record);
     setIsModalVisible(true);
   };
@@ -82,60 +103,68 @@ const TourReservationCustom = () => {
     { title: "SĐT", dataIndex: "mobilePhone", key: "mobilePhone" },
     { title: "Tour ID", dataIndex: "tourId", key: "tourId" },
     { title: "Ngày khởi hành", dataIndex: "departureDate", key: "departureDate" },
+    { title: "Số người", dataIndex: "numberOfTravelers", key: "numberOfTravelers" },
     {
       title: "Hành động",
       key: "actions",
-      render: (_, record) => (
-        <Space>
-          <Button type="link" onClick={() => handleView(record)}>
-            Xem
-          </Button>
-          <Button type="link" danger onClick={() => handleDelete(record.id)}>
-            Xóa
-          </Button>
-        </Space>
+      render: (_: any, record: TourReservation) => (
+          <Space>
+            <Button type="link" onClick={() => handleView(record)}>
+              Xem
+            </Button>
+            <Button type="link" danger onClick={() => handleDelete(record.id)}>
+              Xóa
+            </Button>
+          </Space>
       ),
     },
   ];
 
   return (
-    <div>
-      <Space style={{ marginBottom: 16 }}>
-        <Input placeholder="Tìm theo tên" onChange={(e) => handleSearchChange("name", e.target.value)} />
-        <Input placeholder="Tìm theo SĐT" onChange={(e) => handleSearchChange("mobile", e.target.value)} />
-        <Input placeholder="Tìm theo tên tour" onChange={(e) => handleSearchChange("tourName", e.target.value)} />
-      </Space>
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowKey="id"
-        loading={loading}
-        pagination={pagination}
-        onChange={handleTableChange}
-      />
-      {/* Modal xem chi tiết */}
-      <Modal
-        title="Chi tiết Đặt Chỗ Tour"
-        open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        footer={null}
-      >
-        {selectedRecord && (
-          <Card>
-            <p><strong>ID:</strong> {selectedRecord.id}</p>
-            <p><strong>Họ:</strong> {selectedRecord.lastName}</p>
-            <p><strong>Tên:</strong> {selectedRecord.firstName}</p>
-            <p><strong>Email:</strong> {selectedRecord.email}</p>
-            <p><strong>SĐT:</strong> {selectedRecord.mobilePhone}</p>
-            <p><strong>Quốc tịch:</strong> {selectedRecord.nationality}</p>
-            <p><strong>Quốc gia cư trú:</strong> {selectedRecord.countryOfResidence}</p>
-            <p><strong>Tour ID:</strong> {selectedRecord.tourId}</p>
-            <p><strong>Ngày khởi hành:</strong> {selectedRecord.departureDate}</p>
-            <p><strong>Số người:</strong> {selectedRecord.numberOfTravelers}</p>
-          </Card>
-        )}
-      </Modal>
-    </div>
+      <div>
+        <Space style={{ marginBottom: 16 }}>
+          <Input placeholder="Tìm theo tên" onChange={(e) => handleSearchChange("name", e.target.value)} />
+          <Input placeholder="Tìm theo SĐT" onChange={(e) => handleSearchChange("mobile", e.target.value)} />
+          <Input placeholder="Tìm theo tên tour" onChange={(e) => handleSearchChange("tourName", e.target.value)} />
+        </Space>
+        <Table
+            columns={columns}
+            dataSource={data}
+            rowKey="id"
+            loading={loading}
+            pagination={pagination}
+            onChange={handleTableChange}
+        />
+        {/* Modal xem chi tiết */}
+        <Modal
+            title="Chi tiết Đặt Chỗ Tour"
+            open={isModalVisible}
+            onCancel={() => setIsModalVisible(false)}
+            footer={null}
+        >
+          {selectedRecord && (
+              <Card>
+                <p><strong>ID:</strong> {selectedRecord.id}</p>
+                <p><strong>Họ:</strong> {selectedRecord.lastName}</p>
+                <p><strong>Tên:</strong> {selectedRecord.firstName}</p>
+                <p><strong>Email:</strong> {selectedRecord.email}</p>
+                <p><strong>SĐT:</strong> {selectedRecord.mobilePhone}</p>
+                <p><strong>Quốc tịch:</strong> {selectedRecord.nationality}</p>
+                <p><strong>Quốc gia cư trú:</strong> {selectedRecord.countryOfResidence}</p>
+                <p><strong>Tour ID:</strong> {selectedRecord.tourId}</p>
+                <p><strong>Ngày khởi hành:</strong> {selectedRecord.departureDate}</p>
+                <p><strong>Số người:</strong> {selectedRecord.numberOfTravelers}</p>
+                <p><strong>Phòng đơn:</strong> {selectedRecord.singleRoom}</p>
+                <p><strong>Phòng đôi:</strong> {selectedRecord.sharedRoom}</p>
+                <p><strong>Số người/phòng:</strong> {selectedRecord.peoplePerRoom}</p>
+                <p><strong>Tuổi của người đi cùng:</strong> {selectedRecord.companionsAges}</p>
+                <p><strong>Phương thức liên hệ:</strong> {selectedRecord.additionalContactPreferences}</p>
+                <p><strong>Tổng giá:</strong> {selectedRecord.totalPrices}</p>
+                <p><strong>Ngày tạo:</strong> {selectedRecord.createdAt}</p>
+              </Card>
+          )}
+        </Modal>
+      </div>
   );
 };
 
