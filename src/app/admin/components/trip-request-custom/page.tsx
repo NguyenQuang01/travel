@@ -1,5 +1,5 @@
 import { Table, Input, Button, Modal, message, Space, DatePicker, Form } from "antd";
-import { useState, useEffect } from "react";
+import {useState, useEffect, JSX} from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import Card from "@mui/material/Card";
@@ -33,7 +33,7 @@ interface TripRequest {
   createdAt: string;
 }
 
-const TripRequestCustom: React.FC = () => {
+const TripRequestCustom: () => JSX.Element = () => {
   const [data, setData] = useState<TripRequest[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState({

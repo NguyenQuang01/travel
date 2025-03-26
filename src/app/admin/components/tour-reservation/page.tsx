@@ -1,5 +1,5 @@
 import { Table, Input, Button, Modal, message, Space } from "antd";
-import { useState, useEffect } from "react";
+import {useState, useEffect, JSX} from "react";
 import axios from "axios";
 import Card from "@mui/material/Card";
 
@@ -27,7 +27,7 @@ interface TourReservation {
   createdAt: string;
 }
 
-const TourReservationCustom = () => {
+const TourReservationCustom: () => JSX.Element = () => {
   const [data, setData] = useState<TourReservation[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
