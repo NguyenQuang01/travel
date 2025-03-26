@@ -1,3 +1,5 @@
+"use client";
+
 import { Table, Input, Button, Modal, message, Space } from "antd";
 import {useState, useEffect, JSX} from "react";
 import axios from "axios";
@@ -49,10 +51,11 @@ const TourReservationCustom: () => JSX.Element = () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
-        page: page.toString(),
-        size: pageSize.toString(),
+        page: page - 1,
+        size: pageSize,
         sortBy: "id",
         sortDir: "asc",
+        ...searchParams
       }).toString();
 
       const response = await axios.get(`${API_URL}?${params}`);
@@ -66,7 +69,7 @@ const TourReservationCustom: () => JSX.Element = () => {
 
   useEffect(() => {
     fetchData(1, pagination.defaultPageSize);
-  }, []);
+  }, [searchParams]);
 
   // Xử lý thay đổi input search
   const handleSearchChange = (key: string, value: string) => {

@@ -1,3 +1,5 @@
+"use client";
+
 import { Table, Input, Button, Modal, message, Space, DatePicker, Form } from "antd";
 import {useState, useEffect, JSX} from "react";
 import axios from "axios";
@@ -55,9 +57,10 @@ const TripRequestCustom: () => JSX.Element = () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
-        page: page.toString(),
-        size: pageSize.toString(),
+        page: page - 1,
+        size: pageSize,
         sort: "createdAt,DESC",
+        ...searchParams
       }).toString();
 
       const response = await axios.get(`${API_URL}?${params}`);
@@ -77,11 +80,11 @@ const TripRequestCustom: () => JSX.Element = () => {
     setSearchParams((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleDateChange = (dates: [dayjs.Dayjs, dayjs.Dayjs] | null) => {
+  const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null, dateStrings: [string, string]) => {
     setSearchParams((prev) => ({
       ...prev,
-      from: dates ? dayjs(dates[0]).format("YYYY-MM-DD") : "2023-01-01",
-      to: dates ? dayjs(dates[1]).format("YYYY-MM-DD") : "2026-12-31",
+      from: dates?.[0] ? dateStrings[0] : "2023-01-01",
+      to: dates?.[1] ? dateStrings[1] : "2026-12-31",
     }));
   };
 
