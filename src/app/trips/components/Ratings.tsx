@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import {
     Card,
     Rate,
@@ -10,9 +11,11 @@ import {
     Row,
     Col,
     Space,
+    Avatar,
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { Container } from "@mui/material";
+import Link from "next/link";
 
 const { Title, Text } = Typography;
 
@@ -33,6 +36,35 @@ const Ratings = () => {
             ]}
         />
     );
+    const reviews = [
+        {
+            name: "John B",
+            date: "Sep 2024",
+            platform: "TravelStride",
+            title: "The Italy Grand Tour",
+            company: "Alma Italia",
+            comment:
+                "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
+        },
+        {
+            name: "John B",
+            date: "Sep 2024",
+            platform: "TravelStride",
+            title: "The Italy Grand Tour",
+            company: "Alma Italia",
+            comment:
+                "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
+        },
+        {
+            name: "John B",
+            date: "Sep 2024",
+            platform: "TravelStride",
+            title: "The Italy Grand Tour",
+            company: "Alma Italia",
+            comment:
+                "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
+        },
+    ];
 
     return (
         <div className="pt-10" id="Ratings">
@@ -69,24 +101,73 @@ const Ratings = () => {
                                 </div>
                             </div>
                         </Col>
-                        <Col span={12}>
-                            {ratingData.map((item, index) => (
-                                <Row
-                                    key={index}
-                                    justify="space-between"
-                                    align="middle"
-                                    className="mb-2"
-                                >
-                                    <Text>{item.label}</Text>
-                                    <Progress
-                                        percent={item.value}
-                                        showInfo={false}
-                                        strokeColor={`#${item.color}`}
-                                        className="w-2/3"
-                                    />
-                                    <Text>{item.value}</Text>
-                                </Row>
-                            ))}
+                        <Col span={24}>
+                            <Row className="mt-4" gutter={[70, 16]}>
+                                <Col span={12}>
+                                    {" "}
+                                    {ratingData.map((item, index) => (
+                                        <Row
+                                            key={index}
+                                            justify="space-between"
+                                            align="middle"
+                                            className="mb-2"
+                                        >
+                                            <Text>{item.label}</Text>
+                                            <Progress
+                                                percent={item.value}
+                                                showInfo={false}
+                                                strokeColor={`#${item.color}`}
+                                                className="w-2/3"
+                                            />
+                                            <Text>{item.value}</Text>
+                                        </Row>
+                                    ))}
+                                </Col>
+                                <Col span={12}>
+                                    {" "}
+                                    <div className="mt-6 pt-4">
+                                        {reviews.map((review, index) => (
+                                            <div
+                                                key={index}
+                                                className="flex items-start space-x-4 mb-6"
+                                            >
+                                                <Avatar className="bg-gray-300 text-gray-700 mr-2">
+                                                    {review.name[0]}
+                                                </Avatar>
+                                                <div>
+                                                    <Text
+                                                        strong
+                                                        className="ml-2"
+                                                    >
+                                                        {review.name}
+                                                    </Text>
+                                                    <Text className="text-gray-500 text-sm ml-2">
+                                                        {review.date} | Written
+                                                        on{" "}
+                                                        {/* {review.platform} */}
+                                                    </Text>
+                                                    <div className="mt-1">
+                                                        <span className="text-black font-bold">
+                                                            {review.title}
+                                                        </span>{" "}
+                                                        <span color="#888">
+                                                            by{" "}
+                                                        </span>
+                                                        <span className="text-black font-bold">
+                                                            {review.company}
+                                                        </span>
+                                                    </div>
+                                                    <Text className="block mt-1">
+                                                        {review.comment}
+                                                    </Text>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </Col>
+                            </Row>
+
+                            {/* User Reviews */}
                         </Col>
                     </Row>
                 </div>
