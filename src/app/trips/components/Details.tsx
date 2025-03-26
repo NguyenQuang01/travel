@@ -176,49 +176,49 @@ const Details = () => {
                                 <Space>
                                     <div className="text-green-600">✔</div>
                                     <div>
-                                        3-night accommodation in El Calafate
+                                        2-night stay in Torres del Paine
+                                        National Park
                                     </div>
                                 </Space>
                                 <Space>
                                     <div className="text-green-600">✔</div>
                                     <div>
-                                        3-night accommodation in El Calafate
+                                        All transfers and ground transportation
                                     </div>
                                 </Space>
                                 <Space>
                                     <div className="text-green-600">✔</div>
                                     <div>
-                                        3-night accommodation in El Calafate
+                                        Professional English-speaking guide
                                     </div>
                                 </Space>
                                 <Space>
                                     <div className="text-green-600">✔</div>
                                     <div>
-                                        3-night accommodation in El Calafate
+                                        Daily breakfast and selected meals
+                                    </div>
+                                </Space>
+                                <Space>
+                                    <div className="text-green-600">✔</div>
+                                    <div>Entrance fees to national parks</div>
+                                </Space>
+                                <Space>
+                                    <div className="text-green-600">✔</div>
+                                    <div>
+                                        Glacier hiking equipment and safety gear
                                     </div>
                                 </Space>
                                 <Space>
                                     <div className="text-green-600">✔</div>
                                     <div>
-                                        3-night accommodation in El Calafate
+                                        Kayaking excursion in Glacier National
+                                        Park
                                     </div>
                                 </Space>
                                 <Space>
                                     <div className="text-green-600">✔</div>
                                     <div>
-                                        3-night accommodation in El Calafate
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        3-night accommodation in El Calafate
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        3-night accommodation in El Calafate
+                                        24/7 emergency support during the trip
                                     </div>
                                 </Space>
                             </div>

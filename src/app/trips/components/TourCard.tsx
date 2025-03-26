@@ -9,6 +9,7 @@ import { Container } from "@mui/material";
 import Image from "next/image";
 
 const TourCard = () => {
+    // console.log("🚀 ~ TourCard ~ props:", props);
     return (
         <Container className=" rounded-lg p-6">
             {/* Tiêu đề */}

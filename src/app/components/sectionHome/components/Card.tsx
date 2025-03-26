@@ -9,6 +9,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 import { Box, Rating } from "@mui/material";
 import { StarTwoTone } from "@ant-design/icons";
+import Link from "next/link";
+
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -81,61 +83,63 @@ export default function CardReview(prop: TourData) {
 
     return (
         <Card>
-            <Image
-                src={
-                    prop?.images[0]?.url
-                        ? `http://202.92.7.92:3082${prop?.images[0]?.url}`
-                        : "https://png.pngtree.com/png-clipart/20191120/original/pngtree-error-file-icon-vectors-png-image_5053766.jpg"
-                }
-                alt="img"
-                width={200}
-                height={200}
-                priority={true}
-                loading="eager"
-                className="w-full h-[173px] md:h-[290px] h-[200px] object-cover"
-            />
-            <Box className="p-2 md:p-[1rem] pb-0">
-                <Box>
-                    <p className="text-sm md:text-base font-bold leading-[16px] truncate">
-                        {prop.tour.name}
-                    </p>
-                    <Box className="flex items-center my-2">
-                        <Box
-                            sx={{
-                                height: "12px",
-                                width: "12px",
-                                background: "#000",
-                                borderRadius: "10%",
-                            }}
-                            className=" mr-[8px]"
-                        ></Box>
-                        <p className="text-sm md:text-base truncate">
-                            {prop.tour?.tripType}
+            <Link href={"/trips/434"}>
+                <Image
+                    src={
+                        prop?.images[0]?.url
+                            ? `http://202.92.7.92:3082${prop?.images[0]?.url}`
+                            : "https://png.pngtree.com/png-clipart/20191120/original/pngtree-error-file-icon-vectors-png-image_5053766.jpg"
+                    }
+                    alt="img"
+                    width={200}
+                    height={200}
+                    priority={true}
+                    loading="eager"
+                    className="w-full h-[173px] md:h-[290px] h-[200px] object-cover"
+                />
+                <Box className="p-2 md:p-[1rem] pb-0">
+                    <Box>
+                        <p className="text-sm md:text-base font-bold leading-[16px] truncate">
+                            {prop.tour.name}
                         </p>
+                        <Box className="flex items-center my-2">
+                            <Box
+                                sx={{
+                                    height: "12px",
+                                    width: "12px",
+                                    background: "#000",
+                                    borderRadius: "10%",
+                                }}
+                                className=" mr-[8px]"
+                            ></Box>
+                            <p className="text-sm md:text-base truncate">
+                                {prop.tour?.tripType}
+                            </p>
+                        </Box>
+                    </Box>
+                    <Box className="flex justify-between">
+                        <Typography>{prop.tour.totalDay} Days</Typography>
+                        <div className="flex items-center">
+                            <p className="text-sm mr-2">From:</p>
+                            <span className="text-2xl">
+                                {" "}
+                                {prop.tour.oldPrice || 0}
+                            </span>
+                        </div>
                     </Box>
                 </Box>
-                <Box className="flex justify-between">
-                    <Typography>{prop.tour.totalDay} Days</Typography>
-                    <div className="flex items-center">
-                        <p className="text-sm mr-2">From:</p>
-                        <span className="text-2xl">
-                            {" "}
-                            {prop.tour.oldPrice || 0}
-                        </span>
-                    </div>
-                </Box>
-            </Box>
-            <CardActions disableSpacing>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                    className="h-5"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
-            </CardActions>
+                <CardActions disableSpacing>
+                    <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                        className="h-5"
+                    >
+                        <ExpandMoreIcon />
+                    </ExpandMore>
+                </CardActions>
+            </Link>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Box className="flex justify-between p-[1rem] pt-0">
                     <Box>

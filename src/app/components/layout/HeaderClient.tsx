@@ -292,7 +292,13 @@ function HeaderClient() {
                                         {section.destinations.map(
                                             (place, i) => (
                                                 <li key={i}>
-                                                    {place.destination}
+                                                    <Link
+                                                        href={
+                                                            "/guide/" + place.id
+                                                        }
+                                                    >
+                                                        {place.destination}
+                                                    </Link>
                                                 </li>
                                             )
                                         )}
@@ -314,7 +320,12 @@ function HeaderClient() {
                         <h3 className="font-bold text-lg mb-2">Adventure</h3>
                         <ul className="space-y-1 text-gray-700">
                             {activities?.map((activity, index) => (
-                                <li key={activity.id}>{activity.activity}</li>
+                                <li key={activity.id}>
+                                    {" "}
+                                    <Link href={"/guide/" + activity.id}>
+                                        {activity.activity}
+                                    </Link>
+                                </li>
                             ))}
                         </ul>
                     </div>
@@ -322,7 +333,12 @@ function HeaderClient() {
                         <h3 className="font-bold text-lg mb-2">Styles</h3>
                         <ul className="space-y-1 text-gray-700">
                             {styles?.map((style, index) => (
-                                <li key={style.id}>{style.name}</li>
+                                <li key={style.id}>
+                                    {" "}
+                                    <Link href={"/guide/" + style.id}>
+                                        {style.name}
+                                    </Link>
+                                </li>
                             ))}
                         </ul>
                     </div>
@@ -330,7 +346,12 @@ function HeaderClient() {
                         <h3 className="font-bold text-lg mb-2">Interests</h3>
                         <ul className="space-y-1 text-gray-700">
                             {Interests?.map((interest, index) => (
-                                <li key={interest.id}>{interest.name}</li>
+                                <li key={interest.id}>
+                                    {" "}
+                                    <Link href={"/guide/" + interest.id}>
+                                        {interest.name}
+                                    </Link>
+                                </li>
                             ))}
                         </ul>
                     </div>

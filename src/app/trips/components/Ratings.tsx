@@ -67,7 +67,7 @@ const Ratings = () => {
     ];
 
     return (
-        <div className="pt-10" id="Ratings">
+        <div className="py-10" id="Ratings">
             <Container className=" bg-white py-10 rounded-lg">
                 <div className=" rounded-xl">
                     <Row justify="space-between" align="middle">
@@ -129,16 +129,16 @@ const Ratings = () => {
                                         {reviews.map((review, index) => (
                                             <div
                                                 key={index}
-                                                className="flex items-start space-x-4 mb-6"
+                                                className="flex mb-6"
                                             >
-                                                <Avatar className="bg-gray-300 text-gray-700 mr-2">
-                                                    {review.name[0]}
-                                                </Avatar>
+                                                <div className="w-15">
+                                                    <div className="bg-gray-300 text-gray-700 mr-2 h-10 w-10 flex items-center justify-center rounded-full">
+                                                        {review.name[0]}
+                                                    </div>
+                                                </div>
+
                                                 <div>
-                                                    <Text
-                                                        strong
-                                                        className="ml-2"
-                                                    >
+                                                    <Text strong>
                                                         {review.name}
                                                     </Text>
                                                     <Text className="text-gray-500 text-sm ml-2">
