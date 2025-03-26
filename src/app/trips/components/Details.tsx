@@ -110,55 +110,61 @@ const Details = () => {
                     {/* Section 2: Flights and transport */}
 
                     {/* Section 3: Tags */}
-                    <div className="flex ">
-                        <div className="">
-                            <div className="mt-6">
-                                <div className="font-bold">Travel Themes</div>
-                                <Space wrap>
-                                    <Tag className="px-3 py-1 text-lg">
-                                        Nature & Wildlife
-                                    </Tag>
-                                    <Tag className="px-3 py-1 text-base">
-                                        Hiking & Walking
-                                    </Tag>
-                                    <Tag className="px-3 py-1 text-base">
-                                        Rafting, Kayaking, Canoeing
-                                    </Tag>
-                                </Space>
+                    <div className="flex  w-full ">
+                        <div className="   w-full">
+                            <div>
+                                <div className="mt-6">
+                                    <div className="font-bold">
+                                        Travel Themes
+                                    </div>
+                                    <Space wrap>
+                                        <Tag className="px-3 py-1 text-lg">
+                                            Nature & Wildlife
+                                        </Tag>
+                                        <Tag className="px-3 py-1 text-base">
+                                            Hiking & Walking
+                                        </Tag>
+                                        <Tag className="px-3 py-1 text-base">
+                                            Rafting, Kayaking, Canoeing
+                                        </Tag>
+                                    </Space>
+                                </div>
+
+                                <div className="mt-6">
+                                    <div className="font-bold">
+                                        Destinations
+                                    </div>
+                                    <Space wrap>
+                                        <Tag className="px-3 py-1 text-base">
+                                            South America
+                                        </Tag>
+                                        <Tag className="px-3 py-1 text-base">
+                                            Argentina
+                                        </Tag>
+                                        <Tag className="px-3 py-1 text-base">
+                                            Chile
+                                        </Tag>
+                                    </Space>
+                                </div>
+                                <div className="mt-6">
+                                    <div className="font-bold">Activities</div>
+                                    <Space wrap>
+                                        <Tag className="px-3 py-1 text-base">
+                                            Bird Watching
+                                        </Tag>
+                                        <Tag className="px-3 py-1 text-base">
+                                            Hiking
+                                        </Tag>
+                                        <Tag className="px-3 py-1 text-base">
+                                            Kayaking
+                                        </Tag>
+                                        <Tag className="px-3 py-1 text-base">
+                                            Nature
+                                        </Tag>
+                                    </Space>
+                                </div>
                             </div>
 
-                            <div className="mt-6">
-                                <div className="font-bold">Destinations</div>
-                                <Space wrap>
-                                    <Tag className="px-3 py-1 text-base">
-                                        South America
-                                    </Tag>
-                                    <Tag className="px-3 py-1 text-base">
-                                        Argentina
-                                    </Tag>
-                                    <Tag className="px-3 py-1 text-base">
-                                        Chile
-                                    </Tag>
-                                </Space>
-                            </div>
-
-                            <div className="mt-6">
-                                <div className="font-bold">Activities</div>
-                                <Space wrap>
-                                    <Tag className="px-3 py-1 text-base">
-                                        Bird Watching
-                                    </Tag>
-                                    <Tag className="px-3 py-1 text-base">
-                                        Hiking
-                                    </Tag>
-                                    <Tag className="px-3 py-1 text-base">
-                                        Kayaking
-                                    </Tag>
-                                    <Tag className="px-3 py-1 text-base">
-                                        Nature
-                                    </Tag>
-                                </Space>
-                            </div>
                             <div className="mt-6 flex flex-col gap-3">
                                 <div className="font-bold">Trip Includes</div>
                                 <Space>

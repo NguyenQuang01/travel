@@ -119,7 +119,7 @@ export default function Home() {
     }, []);
     return (
         <div>
-            <Manage></Manage>
+            {/* <Manage></Manage> */}
             <Slide />
             <Slider data={data?.styles ?? []} />
             <Banner />
