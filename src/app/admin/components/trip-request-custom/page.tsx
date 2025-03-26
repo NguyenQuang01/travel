@@ -44,6 +44,7 @@ const TripRequestCustom: () => JSX.Element = () => {
     from: "2023-01-01",
     to: "2026-12-31",
   });
+  const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({
     defaultPageSize: 10,
     showSizeChanger: true,
@@ -53,7 +54,7 @@ const TripRequestCustom: () => JSX.Element = () => {
   const [selectedRecord, setSelectedRecord] = useState<TripRequest | null>(null);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-  const fetchData = async (page = 1, pageSize = 10) => {
+  const fetchData = async (page = currentPage, pageSize = 10) => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
@@ -66,11 +67,18 @@ const TripRequestCustom: () => JSX.Element = () => {
       const response = await axios.get(`${API_URL}?${params}`);
       setData(response.data.content);
       setPagination((prev) => ({ ...prev, total: response.data.totalElements }));
+      setCurrentPage(page);
     } catch (error) {
       message.error("Lỗi khi tải dữ liệu!");
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (data.length == 0 && currentPage > 1) {
+      fetchData(currentPage - 1, pagination.defaultPageSize);
+    }
+  }, [data]);
 
   useEffect(() => {
     fetchData(1, pagination.defaultPageSize);
@@ -89,6 +97,7 @@ const TripRequestCustom: () => JSX.Element = () => {
   };
 
   const handleTableChange = (pagination: any) => {
+    setCurrentPage(pagination.current);
     fetchData(pagination.current, pagination.pageSize);
   };
 
@@ -96,7 +105,7 @@ const TripRequestCustom: () => JSX.Element = () => {
     try {
       await axios.delete(`${API_URL}/${id}`);
       message.success("Xóa thành công!");
-      fetchData(1, pagination.defaultPageSize);
+      fetchData(currentPage, pagination.defaultPageSize);
     } catch (error) {
       message.error("Lỗi khi xóa!");
     }

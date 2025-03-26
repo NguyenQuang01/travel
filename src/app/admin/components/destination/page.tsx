@@ -37,7 +37,6 @@ const TourReservationCustom: () => JSX.Element = () => {
     mobile: "",
     tourName: "",
   });
-  const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({
     defaultPageSize: 10,
     showSizeChanger: true,
@@ -48,7 +47,7 @@ const TourReservationCustom: () => JSX.Element = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Fetch dữ liệu
-  const fetchData = async (page = currentPage, pageSize = 10) => {
+  const fetchData = async (page = 1, pageSize = 10) => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
@@ -62,7 +61,6 @@ const TourReservationCustom: () => JSX.Element = () => {
       const response = await axios.get(`${API_URL}?${params}`);
       setData(response.data.content);
       setPagination((prev) => ({ ...prev, total: response.data.totalElements }));
-      setCurrentPage(page);
     } catch (error) {
       message.error("Lỗi khi tải dữ liệu!");
     }
@@ -70,13 +68,7 @@ const TourReservationCustom: () => JSX.Element = () => {
   };
 
   useEffect(() => {
-    if (data.length == 0 && currentPage > 1) {
-      fetchData(currentPage - 1, pagination.defaultPageSize);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    fetchData(currentPage, pagination.defaultPageSize);
+    fetchData(1, pagination.defaultPageSize);
   }, [searchParams]);
 
   // Xử lý thay đổi input search
@@ -86,7 +78,6 @@ const TourReservationCustom: () => JSX.Element = () => {
 
   // Xử lý phân trang
   const handleTableChange = (pagination: any) => {
-    setCurrentPage(pagination.current);
     fetchData(pagination.current, pagination.pageSize);
   };
 
@@ -95,7 +86,7 @@ const TourReservationCustom: () => JSX.Element = () => {
     try {
       await axios.delete(`${API_URL}/${id}`);
       message.success("Xóa thành công!");
-      fetchData(currentPage, pagination.defaultPageSize);
+      fetchData(1, pagination.defaultPageSize);
     } catch (error) {
       message.error("Lỗi khi xóa!");
     }
