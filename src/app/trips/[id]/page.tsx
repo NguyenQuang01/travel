@@ -5,6 +5,7 @@ import Overview from "../components/Overview";
 import Details from "../components/Details";
 import Itinerary from "../components/Itinerary";
 import Banner from "../components/Banner";
+import Ratings from "../components/Ratings";
 
 const TourDetail = () => {
     return (
@@ -16,6 +17,7 @@ const TourDetail = () => {
                 <Details />
                 <Itinerary />
                 <Banner />
+                <Ratings />
             </div>
         </div>
     );
