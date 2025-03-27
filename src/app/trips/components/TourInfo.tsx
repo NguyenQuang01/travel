@@ -4,7 +4,8 @@ import { Row, Col, Button, Typography } from "antd";
 import { Container } from "@mui/material";
 import ButtonGreen from "@/app/components/ButtonGreen";
 
-const TourInfo = () => {
+const TourInfo = (props: any) => {
+    const { price, oldPrice, tripType } = props;
     const [isExpanded, setIsExpanded] = React.useState(false);
 
     const description =
@@ -18,7 +19,7 @@ const TourInfo = () => {
                         <div className="flex items-center">
                             <div className="w-4 h-4 bg-red-500 rounded-sm mr-2"></div>
                             <div className="font-semibold text-lg">
-                                Private Guided
+                                {tripType}
                             </div>
                         </div>
 
@@ -49,7 +50,6 @@ const TourInfo = () => {
                                     "Itinerary",
                                     "Details",
                                     "Reviews",
-                                    "Similar Trips",
                                 ].map((tab) => (
                                     <Col key={tab}>
                                         <Button
@@ -75,11 +75,14 @@ const TourInfo = () => {
                     <Col span={8}>
                         <div className="p-6  rounded-lg shadow-lg">
                             <div className="flex flex-col justify-end gap-3 mb-4">
-                                <div className="text-gray-500 text-lg  text-right ">
-                                    $7,410
+                                <div className="text-gray-500 text-lg text-right line-through">
+                                    ${oldPrice}
                                 </div>
-                                <div className="text-green-600  text-right text-2xl">
-                                    From $6,950
+                                <div className="  text-right text-xl">
+                                    From{" "}
+                                    <span className="text-4xl text-green-600">
+                                        ${price}
+                                    </span>
                                 </div>
                             </div>
                             <ButtonGreen name={"Reserve"} width="full" />

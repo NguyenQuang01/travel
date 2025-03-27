@@ -9,7 +9,8 @@ import {
 } from "@ant-design/icons";
 import { Container } from "@mui/material";
 
-const Details = () => {
+const Details = (props: any) => {
+    const { data, themes, destinations, activities } = props;
     return (
         <div className="pt-10" id="Details">
             <Container className="bg-white rounded-xl ">
@@ -28,7 +29,7 @@ const Details = () => {
                                         <div className="text-[#888]">
                                             Itinerary Focus
                                         </div>
-                                        <div>Active and Outdoor Sports</div>
+                                        <div>{data.itineraryFocus}</div>
                                     </div>
                                 </Space>
                             </Card>
@@ -41,7 +42,10 @@ const Details = () => {
                                         <div className="text-[#888]">
                                             Group Size
                                         </div>
-                                        <div>Small Group - 24 max</div>
+                                        <div>
+                                            Small Group - {data.maxGroupSize}{" "}
+                                            max
+                                        </div>
                                     </div>
                                 </Space>
                             </Card>
@@ -54,7 +58,11 @@ const Details = () => {
                                         <div className="text-[#888]">
                                             Age Range
                                         </div>
-                                        <div>No age restrictions</div>
+                                        <div>
+                                            {data.ageRange
+                                                ? data.ageRange
+                                                : "No age restrictions"}
+                                        </div>
                                     </div>
                                 </Space>
                             </Card>
@@ -118,15 +126,16 @@ const Details = () => {
                                         Travel Themes
                                     </div>
                                     <Space wrap>
-                                        <Tag className="px-3 py-1 text-lg">
-                                            Nature & Wildlife
-                                        </Tag>
-                                        <Tag className="px-3 py-1 text-base">
-                                            Hiking & Walking
-                                        </Tag>
-                                        <Tag className="px-3 py-1 text-base">
-                                            Rafting, Kayaking, Canoeing
-                                        </Tag>
+                                        {themes.map(
+                                            (theme: any, index: number) => (
+                                                <Tag
+                                                    key={theme.themeId}
+                                                    className="px-3 py-1 text-lg"
+                                                >
+                                                    {theme.name}
+                                                </Tag>
+                                            )
+                                        )}
                                     </Space>
                                 </div>
 
@@ -135,92 +144,29 @@ const Details = () => {
                                         Destinations
                                     </div>
                                     <Space wrap>
-                                        <Tag className="px-3 py-1 text-base">
-                                            South America
-                                        </Tag>
-                                        <Tag className="px-3 py-1 text-base">
-                                            Argentina
-                                        </Tag>
-                                        <Tag className="px-3 py-1 text-base">
-                                            Chile
-                                        </Tag>
+                                        {destinations.map((item: any) => (
+                                            <Tag
+                                                key={item.continentId}
+                                                className="px-3 py-1 text-lg"
+                                            >
+                                                {item.destination}
+                                            </Tag>
+                                        ))}
                                     </Space>
                                 </div>
                                 <div className="mt-6">
                                     <div className="font-bold">Activities</div>
                                     <Space wrap>
-                                        <Tag className="px-3 py-1 text-base">
-                                            Bird Watching
-                                        </Tag>
-                                        <Tag className="px-3 py-1 text-base">
-                                            Hiking
-                                        </Tag>
-                                        <Tag className="px-3 py-1 text-base">
-                                            Kayaking
-                                        </Tag>
-                                        <Tag className="px-3 py-1 text-base">
-                                            Nature
-                                        </Tag>
+                                        {activities.map((activity: any) => (
+                                            <Tag
+                                                key={activity.id}
+                                                className="px-3 py-1 text-lg"
+                                            >
+                                                {activity.activity}
+                                            </Tag>
+                                        ))}
                                     </Space>
                                 </div>
-                            </div>
-
-                            <div className="mt-6 flex flex-col gap-3">
-                                <div className="font-bold">Trip Includes</div>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        3-night accommodation in El Calafate
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        2-night stay in Torres del Paine
-                                        National Park
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        All transfers and ground transportation
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        Professional English-speaking guide
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        Daily breakfast and selected meals
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>Entrance fees to national parks</div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        Glacier hiking equipment and safety gear
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        Kayaking excursion in Glacier National
-                                        Park
-                                    </div>
-                                </Space>
-                                <Space>
-                                    <div className="text-green-600">✔</div>
-                                    <div>
-                                        24/7 emergency support during the trip
-                                    </div>
-                                </Space>
                             </div>
                         </div>
                     </div>

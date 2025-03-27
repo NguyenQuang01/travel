@@ -8,22 +8,26 @@ import {
 import { Container } from "@mui/material";
 import Image from "next/image";
 
-const TourCard = () => {
-    // console.log("🚀 ~ TourCard ~ props:", props);
+const TourCard = (props: any) => {
+    const { data, review, star, img } = props;
+    // console.log("🚀 ~ TourCard ~ data:", data);
     return (
         <Container className=" rounded-lg p-6">
             {/* Tiêu đề */}
-            <Row justify="space-between" align="middle">
-                <h2 className="text-2xl font-bold">The Italy Grand Tour</h2>
-                <span className="text-xl text-gray-600">13 days</span>
-            </Row>
+            <div className="flex gap-2 items-center">
+                {" "}
+                <h2 className="text-2xl font-bold">{data?.name}</h2>|
+                <span className="text-xl text-gray-600">
+                    {data?.totalDay} days
+                </span>
+            </div>
 
             {/* Hình ảnh */}
             <Row gutter={[12, 12]} className="mt-4 h-[400px] ">
                 <Col span={12}>
                     <div className="relative">
                         <Image
-                            src="https://images.pexels.com/photos/4618494/pexels-photo-4618494.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
+                            src={`http://202.92.7.92:3082${img && img[0].url}`}
                             alt="Logo"
                             width={201}
                             height={44}
@@ -37,7 +41,9 @@ const TourCard = () => {
                     <Row gutter={[8, 8]}>
                         <Col span={24} className="h-[200px]">
                             <Image
-                                src="https://images.pexels.com/photos/30063974/pexels-photo-30063974/free-photo-of-ng-i-ph-n-thanh-l-ch-trong-chi-c-vay-d-d-c-bao-quanh-b-i-nh-ng-chu-chim.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
+                                src={`http://202.92.7.92:3082${
+                                    img && img[1].url
+                                }`}
                                 alt="Logo"
                                 width={201}
                                 height={44}
@@ -48,7 +54,7 @@ const TourCard = () => {
                         </Col>
                         <Col span={24} className="h-[200px]">
                             <iframe
-                                src="https://www.youtube.com/embed/somqBOBpixI?si=DdJiMtjFZ83GSKFp"
+                                src={`https://www.youtube.com/embed/w1ucZCmvO5c?si=EZ0DFpyS0D4Y1QSm`}
                                 title="YouTube video player"
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -63,7 +69,9 @@ const TourCard = () => {
                     <Row gutter={[8, 8]} className="h-[400px]">
                         <Col span={24} className="h-[200px]">
                             <Image
-                                src="https://images.pexels.com/photos/30063974/pexels-photo-30063974/free-photo-of-ng-i-ph-n-thanh-l-ch-trong-chi-c-vay-d-d-c-bao-quanh-b-i-nh-ng-chu-chim.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
+                                src={`http://202.92.7.92:3082${
+                                    img && img[2].url
+                                }`}
                                 alt="Logo"
                                 width={201}
                                 height={44}
@@ -74,7 +82,9 @@ const TourCard = () => {
                         </Col>
                         <Col span={24} className="h-[200px]">
                             <Image
-                                src="https://images.pexels.com/photos/27440941/pexels-photo-27440941/free-photo-of-dan-ong-b-d-dan-ba-den.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
+                                src={`http://202.92.7.92:3082${
+                                    img && img[3].url
+                                }`}
                                 alt="Logo"
                                 width={201}
                                 height={44}
@@ -90,12 +100,12 @@ const TourCard = () => {
             {/* Đánh giá */}
             <Row align="middle" className="mt-4">
                 <Rate disabled defaultValue={5} className="text-yellow-500" />
-                <span className="ml-2 font-semibold text-black">
-                    5/5 Excellent
+                <div className="ml-2 font-semibold text-black">
+                    {(star ?? 5).toFixed(1)}/5 Excellent
+                </div>
+                <span className="ml-4 text-gray-600">
+                    {review ?? 0} reviews
                 </span>
-                <span className="ml-4 text-gray-600">28 reviews</span>
-                <LikeOutlined className="ml-4 text-gray-600" />
-                <div className="ml-2 text-gray-600">100%</div>
             </Row>
         </Container>
     );

@@ -9,7 +9,8 @@ import {
 import { Container } from "@mui/material";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 
-const Overview = () => {
+const Overview = (props: any) => {
+    const { data } = props;
     return (
         <div className="pt-10" id="Overview">
             <Container className="bg-white py-10 rounded-lg">
@@ -24,7 +25,7 @@ const Overview = () => {
                         <div className="text-gray-500">Trip type</div>
                         <div className="flex items-center mt-1">
                             <div className="w-4 h-4 bg-red-500 rounded-sm mr-2"></div>
-                            <div className="font-semibold">Private Guided</div>
+                            <div className="font-semibold">{data.tripType}</div>
                         </div>
                     </Col>
 
@@ -37,7 +38,7 @@ const Overview = () => {
                             </Tooltip>
                         </div>
                         <div className="font-semibold mt-1">
-                            Luxury - 5 Star
+                            {data.lodgingLevel}
                         </div>
                         <div className="mt-2">
                             <Rate allowHalf defaultValue={2.5} />
@@ -52,7 +53,9 @@ const Overview = () => {
                                 <InfoCircleOutlined className="ml-1" />
                             </Tooltip>
                         </div>
-                        <div className="font-semibold mt-1">Easy</div>
+                        <div className="font-semibold mt-1">
+                            {data.physicalLevel}
+                        </div>
                         <div className="mt-2">
                             {" "}
                             <Rate
@@ -66,7 +69,9 @@ const Overview = () => {
                     {/* Cột 4: Trip Pace */}
                     <Col span={12}>
                         <div className="text-gray-500">Trip pace</div>
-                        <div className="font-semibold mt-1">Full Schedule</div>
+                        <div className="font-semibold mt-1">
+                            {data.tripPace}
+                        </div>
                         <div className="mt-2">
                             {" "}
                             <Rate
@@ -106,15 +111,7 @@ const Overview = () => {
                     What's this trip about?
                 </div>
                 <div className="text-[#888] leading-relaxed">
-                    If you want to take your family and friends on the trip of a
-                    lifetime to see the soul of Italy in one Grand private
-                    guided tour of Italy, then we offer this itinerary as
-                    inspiration.
-                    <br />
-                    If Italy was releasing an album, this would be the guided
-                    tours of Italy's 'Greatest hits'. This luxury Italy vacation
-                    will immerse you in elegant art, tranquil nature, and the
-                    legendary "Dolce vita".
+                    {data.tripAbout}
                 </div>
             </Container>
         </div>

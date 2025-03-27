@@ -12,6 +12,8 @@ import { getToursSearch } from "../hook";
 import CardReview from "@/app/components/Card";
 import Banner from "@/app/components/sectionHome/Banner";
 import ButtonGreen from "@/app/components/ButtonGreen";
+import { useParams } from "next/navigation";
+
 interface ReviewSummary {
     avgTransportation: number;
     avgActivities: number;
@@ -58,6 +60,8 @@ interface ToursResponse {
     [key: string]: TourData[];
 }
 const TourTheme = () => {
+    const params = useParams();
+    const id = params.id; // Lấy id từ URL
     const [data, setData] = useState<ToursResponse>();
     const [theme, setTheme] = useState<string[]>();
     const travelOptions = [
@@ -71,7 +75,7 @@ const TourTheme = () => {
     ];
     const getData = async () => {
         try {
-            const response: any = await getToursSearch("Europe");
+            const response: any = await getToursSearch(String(id));
             setTheme(Object.keys(response.data.data));
             setData(response.data.data);
         } catch (error) {

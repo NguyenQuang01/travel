@@ -294,7 +294,8 @@ function HeaderClient() {
                                                 <li key={i}>
                                                     <Link
                                                         href={
-                                                            "/guide/" + place.id
+                                                            "/guide/" +
+                                                            place.destination
                                                         }
                                                     >
                                                         {place.destination}
@@ -322,7 +323,7 @@ function HeaderClient() {
                             {activities?.map((activity, index) => (
                                 <li key={activity.id}>
                                     {" "}
-                                    <Link href={"/guide/" + activity.id}>
+                                    <Link href={"/guide/" + activity.activity}>
                                         {activity.activity}
                                     </Link>
                                 </li>
@@ -335,7 +336,7 @@ function HeaderClient() {
                             {styles?.map((style, index) => (
                                 <li key={style.id}>
                                     {" "}
-                                    <Link href={"/guide/" + style.id}>
+                                    <Link href={"/guide/" + style.name}>
                                         {style.name}
                                     </Link>
                                 </li>
@@ -348,7 +349,7 @@ function HeaderClient() {
                             {Interests?.map((interest, index) => (
                                 <li key={interest.id}>
                                     {" "}
-                                    <Link href={"/guide/" + interest.id}>
+                                    <Link href={"/guide/" + interest.name}>
                                         {interest.name}
                                     </Link>
                                 </li>
