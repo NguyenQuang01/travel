@@ -1,20 +1,26 @@
 "use client";
 
-import { Table, Input, Button, Modal, message, Space } from "antd";
+import {Table, Input, Button, Modal, message, Space, Form, Upload, Image, Switch, Select} from "antd";
 import { useState, useEffect, JSX } from "react";
 import axios from "axios";
-import Card from "@mui/material/Card";
+import { UploadOutlined } from "@ant-design/icons";
 
-const API_URL = "http://202.92.7.92:3082/api/destinations/searchAdmin";
+const API_URL = "http://202.92.7.92:3082/api/destinations";
+
+interface Continent {
+  continentId?: number;
+  continentName: string;
+}
 
 interface Destination {
-  id: number;
+  id?: number;
   destination: string;
-  continentName: string;
-  imageUrl: string;
+  continentId: number;
   description: string;
   isShow: boolean;
+  image?: File | null;
 }
+
 
 const DestinationCustom: () => JSX.Element = () => {
   const [data, setData] = useState<Destination[]>([]);
@@ -28,19 +34,20 @@ const DestinationCustom: () => JSX.Element = () => {
     total: 0,
   });
   const [selectedRecord, setSelectedRecord] = useState<Destination | null>(null);
+  const [isDetailModalVisible, setIsDetailModalVisible] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [form] = Form.useForm();
+  const [file, setFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [continents, setContinents] = useState<Continent[]>([]);
 
   const fetchData = async (page = currentPage, pageSize = 10) => {
     setLoading(true);
     try {
-      const response = await axios.get(API_URL, {
-        params: {
-          search: searchTerm,
-          page: page - 1,
-          size: pageSize,
-        },
+      const response = await axios.get(`${API_URL}/searchAdmin`, {
+        params: { search: searchTerm, page: page - 1, size: pageSize },
       });
-
       setData(response.data.content);
       setPagination((prev) => ({ ...prev, total: response.data.totalElements }));
       setCurrentPage(page);
@@ -50,12 +57,27 @@ const DestinationCustom: () => JSX.Element = () => {
     setLoading(false);
   };
 
+  const fetchContinents = async () => {
+    try {
+      const response = await axios.get("http://202.92.7.92:3082/api/continents");
+      setContinents(response.data);
+    } catch (error) {
+      message.error("Lỗi khi tải danh sách châu lục!");
+    }
+  };
+
   useEffect(() => {
+    fetchContinents();
     fetchData(1, pagination.defaultPageSize);
   }, [searchTerm]);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  const handleAddOrEdit = (record?: Destination) => {
+    setIsEditMode(!!record);
+    setSelectedRecord(record || null);
+    form.setFieldsValue(record || { destination: "", continentId: 1, description: "", isShow: true });
+    setFile(null);
+    setPreviewImage(record?.image ? `${API_URL}/images/${record.image}` : null);
+    setIsModalVisible(true);
   };
 
   const handleTableChange = (pagination: any) => {
@@ -63,35 +85,90 @@ const DestinationCustom: () => JSX.Element = () => {
     fetchData(pagination.current, pagination.pageSize);
   };
 
-  const handleView = (record: Destination) => {
+  const handleDelete = async (id?: number) => {
+    if (!id) return;
+    Modal.confirm({
+      title: "Xác nhận xóa",
+      content: "Bạn có chắc chắn muốn xóa điểm đến này?",
+      okText: "Xóa",
+      cancelText: "Hủy",
+      okType: "danger",
+      onOk: async () => {
+        try {
+          await axios.delete(`${API_URL}/${id}`);
+          message.success("Xóa thành công!");
+          fetchData(currentPage, pagination.defaultPageSize);
+        } catch (error) {
+          message.error("Lỗi khi xóa dữ liệu!");
+        }
+      },
+    });
+  };
+
+  const handleViewDetails = (record: Destination) => {
     setSelectedRecord(record);
-    setIsModalVisible(true);
+    setIsDetailModalVisible(true);
+  };
+
+  const handleSubmit = async (values: Destination) => {
+    const formData = new FormData();
+    formData.append("destination", values.destination);
+    formData.append("description", values.description);
+    formData.append("continentId", values.continentId.toString());
+    formData.append("isShow", values.isShow ? "true" : "false");
+    if (file) formData.append("image", file);
+
+    try {
+      if (isEditMode && selectedRecord?.id) {
+        await axios.put(`${API_URL}/${selectedRecord.id}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        message.success("Cập nhật thành công!");
+      } else {
+        if (!file) {
+          message.error("Ảnh là bắt buộc khi tạo mới!");
+          return;
+        }
+        await axios.post(`${API_URL}/create`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        message.success("Thêm mới thành công!");
+      }
+      setIsModalVisible(false);
+      fetchData(currentPage, pagination.defaultPageSize);
+    } catch (error) {
+      message.error("Lỗi khi lưu dữ liệu!");
+    }
   };
 
   const columns = [
     { title: "ID", dataIndex: "id", key: "id" },
     { title: "Điểm đến", dataIndex: "destination", key: "destination" },
-    { title: "Châu lục", dataIndex: "continentName", key: "continentName" },
     {
       title: "Hình ảnh",
       dataIndex: "imageUrl",
       key: "imageUrl",
-      render: (url: string) => <img src={url} alt="destination" style={{ width: 50, height: 50 }} />,
+      render: (image: string) =>
+        image ? <Image width={50} src={`${API_URL}/images/${image}`} /> : "Không có ảnh",
     },
     {
-      title: "Hiển thị",
-      dataIndex: "isShow",
-      key: "isShow",
-      render: (isShow: boolean) => (isShow ? "Có" : "Không"),
+      title: "Châu lục",
+      dataIndex: "continentId",
+      key: "continentId",
+      render: (continentId: number) => {
+        const continent = continents.find(c => c.continentId === continentId);
+        return continent ? continent.continentName : "Không xác định";
+      }
     },
+    { title: "Châu lục", dataIndex: "continentId", key: "continentId" },
     {
       title: "Hành động",
       key: "actions",
       render: (_: any, record: Destination) => (
         <Space>
-          <Button type="link" onClick={() => handleView(record)}>
-            Xem
-          </Button>
+          <Button type="link" onClick={() => handleAddOrEdit(record)}>Sửa</Button>
+          <Button type="link" danger onClick={() => handleDelete(record.id)}>Xóa</Button>
+          <Button type="link" onClick={() => handleViewDetails(record)}>Xem</Button>
         </Space>
       ),
     },
@@ -100,32 +177,39 @@ const DestinationCustom: () => JSX.Element = () => {
   return (
     <div>
       <Space style={{ marginBottom: 16 }}>
-        <Input placeholder="Tìm kiếm điểm đến" onChange={handleSearchChange} />
+        <Input placeholder="Tìm kiếm điểm đến" onChange={(e) => setSearchTerm(e.target.value)} />
+        <Button type="primary" onClick={() => handleAddOrEdit()}>Thêm mới</Button>
       </Space>
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowKey="id"
-        loading={loading}
-        pagination={pagination}
-        onChange={handleTableChange}
-      />
-      <Modal
-        title="Chi tiết Điểm đến"
-        open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        footer={null}
-      >
-        {selectedRecord && (
-          <Card>
-            <p><strong>ID:</strong> {selectedRecord.id}</p>
-            <p><strong>Điểm đến:</strong> {selectedRecord.destination}</p>
-            <p><strong>Châu lục:</strong> {selectedRecord.continentName}</p>
-            <p><strong>Mô tả:</strong> {selectedRecord.description}</p>
-            <p><strong>Hiển thị:</strong> {selectedRecord.isShow ? "Có" : "Không"}</p>
-            <img src={selectedRecord.imageUrl} alt="destination" style={{ width: "100%", height: "auto" }} />
-          </Card>
-        )}
+      <Table columns={columns} dataSource={data} rowKey="id" loading={loading} pagination={pagination} onChange={handleTableChange} />
+      <Modal title={isEditMode ? "Chỉnh sửa Điểm đến" : "Thêm mới Điểm đến"} open={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={null}>
+        <Form form={form} onFinish={handleSubmit} layout="vertical">
+          <Form.Item name="destination" label="Điểm đến" rules={[{ required: true, message: "Vui lòng nhập điểm đến!" }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item name="continentId" label="Châu lục" rules={[{ required: true, message: "Vui lòng chọn châu lục!" }]}>
+            <Select options={continents.map(c => ({ value: c.continentId, label: c.continentName }))} placeholder="Chọn châu lục" />
+          </Form.Item>
+          <Form.Item name="description" label="Mô tả">
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item name="isShow" label="Hiển thị" valuePropName="checked">
+            <Switch />
+          </Form.Item>
+          {previewImage && <Image width={200} src={previewImage} />}
+          <Form.Item label="Hình ảnh">
+            <Upload beforeUpload={(file) => { setFile(file); setPreviewImage(URL.createObjectURL(file)); return false; }} showUploadList={false}>
+              <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
+            </Upload>
+          </Form.Item>
+          <Button type="primary" htmlType="submit">Lưu</Button>
+        </Form>
+      </Modal>
+      <Modal title="Chi tiết Điểm đến" open={isDetailModalVisible} onCancel={() => setIsDetailModalVisible(false)} footer={null}>
+        <p><strong>Điểm đến:</strong> {selectedRecord?.destination}</p>
+        <p><strong>Châu lục:</strong> {selectedRecord?.continentId}</p>
+        <p><strong>Mô tả:</strong> {selectedRecord?.description}</p>
+        <p><strong>Hiển thị:</strong> {selectedRecord?.isShow ? "Có" : "Không"}</p>
+        {selectedRecord?.image && <Image width={200} src={`${API_URL}/images/${selectedRecord.image}`} />}
       </Modal>
     </div>
   );
