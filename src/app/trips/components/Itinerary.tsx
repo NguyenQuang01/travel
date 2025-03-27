@@ -8,7 +8,7 @@ const Itinerary = () => {
             <Container className="bg-white rounded-xl ">
                 <div className=" py-10">
                     <div className="text-[32px] font-semibold text-[hsl(0,0%,20%)] font-roboto leading-[48px] mr-4 mb-4">
-                        Details
+                        Itinerary
                     </div>
                     <div className="ml-20">
                         <Timeline

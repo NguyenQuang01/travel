@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TourCard from "../components/TourCard";
 import TourInfo from "../components/TourInfo";
 import Overview from "../components/Overview";
@@ -8,36 +8,56 @@ import Itinerary from "../components/Itinerary";
 import Banner from "../components/Banner";
 import Ratings from "../components/Ratings";
 import { useParams } from "next/navigation";
-// import { getToursDetail } from "../hook";
+import { getToursDetail } from "../hook";
+import Loading from "@/app/components/Loading";
 
 const TourDetail = () => {
     const params = useParams();
     const id = params.id; // Lấy id từ URL
-    console.log("🚀 ~ TourDetail ~ id:", id);
-    // const [data, setData] = useState<any>();
-    // const getData = async () => {
-    //     const res: any = await getToursDetail();
-    //     if (res.status === 200) {
-    //         console.log(res.data, "------------------------1");
-    //         setData(res.data);
-    //     }
+    const [data, setData] = useState<any>();
+    const getData = async () => {
+        const res: any = await getToursDetail();
+        if (res.status === 200) {
+            console.log(res.data.tourData, "---------------------1");
+            setData(res.data.tourData);
+        }
 
-    //     return;
-    // }; // getData is not used
-    // useEffect(() => {
-    //     // getData();
-    // }, []);
+        return;
+    }; // getData is not used
+    useEffect(() => {
+        getData();
+    }, []);
     return (
         <div>
-            <TourCard />
-            <TourInfo />
-            <div className="bg-[#f8f7fd]">
-                <Overview />
-                <Details />
-                <Itinerary />
-                <Banner />
-                <Ratings />
-            </div>
+            {data ? (
+                <div>
+                    <TourCard
+                        data={data?.tour}
+                        review={data?.averageRatings.totalReviews}
+                        star={data?.averageRatings.overallRatingAvg}
+                        img={data?.images}
+                    />
+                    <TourInfo
+                        oldPrice={data?.tour.oldPrice}
+                        price={data?.tour.price}
+                        tripType={data?.tour.tripType}
+                    />
+                    <div className="bg-[#f8f7fd]">
+                        <Overview data={data?.tour} />
+                        <Details
+                            data={data?.tour}
+                            themes={data?.themes}
+                            destinations={data?.destinations}
+                            activities={data?.activities}
+                        />
+                        <Itinerary />
+                        <Banner />
+                        <Ratings reviews={data?.reviews} />
+                    </div>
+                </div>
+            ) : (
+                <Loading />
+            )}
         </div>
     );
 };

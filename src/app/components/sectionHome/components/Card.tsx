@@ -74,7 +74,6 @@ interface TourData {
 }
 
 export default function CardReview(prop: TourData) {
-    console.log("🚀 ~ CardReview ~ prop:", prop.images[0]?.url);
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {

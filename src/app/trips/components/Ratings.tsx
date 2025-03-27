@@ -16,10 +16,27 @@ import {
 import { DownOutlined } from "@ant-design/icons";
 import { Container } from "@mui/material";
 import Link from "next/link";
-
+interface Review {
+    id: number;
+    tourId: number;
+    companyName: string;
+    nickname: string;
+    reviewSummary: string;
+    reviewContent: string;
+    overallRating: number;
+    valueRating: number;
+    guideRating: number;
+    activitiesRating: number;
+    lodgingRating: number;
+    transportationRating: number;
+    mealsRating: number;
+    travelDate: string;
+    createdAt: string;
+}
 const { Title, Text } = Typography;
 
-const Ratings = () => {
+const Ratings = (props: any) => {
+    const { reviews } = props;
     const ratingData = [
         { label: "Excellent", value: 28, color: "green-500" },
         { label: "Great", value: 0, color: "gray-300" },
@@ -36,38 +53,38 @@ const Ratings = () => {
             ]}
         />
     );
-    const reviews = [
-        {
-            name: "John B",
-            date: "Sep 2024",
-            platform: "TravelStride",
-            title: "The Italy Grand Tour",
-            company: "Alma Italia",
-            comment:
-                "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
-        },
-        {
-            name: "John B",
-            date: "Sep 2024",
-            platform: "TravelStride",
-            title: "The Italy Grand Tour",
-            company: "Alma Italia",
-            comment:
-                "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
-        },
-        {
-            name: "John B",
-            date: "Sep 2024",
-            platform: "TravelStride",
-            title: "The Italy Grand Tour",
-            company: "Alma Italia",
-            comment:
-                "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
-        },
-    ];
+    // const reviews = [
+    //     {
+    //         name: "John B",
+    //         date: "Sep 2024",
+    //         platform: "TravelStride",
+    //         title: "The Italy Grand Tour",
+    //         company: "Alma Italia",
+    //         comment:
+    //             "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
+    //     },
+    //     {
+    //         name: "John B",
+    //         date: "Sep 2024",
+    //         platform: "TravelStride",
+    //         title: "The Italy Grand Tour",
+    //         company: "Alma Italia",
+    //         comment:
+    //             "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
+    //     },
+    //     {
+    //         name: "John B",
+    //         date: "Sep 2024",
+    //         platform: "TravelStride",
+    //         title: "The Italy Grand Tour",
+    //         company: "Alma Italia",
+    //         comment:
+    //             "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
+    //     },
+    // ];
 
     return (
-        <div className="py-10" id="Ratings">
+        <div className="py-10" id="Reviews">
             <Container className=" bg-white py-10 rounded-lg">
                 <div className=" rounded-xl">
                     <Row justify="space-between" align="middle">
@@ -126,43 +143,50 @@ const Ratings = () => {
                                 <Col span={12}>
                                     {" "}
                                     <div className="mt-6 pt-4">
-                                        {reviews.map((review, index) => (
-                                            <div
-                                                key={index}
-                                                className="flex mb-6"
-                                            >
-                                                <div className="w-15">
-                                                    <div className="bg-gray-300 text-gray-700 mr-2 h-10 w-10 flex items-center justify-center rounded-full">
-                                                        {review.name[0]}
+                                        {reviews?.map(
+                                            (review: Review, index: number) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex mb-6"
+                                                >
+                                                    <div className="w-15">
+                                                        <div className="bg-gray-300 text-gray-700 mr-2 h-10 w-10 flex items-center justify-center rounded-full">
+                                                            {review.nickname[0]}
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div>
-                                                    <Text strong>
-                                                        {review.name}
-                                                    </Text>
-                                                    <Text className="text-gray-500 text-sm ml-2">
-                                                        {review.date} | Written
-                                                        on{" "}
-                                                        {/* {review.platform} */}
-                                                    </Text>
-                                                    <div className="mt-1">
-                                                        <span className="text-black font-bold">
-                                                            {review.title}
-                                                        </span>{" "}
-                                                        <span color="#888">
-                                                            by{" "}
-                                                        </span>
-                                                        <span className="text-black font-bold">
-                                                            {review.company}
-                                                        </span>
+                                                    <div>
+                                                        <Text strong>
+                                                            {review.nickname}
+                                                        </Text>
+                                                        <Text className="text-gray-500 text-sm ml-2">
+                                                            {review.travelDate}{" "}
+                                                            | Written on Travel
+                                                        </Text>
+                                                        <div className="mt-1">
+                                                            <span className="text-black font-bold">
+                                                                {
+                                                                    review.reviewSummary
+                                                                }
+                                                            </span>{" "}
+                                                            <span color="#888">
+                                                                by{" "}
+                                                            </span>
+                                                            <span className="text-black font-bold">
+                                                                {
+                                                                    review.companyName
+                                                                }
+                                                            </span>
+                                                        </div>
+                                                        <Text className="block mt-1">
+                                                            {
+                                                                review.reviewContent
+                                                            }
+                                                        </Text>
                                                     </div>
-                                                    <Text className="block mt-1">
-                                                        {review.comment}
-                                                    </Text>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            )
+                                        )}
                                     </div>
                                 </Col>
                             </Row>
