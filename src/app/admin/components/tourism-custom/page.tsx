@@ -1,53 +1,70 @@
 "use client";
 
-import { Table, Input, Button, Modal, message, Space, Card, Form, Upload } from "antd";
+import { Table, Input, Button, Modal, message, Space } from "antd";
 import { useState, useEffect, JSX } from "react";
 import axios from "axios";
-import { UploadOutlined } from "@ant-design/icons";
+import Card from "@mui/material/Card";
 
-const API_URL = "http://202.92.7.92:3082/api/tours";
+const API_URL = "http://202.92.7.92:3082/api/tours/searchAdmin";
 
 interface Tour {
   id: number;
+  tripId: string;
   name: string;
-  destination: string;
-  duration: string;
-  price: number;
+  lodgingLevel: string;
+  lodgingLevelNumber: number;
+  video: string;
+  totalDay: number;
   tripType: string;
-  createdAt: string;
-}
-
-interface TourData {
-  tourInfo: Tour;
-  images: string[];
-  reviewSummary: Record<string, any>;
+  physicalLevel: string;
+  physicalLevelNumber: number;
+  tripPace: string;
+  tripPaceNumber: number;
+  highlights: string;
+  tripAbout: string;
+  flyAndTransport: string;
+  startCity: string;
+  endCity: string;
+  itineraryFocus: string;
+  groupSize: string;
+  ageRange: string;
+  minGroupSize: number;
+  maxGroupSize: number;
+  attractions: string;
+  destinations: string;
+  isTrending: number;
+  price: string;
+  oldPrice: string;
 }
 
 const TourCustom: () => JSX.Element = () => {
-  const [data, setData] = useState<{ [key: string]: TourData[] }>({});
+  const [data, setData] = useState<Tour[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [searchName, setSearchName] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({
     defaultPageSize: 10,
     showSizeChanger: true,
     pageSizeOptions: ["10", "20", "30"],
     total: 0,
-    current: 1,
   });
-  const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
-  const [selectedRecord, setSelectedRecord] = useState<TourData | null>(null);
+  const [selectedRecord, setSelectedRecord] = useState<Tour | null>(null);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [form] = Form.useForm();
-  const [fileList, setFileList] = useState<any[]>([]);
 
-  const fetchData = async (page = 1, pageSize = 10) => {
+  const fetchData = async (page = currentPage, pageSize = 10) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${API_URL}/search`, {
-        params: { keyword: searchKeyword, page: page - 1, size: pageSize },
+      const response = await axios.get(API_URL, {
+        params: {
+          name: searchName,
+          page: page - 1,
+          size: pageSize,
+        },
       });
-      setData(response.data.data);
-      setPagination((prev) => ({ ...prev, total: response.data.totalItems, current: page }));
+
+      setData(response.data.tours);
+      setPagination((prev) => ({ ...prev, total: response.data.totalItems }));
+      setCurrentPage(page);
     } catch (error) {
       message.error("Lỗi khi tải dữ liệu!");
     }
@@ -56,136 +73,73 @@ const TourCustom: () => JSX.Element = () => {
 
   useEffect(() => {
     fetchData(1, pagination.defaultPageSize);
-  }, [searchKeyword]);
+  }, [searchName]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchName(e.target.value);
+  };
 
   const handleTableChange = (pagination: any) => {
+    setCurrentPage(pagination.current);
     fetchData(pagination.current, pagination.pageSize);
   };
 
-  const handleExpand = (expanded: boolean, record: any) => {
-    setExpandedRowKeys(expanded ? [record.key] : []);
-  };
-
-  const openModal = (tour?: TourData) => {
+  const handleView = (record: Tour) => {
+    setSelectedRecord(record);
     setIsModalVisible(true);
-    form.resetFields();
-    if (tour) {
-      setSelectedRecord(tour);
-      form.setFieldsValue(tour.tourInfo);
-      setFileList(tour.images.map((url, index) => ({ uid: index, url, name: `Image ${index + 1}` })));
-    } else {
-      setSelectedRecord(null);
-      setFileList([]);
-    }
-  };
-
-  const handleCreateOrUpdate = async () => {
-    try {
-      const values = await form.validateFields();
-      const formData = new FormData();
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key]);
-      });
-      fileList.forEach((file) => {
-        if (file.originFileObj) {
-          formData.append("images", file.originFileObj);
-        }
-      });
-
-      if (selectedRecord) {
-        await axios.put(`${API_URL}/update/${selectedRecord.tourInfo.id}`, formData);
-        message.success("Tour updated successfully!");
-      } else {
-        await axios.post(`${API_URL}/create`, formData);
-        message.success("Tour created successfully!");
-      }
-      fetchData();
-      setIsModalVisible(false);
-    } catch (error) {
-      message.error("Lỗi khi xử lý tour!");
-    }
-  };
-
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`${API_URL}/tour/${id}`);
-      message.success("Tour deleted successfully!");
-      fetchData();
-    } catch (error) {
-      message.error("Lỗi khi xoá tour!");
-    }
   };
 
   const columns = [
-    { title: "Loại Tour", dataIndex: "tripType", key: "tripType" },
+    { title: "ID", dataIndex: "id", key: "id" },
+    { title: "Tên tour", dataIndex: "name", key: "name" },
+    { title: "Loại hình", dataIndex: "tripType", key: "tripType" },
+    { title: "Bắt đầu từ", dataIndex: "startCity", key: "startCity" },
+    { title: "Kết thúc tại", dataIndex: "endCity", key: "endCity" },
+    { title: "Giá", dataIndex: "price", key: "price" },
+    {
+      title: "Hành động",
+      key: "actions",
+      render: (_: any, record: Tour) => (
+        <Space>
+          <Button type="link" onClick={() => handleView(record)}>
+            Xem
+          </Button>
+        </Space>
+      ),
+    },
   ];
 
   return (
     <div>
       <Space style={{ marginBottom: 16 }}>
-        <Input placeholder="Tìm kiếm" onChange={(e) => setSearchKeyword(e.target.value)} />
-        <Button type="primary" onClick={() => openModal()}>Thêm Tour</Button>
+        <Input placeholder="Tìm theo tên tour" onChange={handleSearchChange} />
       </Space>
-
       <Table
         columns={columns}
-        dataSource={Object.keys(data).map((tripType, index) => ({ key: index, tripType }))}
-        expandable={{
-          expandedRowRender: (record) => (
-            <Table
-              columns={[
-                { title: "ID", dataIndex: ["tourInfo", "id"], key: "id" },
-                { title: "Tên Tour", dataIndex: ["tourInfo", "name"], key: "name" },
-                { title: "Điểm đến", dataIndex: ["tourInfo", "destination"], key: "destination" },
-                { title: "Thời gian", dataIndex: ["tourInfo", "duration"], key: "duration" },
-                { title: "Giá", dataIndex: ["tourInfo", "price"], key: "price" },
-                { title: "Ngày tạo", dataIndex: ["tourInfo", "createdAt"], key: "createdAt" },
-                {
-                  title: "Hành động",
-                  key: "actions",
-                  render: (_: any, tour: TourData) => (
-                    <Space>
-                      <Button type="link" onClick={() => openModal(tour)}>Xem</Button>
-                      <Button type="link" onClick={() => openModal(tour)}>Sửa</Button>
-                      <Button type="link" danger onClick={() => handleDelete(tour.tourInfo.id)}>Xóa</Button>
-                    </Space>
-                  )
-                }
-              ]}
-              dataSource={data[record.tripType] || []}
-              rowKey={(tour) => tour.tourInfo.id}
-              pagination={false}
-            />
-          ),
-          expandedRowKeys,
-          onExpand: handleExpand,
-        }}
+        dataSource={data}
+        rowKey="id"
         loading={loading}
         pagination={pagination}
         onChange={handleTableChange}
       />
-
       <Modal
-        title={selectedRecord ? "Sửa Tour" : "Thêm Tour"}
-        visible={isModalVisible}
+        title="Chi tiết Tour"
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
-        onOk={handleCreateOrUpdate}
+        footer={null}
       >
-        <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Tên Tour" rules={[{ required: true, message: "Vui lòng nhập tên tour" }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label="Hình ảnh">
-            <Upload
-              listType="picture-card"
-              fileList={fileList}
-              beforeUpload={() => false}
-              onChange={({ fileList }) => setFileList(fileList)}
-            >
-              <UploadOutlined />
-            </Upload>
-          </Form.Item>
-        </Form>
+        {selectedRecord && (
+          <Card>
+            <p><strong>ID:</strong> {selectedRecord.id}</p>
+            <p><strong>Tên tour:</strong> {selectedRecord.name}</p>
+            <p><strong>Loại hình:</strong> {selectedRecord.tripType}</p>
+            <p><strong>Thành phố bắt đầu:</strong> {selectedRecord.startCity}</p>
+            <p><strong>Thành phố kết thúc:</strong> {selectedRecord.endCity}</p>
+            <p><strong>Giá:</strong> {selectedRecord.price}</p>
+            <p><strong>Giá cũ:</strong> {selectedRecord.oldPrice}</p>
+            <p><strong>Thông tin tour:</strong> {selectedRecord.tripAbout}</p>
+          </Card>
+        )}
       </Modal>
     </div>
   );

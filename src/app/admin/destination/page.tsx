@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import LayoutAdmin from "@/app/admin/layout";
-import TripRequestCustom from "@/app/admin/components/trip-request-custom/page";
+import DestinationCustom from "@/app/admin/components/destination/page";
 
-const TripRequest = () => {
+const Destination = () => {
     return (
         <LayoutAdmin>
-            <TripRequestCustom></TripRequestCustom>
+            <DestinationCustom></DestinationCustom>
         </LayoutAdmin>
     );
 };
 
-export default TripRequest;
+export default Destination;
