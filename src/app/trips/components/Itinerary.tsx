@@ -2,7 +2,21 @@ import { Container } from "@mui/material";
 import { ClockCircleOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import { Timeline } from "antd";
 
-const Itinerary = () => {
+interface ItineraryProps {
+    data: string;
+}
+
+const Itinerary = ({ data }: ItineraryProps) => {
+    const itineraryItems = data.split(" - ").map((item, index) => ({
+        children: item,
+        dot:
+            index % 2 === 0 ? (
+                <EnvironmentOutlined style={{ fontSize: "16px" }} />
+            ) : (
+                <ClockCircleOutlined style={{ fontSize: "16px" }} />
+            ),
+        color: index % 3 === 1 ? "green" : index % 3 === 2 ? "red" : undefined,
+    }));
     return (
         <div className="pt-10" id="Itinerary">
             <Container className="bg-white rounded-xl ">
@@ -11,50 +25,7 @@ const Itinerary = () => {
                         Itinerary
                     </div>
                     <div className="ml-20">
-                        <Timeline
-                            mode="alternate"
-                            items={[
-                                {
-                                    children:
-                                        "Create a services site 2015-09-01",
-                                    dot: (
-                                        <EnvironmentOutlined
-                                            style={{ fontSize: "16px" }}
-                                        />
-                                    ),
-                                },
-                                {
-                                    children:
-                                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-                                    color: "green",
-                                },
-                                {
-                                    dot: (
-                                        <ClockCircleOutlined
-                                            style={{ fontSize: "16px" }}
-                                        />
-                                    ),
-                                    children: `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
-                                },
-                                {
-                                    color: "red",
-                                    children:
-                                        "Network problems being solved 2015-09-01",
-                                },
-                                {
-                                    children:
-                                        "Create a services site 2015-09-01",
-                                },
-                                {
-                                    dot: (
-                                        <ClockCircleOutlined
-                                            style={{ fontSize: "16px" }}
-                                        />
-                                    ),
-                                    children: "Technical testing 2015-09-01",
-                                },
-                            ]}
-                        />
+                        <Timeline mode="alternate" items={itineraryItems} />
                     </div>
                 </div>
             </Container>

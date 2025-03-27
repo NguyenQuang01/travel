@@ -79,8 +79,8 @@ const Details = (props: any) => {
                                                     Flights and Transport
                                                 </div>
                                                 <div>
-                                                    All internal ground
-                                                    transport included
+                                                    {data.flyAndTransport ??
+                                                        "--"}
                                                 </div>
                                             </div>
                                         </Space>
@@ -93,7 +93,10 @@ const Details = (props: any) => {
                                                     <div className="text-[#888]">
                                                         Start City
                                                     </div>
-                                                    <div>El Calafate</div>
+                                                    <div>
+                                                        {" "}
+                                                        {data.startCity ?? "--"}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div>
@@ -105,7 +108,10 @@ const Details = (props: any) => {
                                                     <div className="text-[#888]">
                                                         End City
                                                     </div>
-                                                    <div>Ushuaia</div>
+                                                    <div>
+                                                        {" "}
+                                                        {data.endCity ?? "--"}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

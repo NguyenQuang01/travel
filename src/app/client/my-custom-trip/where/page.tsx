@@ -8,6 +8,7 @@ import useStore from "@/store/useStore";
 import dynamic from "next/dynamic";
 import MyTripSummary from "@/app/components/MyTripSummary";
 import { Col, Row } from "antd";
+import { countries } from "@/constant/constant";
 
 const Select = dynamic(() => import("antd").then((mod) => mod.Select), {
     ssr: false,
@@ -15,6 +16,7 @@ const Select = dynamic(() => import("antd").then((mod) => mod.Select), {
 export default function Where() {
     const { tripData, setTripData } = useStore();
     const [notSure, setNotSure] = useState(false);
+
     const onChange = (value: unknown) => {
         setTripData({ mainCountry: value as string });
     };
@@ -60,20 +62,7 @@ export default function Where() {
                                 value={tripData.mainCountry}
                                 onChange={onChange}
                                 onSearch={onSearch}
-                                options={[
-                                    {
-                                        value: "vietnam",
-                                        label: "Vietnam",
-                                    },
-                                    {
-                                        value: "thailand",
-                                        label: "Thailand",
-                                    },
-                                    {
-                                        value: "japan",
-                                        label: "Japan",
-                                    },
-                                ]}
+                                options={countries}
                             />
 
                             <p className="text-gray-600 my-4">
@@ -93,20 +82,7 @@ export default function Where() {
                                         ?.split(",")
                                         .filter(Boolean) || []
                                 }
-                                options={[
-                                    {
-                                        value: "jack",
-                                        label: "Jack",
-                                    },
-                                    {
-                                        value: "lucy",
-                                        label: "Lucy",
-                                    },
-                                    {
-                                        value: "tom",
-                                        label: "Tom",
-                                    },
-                                ]}
+                                options={countries}
                             />
 
                             <ButtonNext url="/client/my-custom-trip/who" />

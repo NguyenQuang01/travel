@@ -10,6 +10,7 @@ import SlideBlog from "./components/sectionHome/SlideBlog";
 import Banner from "./components/sectionHome/Banner";
 import { getHome } from "./hook";
 import Manage from "@/app/admin/design-my-trip/page";
+import Loading from "./components/Loading";
 
 export default function Home() {
     interface Image {
@@ -117,7 +118,7 @@ export default function Home() {
     useEffect(() => {
         getData();
     }, []);
-    return (
+    return data ? (
         <div>
             {/* <Manage></Manage> */}
             <Slide />
@@ -129,5 +130,7 @@ export default function Home() {
             <SlideStyle data={data?.destinations ?? []} />
             <SlideBlog data={data?.pots ?? []} />
         </div>
+    ) : (
+        <Loading />
     );
 }

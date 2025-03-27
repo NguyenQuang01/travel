@@ -13,6 +13,8 @@ import CardReview from "@/app/components/Card";
 import Banner from "@/app/components/sectionHome/Banner";
 import ButtonGreen from "@/app/components/ButtonGreen";
 import { useParams } from "next/navigation";
+import Link from "next/link";
+import Loading from "@/app/components/Loading";
 
 interface ReviewSummary {
     avgTransportation: number;
@@ -86,7 +88,7 @@ const TourTheme = () => {
     useEffect(() => {
         getData();
     }, []);
-    return (
+    return data ? (
         <>
             <div className="relative bg-black text-white pt-5  px-6 md:h-[532px]">
                 <Image
@@ -115,12 +117,19 @@ const TourTheme = () => {
                                         "0px 3px 8px rgba(0, 0, 0, 0.3)",
                                 }}
                             >
-                                France Tours & Travel Packages 2025/2026
+                                {decodeURIComponent(String(id))?.replace(
+                                    /%20/g,
+                                    " "
+                                )}{" "}
+                                Tours & Travel Packages 2025/2026
                             </h1>
-                            <p className="mt-4 text-lg text-gray-200  ">
-                                Our 1,369 most popular France trips. Compare
-                                from 195 tour companies. 2,316 reviews. 4.6/5
-                                avg rating.
+                            <p className="mt-4 text-lg text-gray-200">
+                                Discover the beauty of Vietnam through our
+                                carefully curated tours. From bustling cities to
+                                peaceful countryside, ancient temples to
+                                pristine beaches, experience the rich culture
+                                and stunning landscapes of this Southeast Asian
+                                gem.
                             </p>
                         </div>
                         <div>
@@ -289,7 +298,9 @@ const TourTheme = () => {
                                             <Col span={8}>
                                                 <div className="flex justify-end">
                                                     {" "}
-                                                    <ButtonGreen name="Design custom trip" />
+                                                    <Link href="/client/my-custom-trip">
+                                                        <ButtonGreen name="Design custom trip" />
+                                                    </Link>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -301,6 +312,8 @@ const TourTheme = () => {
                 </div>
             </Container>
         </>
+    ) : (
+        <Loading />
     );
 };
 

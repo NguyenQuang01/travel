@@ -50,9 +50,12 @@ const TourDetail = () => {
                             destinations={data?.destinations}
                             activities={data?.activities}
                         />
-                        <Itinerary />
+                        <Itinerary data={data?.tour.itinerary} />
                         <Banner />
-                        <Ratings reviews={data?.reviews} />
+                        <Ratings
+                            reviews={data?.reviews}
+                            averageRatings={data?.averageRatings}
+                        />
                     </div>
                 </div>
             ) : (

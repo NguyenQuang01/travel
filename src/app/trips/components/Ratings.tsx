@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
     Card,
     Rate,
@@ -36,14 +36,14 @@ interface Review {
 const { Title, Text } = Typography;
 
 const Ratings = (props: any) => {
-    const { reviews } = props;
-    const ratingData = [
-        { label: "Excellent", value: 28, color: "green-500" },
-        { label: "Great", value: 0, color: "gray-300" },
-        { label: "Average", value: 0, color: "gray-300" },
-        { label: "Disappointing", value: 0, color: "gray-300" },
-        { label: "Terrible", value: 0, color: "gray-300" },
-    ];
+    const { reviews, averageRatings } = props;
+    const [ratingData, setRatingData] = useState([
+        { label: "Excellent", value: 28 },
+        { label: "Great", value: 0 },
+        { label: "Average", value: 0 },
+        { label: "Disappointing", value: 0 },
+        { label: "Terrible", value: 0 },
+    ]);
 
     const menu = (
         <Menu
@@ -121,24 +121,66 @@ const Ratings = (props: any) => {
                         <Col span={24}>
                             <Row className="mt-4" gutter={[70, 16]}>
                                 <Col span={12}>
-                                    {" "}
-                                    {ratingData.map((item, index) => (
-                                        <Row
-                                            key={index}
-                                            justify="space-between"
-                                            align="middle"
-                                            className="mb-2"
-                                        >
-                                            <Text>{item.label}</Text>
-                                            <Progress
-                                                percent={item.value}
-                                                showInfo={false}
-                                                strokeColor={`#${item.color}`}
-                                                className="w-2/3"
-                                            />
-                                            <Text>{item.value}</Text>
-                                        </Row>
-                                    ))}
+                                    <Row
+                                        justify="space-between"
+                                        align="middle"
+                                        className="mb-2"
+                                    >
+                                        <Text>Excellent</Text>
+                                        <Progress
+                                            percent={averageRatings.rating5Star}
+                                            showInfo={false}
+                                            className="w-2/3"
+                                        />
+                                    </Row>{" "}
+                                    <Row
+                                        justify="space-between"
+                                        align="middle"
+                                        className="mb-2"
+                                    >
+                                        <Text>Great</Text>
+                                        <Progress
+                                            percent={averageRatings.rating4Star}
+                                            showInfo={false}
+                                            className="w-2/3"
+                                        />
+                                    </Row>{" "}
+                                    <Row
+                                        justify="space-between"
+                                        align="middle"
+                                        className="mb-2"
+                                    >
+                                        <Text>Average</Text>
+                                        <Progress
+                                            percent={averageRatings.rating3Star}
+                                            showInfo={false}
+                                            className="w-2/3"
+                                        />
+                                    </Row>{" "}
+                                    <Row
+                                        justify="space-between"
+                                        align="middle"
+                                        className="mb-2"
+                                    >
+                                        <Text>Disappointing</Text>
+                                        <Progress
+                                            percent={averageRatings.rating2Star}
+                                            showInfo={false}
+                                            className="w-2/3"
+                                        />
+                                    </Row>{" "}
+                                    <Row
+                                        justify="space-between"
+                                        align="middle"
+                                        className="mb-2"
+                                    >
+                                        <Text>Terrible</Text>
+                                        <Progress
+                                            percent={averageRatings.rating1Star}
+                                            showInfo={false}
+                                            className="w-2/3"
+                                        />
+                                    </Row>
                                 </Col>
                                 <Col span={12}>
                                     {" "}
