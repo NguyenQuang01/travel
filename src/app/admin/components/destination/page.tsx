@@ -5,7 +5,8 @@ import { useState, useEffect, JSX } from "react";
 import axios from "axios";
 import { UploadOutlined } from "@ant-design/icons";
 
-const API_URL = "http://202.92.7.92:3082/api/destinations";
+const BASE_URL = "http://202.92.7.92:3082";
+const API_URL = `${BASE_URL}/api/destinations`;
 
 interface Continent {
   continentId?: number;
@@ -16,8 +17,10 @@ interface Destination {
   id?: number;
   destination: string;
   continentId: number;
+  continentName: number;
   description: string;
   isShow: boolean;
+  imageUrl: string;
   image?: File | null;
 }
 
@@ -59,7 +62,7 @@ const DestinationCustom: () => JSX.Element = () => {
 
   const fetchContinents = async () => {
     try {
-      const response = await axios.get("http://202.92.7.92:3082/api/continents");
+      const response = await axios.get(`${BASE_URL}/api/continents`);
       setContinents(response.data);
     } catch (error) {
       message.error("Lỗi khi tải danh sách châu lục!");
@@ -76,7 +79,7 @@ const DestinationCustom: () => JSX.Element = () => {
     setSelectedRecord(record || null);
     form.setFieldsValue(record || { destination: "", continentId: 1, description: "", isShow: true });
     setFile(null);
-    setPreviewImage(record?.image ? `${API_URL}/images/${record.image}` : null);
+    setPreviewImage(record?.imageUrl ? `${BASE_URL}${record.imageUrl}` : null);
     setIsModalVisible(true);
   };
 
@@ -149,18 +152,9 @@ const DestinationCustom: () => JSX.Element = () => {
       dataIndex: "imageUrl",
       key: "imageUrl",
       render: (image: string) =>
-        image ? <Image width={50} src={`${API_URL}/images/${image}`} /> : "Không có ảnh",
+        image ? <Image width={50} src={`${BASE_URL}${image}`} /> : "Không có ảnh",
     },
-    {
-      title: "Châu lục",
-      dataIndex: "continentId",
-      key: "continentId",
-      render: (continentId: number) => {
-        const continent = continents.find(c => c.continentId === continentId);
-        return continent ? continent.continentName : "Không xác định";
-      }
-    },
-    { title: "Châu lục", dataIndex: "continentId", key: "continentId" },
+    { title: "Tỉnh thành", dataIndex: "continentName", key: "continentName" },
     {
       title: "Hành động",
       key: "actions",
@@ -189,7 +183,7 @@ const DestinationCustom: () => JSX.Element = () => {
           <Form.Item name="continentId" label="Châu lục" rules={[{ required: true, message: "Vui lòng chọn châu lục!" }]}>
             <Select options={continents.map(c => ({ value: c.continentId, label: c.continentName }))} placeholder="Chọn châu lục" />
           </Form.Item>
-          <Form.Item name="description" label="Mô tả">
+          <Form.Item name="description" label="Mô tả" rules={[{ required: true, message: "Vui lòng nhập Mô tả!" }]}>
             <Input.TextArea />
           </Form.Item>
           <Form.Item name="isShow" label="Hiển thị" valuePropName="checked">
@@ -209,7 +203,7 @@ const DestinationCustom: () => JSX.Element = () => {
         <p><strong>Châu lục:</strong> {selectedRecord?.continentId}</p>
         <p><strong>Mô tả:</strong> {selectedRecord?.description}</p>
         <p><strong>Hiển thị:</strong> {selectedRecord?.isShow ? "Có" : "Không"}</p>
-        {selectedRecord?.image && <Image width={200} src={`${API_URL}/images/${selectedRecord.image}`} />}
+        {selectedRecord?.imageUrl && <Image width={200} src={`${BASE_URL}${selectedRecord.imageUrl}`} />}
       </Modal>
     </div>
   );
