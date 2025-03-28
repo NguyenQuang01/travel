@@ -3,6 +3,7 @@ import ButtonNext from "@/app/components/ButtonNext";
 import ButtonPrev from "@/app/components/ButtonPrev";
 import MyTripSummary from "@/app/components/MyTripSummary";
 import StepsComponent from "@/app/components/Steps";
+import { countries } from "@/constant/constant";
 import useStore from "@/store/useStore";
 import { Container } from "@mui/material";
 import { Col, Row, Select } from "antd";
@@ -50,20 +51,7 @@ export default function Home() {
                                 onChange={onChange}
                                 onSearch={onSearch}
                                 value={tripData.mainCountry}
-                                options={[
-                                    {
-                                        value: "jack",
-                                        label: "Jack",
-                                    },
-                                    {
-                                        value: "lucy",
-                                        label: "Lucy",
-                                    },
-                                    {
-                                        value: "tom",
-                                        label: "Tom",
-                                    },
-                                ]}
+                                options={countries}
                             />
 
                             <div className="flex justify-between mt-6">

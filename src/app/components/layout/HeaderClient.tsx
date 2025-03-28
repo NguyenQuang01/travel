@@ -177,6 +177,7 @@ function HeaderClient() {
         useState<{ id: number; name: string }[]>();
 
     const [trending, setTrending] = useState<Trip[]>();
+    const [showCustomTripButton, setShowCustomTripButton] = useState(false);
     const getMenuActivities = async () => {
         const res: any = await getActivities();
         if (res) {
@@ -251,6 +252,10 @@ function HeaderClient() {
     const handleCancelStyle = () => {
         setIsModalOpenStyle(false);
     };
+    useEffect(() => {
+        const isHomePage = window.location.pathname === "/";
+        setShowCustomTripButton(!isHomePage);
+    }, []);
     return (
         <div>
             <Modal
@@ -267,7 +272,9 @@ function HeaderClient() {
                                 key={index}
                                 className="space-y-1 text-gray-700 text-center whitespace-normal"
                             >
-                                {trip.name}
+                                <Link href={"/guide/" + trip.name}>
+                                    {trip.name}
+                                </Link>
                             </h3>
                         ))}{" "}
                     </div>
@@ -429,7 +436,7 @@ function HeaderClient() {
                                         </ListSubheader>
                                     }
                                 >
-                                    <Link href="client/my-custom-trip">
+                                    <Link href="/client/my-custom-trip">
                                         {" "}
                                         <Button
                                             // onClick={handleCloseNavMenu}
@@ -620,28 +627,26 @@ function HeaderClient() {
                                     )}
                                 </Box>
                             ))}
-
-                            {/* {typeof window !== "undefined" &&
-                                window.location.pathname !== "/" && ( */}
-                            <Link href="client/my-custom-trip">
-                                <Button
-                                    className="flex items-center  rounded-[45px]  px-6 py-[1.1rem] text-[14px]"
-                                    sx={{
-                                        background: "#f6bb43",
-                                        color: "#333",
-                                        textTransform: "none",
-                                        fontWeight: 500,
-                                        borderRadius: "45px",
-                                        padding: "4px 1rem",
-                                    }}
-                                >
-                                    Design custom trip
-                                    <ArrowForwardIosIcon
-                                        sx={{ height: "15px" }}
-                                    />
-                                </Button>
-                            </Link>
-                            {/* )} */}
+                            {showCustomTripButton && (
+                                <Link href="/client/my-custom-trip">
+                                    <Button
+                                        className="flex items-center  rounded-[45px]  px-6 py-[1.1rem] text-[14px]"
+                                        sx={{
+                                            background: "#f6bb43",
+                                            color: "#333",
+                                            textTransform: "none",
+                                            fontWeight: 500,
+                                            borderRadius: "45px",
+                                            padding: "4px 1rem",
+                                        }}
+                                    >
+                                        Design custom trip
+                                        <ArrowForwardIosIcon
+                                            sx={{ height: "15px" }}
+                                        />
+                                    </Button>
+                                </Link>
+                            )}
                         </Box>
                     </Toolbar>
                 </Container>

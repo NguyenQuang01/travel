@@ -2,6 +2,7 @@ import ButtonGreen from "@/app/components/ButtonGreen";
 import { Container } from "@mui/material";
 import { Col, Row } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Banner = () => {
@@ -41,8 +42,9 @@ const Banner = () => {
                             </Col>
                             <Col span={8}>
                                 <div className="flex justify-end">
-                                    {" "}
-                                    <ButtonGreen name="Design custom trip" />
+                                    <Link href="/client/my-custom-trip">
+                                        <ButtonGreen name="Design custom trip" />
+                                    </Link>
                                 </div>
                             </Col>
                         </Row>

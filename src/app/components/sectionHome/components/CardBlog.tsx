@@ -9,6 +9,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 import { Box, Rating } from "@mui/material";
 import { StarTwoTone } from "@ant-design/icons";
+import Link from "next/link";
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -36,23 +37,25 @@ interface Blog {
 
 export default function CardBlog(prop: Blog) {
     return (
-        <div>
-            <Image
-                src={`http://202.92.7.92:3082${prop.coverImage}`}
-                alt="img"
-                width={200}
-                height={200}
-                priority={true}
-                loading="eager"
-                className="w-full h-[173px] md:h-[290px] h-[200px] object-cover"
-            />
-            <Box className="py-2 md:pt-[1rem] pb-2 bg-gray-100">
-                <Box>
-                    <p className="text-sm md:text-2xl font-bold leading-[24px] ">
-                        {prop.title}
-                    </p>
+        <Link href={"/guide/" + prop.title}>
+            <div>
+                <Image
+                    src={`http://202.92.7.92:3082${prop.coverImage}`}
+                    alt="img"
+                    width={200}
+                    height={200}
+                    priority={true}
+                    loading="eager"
+                    className="w-full h-[173px] md:h-[290px] h-[200px] object-cover"
+                />
+                <Box className="py-2 md:pt-[1rem] pb-2 bg-gray-100">
+                    <Box>
+                        <p className="text-sm md:text-2xl font-bold leading-[24px] ">
+                            {prop.title}
+                        </p>
+                    </Box>
                 </Box>
-            </Box>
-        </div>
+            </div>
+        </Link>
     );
 }
