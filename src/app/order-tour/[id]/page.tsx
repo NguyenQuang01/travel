@@ -18,7 +18,8 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { StarTwoTone } from "@ant-design/icons";
 import useStore from "@/store/useStore";
-
+import generalImg from "@/app/assets/imgs/anhChung.jpeg";
+import ButtonGreen from "@/app/components/ButtonGreen";
 const { Title, Text } = Typography;
 const { Option } = Select;
 
@@ -34,7 +35,7 @@ export default function OrderTour() {
         firstName: "",
         lastName: "",
         email: "",
-        countryCode: "+1",
+        countryCode: "+84",
         mobilePhone: "",
         primaryContact: "",
         departureDate: "",
@@ -242,14 +243,7 @@ export default function OrderTour() {
                         </Checkbox.Group>
 
                         <div className="flex justify-end">
-                            <Button
-                                type="primary"
-                                className="mt-6 bg-green-600 hover:bg-green-700"
-                                size="large"
-                                onClick={submitForm}
-                            >
-                                Reserve
-                            </Button>
+                            <ButtonGreen name={"Reserve"} />
                         </div>
                     </div>
                 </Col>
@@ -257,8 +251,9 @@ export default function OrderTour() {
                     <Card>
                         <Image
                             src={
-                                `http://202.92.7.92:3082${tourOder?.img}` ||
-                                "https://png.pngtree.com/png-clipart/20191120/original/pngtree-error-file-icon-vectors-png-image_5053766.jpg"
+                                tourOder?.img
+                                    ? `http://202.92.7.92:3082${tourOder?.img}`
+                                    : generalImg
                             }
                             alt="img"
                             width={200}
