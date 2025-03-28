@@ -92,7 +92,7 @@ const TourTheme = () => {
         <>
             <div className="relative bg-black text-white pt-5  px-6 md:h-[532px]">
                 <Image
-                    src="https://images.pexels.com/photos/31174247/pexels-photo-31174247/free-photo-of-ng-i-ph-n-di-b-v-i-chi-c-o-khu-ph-tau.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                    src="https://images.pexels.com/photos/29515365/pexels-photo-29515365/free-photo-of-hoa-sen-r-c-r-trong-c-nh-quan-vi-t-nam-ng-p-tran-anh-n-ng.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                     alt="Background"
                     fill
                     className="object-cover opacity-50"
@@ -186,8 +186,14 @@ const TourTheme = () => {
                                                     >
                                                         <button
                                                             key={option.name}
-                                                            className={`${option.color} text-white  items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md hover:opacity-80 transition font-roboto leading-6 md:h-[116px] md:w-[162px]`}
+                                                            className={`text-white items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md transition font-roboto leading-6 md:h-[116px] md:w-[162px]`}
                                                             style={{
+                                                                backgroundColor: `#${Math.floor(
+                                                                    Math.random() *
+                                                                        16777215
+                                                                ).toString(
+                                                                    16
+                                                                )}`,
                                                                 color: "white",
                                                                 fontSize:
                                                                     "16px",

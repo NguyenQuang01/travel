@@ -38,7 +38,7 @@ const Slider = (prop: { data: SliderItem[] }) => {
                                 spaceBetween: 10,
                             },
                             768: {
-                                slidesPerView: 4,
+                                slidesPerView: 5,
                                 spaceBetween: 30,
                             },
                         }}
@@ -72,7 +72,14 @@ const Slider = (prop: { data: SliderItem[] }) => {
                                                 loading="eager"
                                                 style={imgStyle}
                                             />
-                                            <div className="intro">
+                                            <div
+                                                className="intro"
+                                                style={{
+                                                    backgroundColor: `hsl(${
+                                                        Math.random() * 360
+                                                    }, 70%, 50%)`,
+                                                }}
+                                            >
                                                 <h2 className="text-h2">
                                                     {item.name}
                                                 </h2>

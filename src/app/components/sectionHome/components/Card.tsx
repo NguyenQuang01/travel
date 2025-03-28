@@ -138,19 +138,20 @@ export default function CardReview(prop: TourData) {
                             </span>
                         </div>
                     </Box>
-                </Box>
-                <CardActions disableSpacing>
-                    <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                        className="h-5"
-                    >
-                        <ExpandMoreIcon />
-                    </ExpandMore>
-                </CardActions>
+                </Box>{" "}
             </Link>
+            <CardActions disableSpacing>
+                <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                    className="h-5"
+                >
+                    <ExpandMoreIcon />
+                </ExpandMore>
+            </CardActions>
+
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Box className="flex justify-between p-[1rem] pt-0">
                     <Box>
