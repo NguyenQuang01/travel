@@ -14,6 +14,7 @@ import Loading from "@/app/components/Loading";
 const TourDetail = () => {
     const params = useParams();
     const id = params.id; // Lấy id từ URL
+    console.log("🚀 ~ TourDetail ~ URL:", id);
     const [data, setData] = useState<any>();
     const getData = async () => {
         const res: any = await getToursDetail(String(id));

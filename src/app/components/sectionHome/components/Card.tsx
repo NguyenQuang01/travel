@@ -11,7 +11,6 @@ import { Box, Rating } from "@mui/material";
 import { StarTwoTone } from "@ant-design/icons";
 import Link from "next/link";
 import useStore from "@/store/useStore";
-import { useParams } from "next/navigation";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -76,8 +75,6 @@ interface TourData {
 }
 
 export default function CardReview(prop: TourData) {
-    const params = useParams();
-    const id = params.id; // Lấy id từ URL
     const [expanded, setExpanded] = React.useState(false);
     const { setTourOrder } = useStore();
     const handleExpandClick = () => {
@@ -96,7 +93,7 @@ export default function CardReview(prop: TourData) {
     };
     return (
         <Card>
-            <Link href={`/trips/${id}`} onClick={setOder}>
+            <Link href={`/trips/${prop.tour.id}`} onClick={setOder}>
                 <Image
                     src={
                         prop?.images[0]?.url

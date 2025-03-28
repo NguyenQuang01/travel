@@ -27,7 +27,7 @@ const TourCard = (props: any) => {
                 <Col span={12}>
                     <div className="relative">
                         <Image
-                            src={`http://202.92.7.92:3082${img && img[0].url}`}
+                            src={`http://202.92.7.92:3082${img && img[0]?.url}`}
                             alt="Logo"
                             width={201}
                             height={44}
@@ -42,7 +42,7 @@ const TourCard = (props: any) => {
                         <Col span={24} className="h-[200px]">
                             <Image
                                 src={`http://202.92.7.92:3082${
-                                    img && img[1].url
+                                    img && img[1]?.url
                                 }`}
                                 alt="Logo"
                                 width={201}
@@ -70,7 +70,7 @@ const TourCard = (props: any) => {
                         <Col span={24} className="h-[200px]">
                             <Image
                                 src={`http://202.92.7.92:3082${
-                                    img && img[2].url
+                                    img && img[2]?.url
                                 }`}
                                 alt="Logo"
                                 width={201}
@@ -83,7 +83,7 @@ const TourCard = (props: any) => {
                         <Col span={24} className="h-[200px]">
                             <Image
                                 src={`http://202.92.7.92:3082${
-                                    img && img[3].url
+                                    img && img[3]?.url
                                 }`}
                                 alt="Logo"
                                 width={201}
