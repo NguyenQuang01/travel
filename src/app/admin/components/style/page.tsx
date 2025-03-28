@@ -1,17 +1,20 @@
 "use client";
 
-import { Table, Input, Button, Modal, message, Space, Form } from "antd";
+import {Table, Input, Button, Modal, message, Space, Form, Image, Upload} from "antd";
 import {useState, JSX, useEffect} from "react";
 import axios from "axios";
 import Card from "@mui/material/Card";
+import {UploadOutlined} from "@ant-design/icons";
 
-const API_URL = "http://202.92.7.92:3082/api/styles";
+const BASE_URL = "http://202.92.7.92:3082";
+const API_URL = `${BASE_URL}/api/styles`;
 // Interface định nghĩa dữ liệu Styles
 interface Style {
   id: number;
   name: string;
   imageUrl: string;
   description: string;
+  image?: File | null;
 }
 
 const StyleCustom: () => JSX.Element = () => {
@@ -23,6 +26,8 @@ const StyleCustom: () => JSX.Element = () => {
     pageSizeOptions: ["10", "20", "30"],
     total: 0,
   });
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [selectedRecord, setSelectedRecord] = useState<Style | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -69,13 +74,20 @@ const StyleCustom: () => JSX.Element = () => {
   const handleEdit = (record: Style) => {
     form.setFieldsValue(record);
     setSelectedRecord(record);
+    setFile(null);
+    setPreviewImage(record?.imageUrl ? `${BASE_URL}${record.imageUrl}` : null);
     setIsEditModalVisible(true);
   };
 
   // Xử lý cập nhật item
   const handleUpdate = async (values: Style) => {
     try {
-      await axios.put(`${API_URL}/${selectedRecord?.id}`, values);
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("description", values.description);
+      if (file) formData.append("image", file);
+
+      await axios.put(`${API_URL}/${selectedRecord?.id}`, formData);
       message.success("Cập nhật thành công!");
       fetchData();
       setIsEditModalVisible(false);
@@ -91,7 +103,8 @@ const StyleCustom: () => JSX.Element = () => {
       title: "Hình ảnh",
       dataIndex: "imageUrl",
       key: "imageUrl",
-      render: (url: string) => <img src={url} alt="style" width={50} height={50} />,
+      render: (image: string) =>
+        image ? <Image width={50} src={`${BASE_URL}${image}`} /> : "Không có ảnh",
     },
     {
       title: "Hành động",
@@ -133,7 +146,7 @@ const StyleCustom: () => JSX.Element = () => {
             <p><strong>ID:</strong> {selectedRecord.id}</p>
             <p><strong>Tên:</strong> {selectedRecord.name}</p>
             <p><strong>Mô tả:</strong> {selectedRecord.description}</p>
-            <img src={selectedRecord.imageUrl} alt="style" width={100} />
+            {selectedRecord?.imageUrl && <Image width={200} src={`${BASE_URL}${selectedRecord.imageUrl}`} />}
           </Card>
         )}
       </Modal>
@@ -142,7 +155,7 @@ const StyleCustom: () => JSX.Element = () => {
         title="Chỉnh sửa Style"
         open={isEditModalVisible}
         onCancel={() => setIsEditModalVisible(false)}
-        onOk={() => form.submit()}
+        footer={null}
       >
         <Form form={form} layout="vertical" onFinish={handleUpdate}>
           <Form.Item name="name" label="Tên" rules={[{ required: true, message: "Vui lòng nhập tên!" }]}>
@@ -151,9 +164,13 @@ const StyleCustom: () => JSX.Element = () => {
           <Form.Item name="description" label="Mô tả">
             <Input.TextArea />
           </Form.Item>
-          <Form.Item name="imageUrl" label="Hình ảnh">
-            <Input />
+          {previewImage && <Image width={200} src={previewImage} />}
+          <Form.Item label="Hình ảnh">
+            <Upload beforeUpload={(file) => { setFile(file); setPreviewImage(URL.createObjectURL(file)); return false; }} showUploadList={false}>
+              <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
+            </Upload>
           </Form.Item>
+          <Button type="primary" htmlType="submit">Lưu</Button>
         </Form>
       </Modal>
     </div>

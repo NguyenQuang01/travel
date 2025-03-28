@@ -64,6 +64,14 @@ const items: MenuItem[] = [
         </Link>
       ),
     },
+    {
+      key: "continent",
+      label: (
+        <Link href="/admin/continent" replace>
+          Continent
+        </Link>
+      ),
+    },
 ];
 const LayoutAdmin = ({ children }: any) => {
     const [current, setCurrent] = useState("");
