@@ -4,8 +4,10 @@ import { Table, Input, Button, Modal, message, Space, Form } from "antd";
 import { useState, useEffect, JSX } from "react";
 import axios from "axios";
 import Card from "@mui/material/Card";
+import {API_INFO} from "@/constant/constant";
 
-const API_URL = "http://202.92.7.92:3082/api/tours";
+const BASE_URL = API_INFO.BASE_URL;
+const API_URL = `${BASE_URL}/api/tours`;
 
 interface Tour {
   id?: number;
@@ -161,13 +163,44 @@ const TourCustom: () => JSX.Element = () => {
         {selectedRecord && (
           <Card>
             <p><strong>ID:</strong> {selectedRecord.id}</p>
-            <p><strong>Tên tour:</strong> {selectedRecord.name}</p>
-            <p><strong>Loại hình:</strong> {selectedRecord.tripType}</p>
-            <p><strong>Thành phố bắt đầu:</strong> {selectedRecord.startCity}</p>
+            <p><strong>Mã chuyến đi:</strong> {selectedRecord.tripId}</p>
+            <p><strong>Tên Tour:</strong> {selectedRecord.name}</p>
+
+            <p><strong>Cấp độ lưu trú:</strong> {selectedRecord.lodgingLevel} ({selectedRecord.lodgingLevelNumber})</p>
+            <p><strong>Loại chuyến đi:</strong> {selectedRecord.tripType}</p>
+            <p><strong>Mức độ thể chất:</strong> {selectedRecord.physicalLevel} ({selectedRecord.physicalLevelNumber})</p>
+            <p><strong>Tốc độ chuyến đi:</strong> {selectedRecord.tripPace} ({selectedRecord.tripPaceNumber})</p>
+
+            <p><strong>Số ngày đi:</strong> {selectedRecord.totalDay} ngày</p>
+            <p><strong>Thành phố khởi hành:</strong> {selectedRecord.startCity}</p>
             <p><strong>Thành phố kết thúc:</strong> {selectedRecord.endCity}</p>
-            <p><strong>Giá:</strong> {selectedRecord.price}</p>
-            <p><strong>Giá cũ:</strong> {selectedRecord.oldPrice}</p>
-            <p><strong>Thông tin tour:</strong> {selectedRecord.tripAbout}</p>
+
+            <p><strong>Kích thước nhóm:</strong> {selectedRecord.groupSize}</p>
+            <p><strong>Độ tuổi tham gia:</strong> {selectedRecord.ageRange}</p>
+            <p><strong>Nhóm tối thiểu:</strong> {selectedRecord.minGroupSize} người</p>
+            <p><strong>Nhóm tối đa:</strong> {selectedRecord.maxGroupSize} người</p>
+
+            <p><strong>Điểm tham quan:</strong> {selectedRecord.attractions}</p>
+            <p><strong>Điểm đến:</strong> {selectedRecord.destinations}</p>
+
+            <p><strong>Giá:</strong> {selectedRecord.price.toLocaleString()} VND</p>
+            {selectedRecord.oldPrice && (
+              <p><strong>Giá cũ:</strong> <del>{selectedRecord.oldPrice.toLocaleString()} VND</del></p>
+            )}
+
+            <p><strong>Điểm nổi bật:</strong> {selectedRecord.highlights}</p>
+            <p><strong>Giới thiệu chuyến đi:</strong> {selectedRecord.tripAbout}</p>
+            <p><strong>Vận chuyển & Di chuyển:</strong> {selectedRecord.flyAndTransport}</p>
+
+            <p><strong>Lịch trình:</strong> {selectedRecord.itinerary}</p>
+            <p><strong>Tiêu điểm lịch trình:</strong> {selectedRecord.itineraryFocus}</p>
+            <p><strong>Tour bao gồm:</strong> {selectedRecord.tripIncludes}</p>
+
+            {selectedRecord.video && (
+              <p><strong>Video:</strong> <a href={selectedRecord.video} target="_blank">Xem video</a></p>
+            )}
+
+            <p><strong>Xu hướng:</strong> {selectedRecord.isTrending ? "🔥 Đang hot" : "Bình thường"}</p>
           </Card>
         )}
       </Modal>

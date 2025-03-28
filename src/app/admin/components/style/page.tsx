@@ -5,8 +5,9 @@ import {useState, JSX, useEffect} from "react";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import {UploadOutlined} from "@ant-design/icons";
+import {API_INFO} from "@/constant/constant";
 
-const BASE_URL = "http://202.92.7.92:3082";
+const BASE_URL = API_INFO.BASE_URL;
 const API_URL = `${BASE_URL}/api/styles`;
 // Interface định nghĩa dữ liệu Styles
 interface Style {

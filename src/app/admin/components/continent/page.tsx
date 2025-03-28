@@ -5,8 +5,9 @@ import {useState, JSX, useEffect} from "react";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import {UploadOutlined} from "@ant-design/icons";
+import {API_INFO} from "@/constant/constant";
 
-const BASE_URL = "http://202.92.7.92:3082";
+const BASE_URL = API_INFO.BASE_URL;
 const API_URL = `${BASE_URL}/api/continents`;
 
 // Interface định nghĩa dữ liệu Continents
@@ -86,10 +87,13 @@ const ContinentCustom: () => JSX.Element = () => {
   };
 
   const handleSubmit = async (values: Continent) => {
+    console.log("isEditMode = ", isEditMode)
+    console.log("selectedRecord?.continentId = ", values)
     const formData = new FormData();
     formData.append("continentName", values.continentName);
     formData.append("description", values.description);
-    if (file) formData.append("image", file);
+    if (file) formData.append("file", file);
+
 
     try {
       if (isEditMode && selectedRecord?.continentId) {
@@ -98,10 +102,6 @@ const ContinentCustom: () => JSX.Element = () => {
         });
         message.success("Cập nhật thành công!");
       } else {
-        if (!file) {
-          message.error("Ảnh là bắt buộc khi tạo mới!");
-          return;
-        }
         await axios.post(`${API_URL}/create`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
@@ -116,7 +116,7 @@ const ContinentCustom: () => JSX.Element = () => {
 
   const columns = [
     { title: "ID", dataIndex: "continentId", key: "continentId" },
-    { title: "Tên Châu Lục", dataIndex: "continentName", key: "continentName" },
+    { title: "Tên tỉnh thành", dataIndex: "continentName", key: "continentName" },
     {
       title: "Hình ảnh",
       dataIndex: "imageUrl",
@@ -156,24 +156,9 @@ const ContinentCustom: () => JSX.Element = () => {
         loading={loading}
         pagination={pagination}
       />
-      <Modal
-        title="Chi tiết Châu Lục"
-        open={isDetailModalVisible}
-        onCancel={() => setIsDetailModalVisible(false)}
-        footer={null}
-      >
-        {selectedRecord && (
-          <Card>
-            <p><strong>ID:</strong> {selectedRecord.continentId}</p>
-            <p><strong>Tên:</strong> {selectedRecord.continentName}</p>
-            <p><strong>Mô tả:</strong> {selectedRecord.description}</p>
-            {selectedRecord?.imageUrl && <Image width={200} src={`${BASE_URL}${selectedRecord.imageUrl}`} />}
-          </Card>
-        )}
-      </Modal>
       <Modal title={isEditMode ? "Chỉnh sửa Điểm đến" : "Thêm mới Điểm đến"} open={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={null}>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          <Form.Item name="continentName" label="Tên Châu Lục" rules={[{ required: true, message: "Vui lòng nhập tên!" }]}>
+          <Form.Item name="continentName" label="Tên tỉnh thành" rules={[{ required: true, message: "Vui lòng nhập tên!" }]}>
             <Input />
           </Form.Item>
           <Form.Item name="description" label="Mô tả">
@@ -187,6 +172,21 @@ const ContinentCustom: () => JSX.Element = () => {
           </Form.Item>
           <Button type="primary" htmlType="submit">Lưu</Button>
         </Form>
+      </Modal>
+      <Modal
+        title="Chi tiết tỉnh thành"
+        open={isDetailModalVisible}
+        onCancel={() => setIsDetailModalVisible(false)}
+        footer={null}
+      >
+        {selectedRecord && (
+          <Card>
+            <p><strong>ID:</strong> {selectedRecord.continentId}</p>
+            <p><strong>Tên:</strong> {selectedRecord.continentName}</p>
+            <p><strong>Mô tả:</strong> {selectedRecord.description}</p>
+            {selectedRecord?.imageUrl && <Image width={200} src={`${BASE_URL}${selectedRecord.imageUrl}`} />}
+          </Card>
+        )}
       </Modal>
     </div>
   );

@@ -4,8 +4,10 @@ import { Table, Input, Button, Modal, message, Space } from "antd";
 import {useState, useEffect, JSX} from "react";
 import axios from "axios";
 import Card from "@mui/material/Card";
+import {API_INFO} from "@/constant/constant";
 
-const API_URL = "http://202.92.7.92:3082/api/tour-reservations/search";
+const BASE_URL = API_INFO.BASE_URL;
+const API_URL = `${BASE_URL}/api/tour-reservations`;
 
 // Interface định nghĩa dữ liệu đặt chỗ
 interface TourReservation {
@@ -59,7 +61,7 @@ const TourReservationCustom: () => JSX.Element = () => {
         ...searchParams
       }).toString();
 
-      const response = await axios.get(`${API_URL}?${params}`);
+      const response = await axios.get(`${API_URL}/search?${params}`);
       setData(response.data.content);
       setPagination((prev) => ({ ...prev, total: response.data.totalElements }));
       setCurrentPage(page);
