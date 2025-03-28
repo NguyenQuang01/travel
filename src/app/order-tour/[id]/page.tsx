@@ -68,7 +68,9 @@ export default function OrderTour() {
                         </Text>
 
                         <div className="mt-6">
-                            <Text>When do you want your trip to start? *</Text>
+                            <h2 className="text-lg font-semibold mb-4">
+                                When do you want your trip to start? *
+                            </h2>
                             <DatePicker
                                 placeholder="MM/DD/YYYY"
                                 className="mt-2 w-full"
@@ -92,7 +94,9 @@ export default function OrderTour() {
                         </div>
 
                         <div className="mt-6">
-                            <Text>How many people are traveling? *</Text>
+                            <h2 className="text-lg font-semibold mb-4">
+                                How many people are traveling? *
+                            </h2>
                             <Select
                                 className="mt-2 w-full"
                                 placeholder="Select"
@@ -110,9 +114,9 @@ export default function OrderTour() {
                         </div>
 
                         <div className="mt-6">
-                            <Text>
+                            <h2 className="text-lg font-semibold mb-4">
                                 Select the ages of all your travel companions *
-                            </Text>
+                            </h2>
                             <Checkbox.Group
                                 style={{ width: "100%" }}
                                 value={formData.companionsAges.split(", ")}
@@ -143,7 +147,9 @@ export default function OrderTour() {
                         </div>
 
                         <div className="mt-6">
-                            <Text>Special Request & Questions</Text>
+                            <h2 className="text-xl font-semibold mb-4">
+                                Special Request & Questions
+                            </h2>
                             <Input.TextArea
                                 rows={4}
                                 placeholder="Feel free to tell us anything else..."
