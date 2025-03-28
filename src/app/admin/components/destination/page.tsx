@@ -4,8 +4,9 @@ import {Table, Input, Button, Modal, message, Space, Form, Upload, Image, Switch
 import { useState, useEffect, JSX } from "react";
 import axios from "axios";
 import { UploadOutlined } from "@ant-design/icons";
+import {API_INFO} from "@/constant/constant";
 
-const BASE_URL = "http://202.92.7.92:3082";
+const BASE_URL = API_INFO.BASE_URL
 const API_URL = `${BASE_URL}/api/destinations`;
 
 interface Continent {
@@ -44,6 +45,8 @@ const DestinationCustom: () => JSX.Element = () => {
   const [file, setFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [continents, setContinents] = useState<Continent[]>([]);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const fetchData = async (page = currentPage, pageSize = 10) => {
     setLoading(true);
@@ -65,7 +68,7 @@ const DestinationCustom: () => JSX.Element = () => {
       const response = await axios.get(`${BASE_URL}/api/continents`);
       setContinents(response.data);
     } catch (error) {
-      message.error("Lỗi khi tải danh sách châu lục!");
+      message.error("Lỗi khi tải danh sách tỉnh thành!");
     }
   };
 
@@ -88,24 +91,22 @@ const DestinationCustom: () => JSX.Element = () => {
     fetchData(pagination.current, pagination.pageSize);
   };
 
-  const handleDelete = async (id?: number) => {
+  const handleDelete = (id?: number) => {
     if (!id) return;
-    Modal.confirm({
-      title: "Xác nhận xóa",
-      content: "Bạn có chắc chắn muốn xóa điểm đến này?",
-      okText: "Xóa",
-      cancelText: "Hủy",
-      okType: "danger",
-      onOk: async () => {
-        try {
-          await axios.delete(`${API_URL}/${id}`);
-          message.success("Xóa thành công!");
-          fetchData(currentPage, pagination.defaultPageSize);
-        } catch (error) {
-          message.error("Lỗi khi xóa dữ liệu!");
-        }
-      },
-    });
+    setDeleteId(id);
+    setIsDeleteModalVisible(true);
+  };
+
+  const executeDelete = async () => {
+    if (!deleteId) return;
+    try {
+      await axios.delete(`${API_URL}/${deleteId}`);
+      message.success("Xóa thành công!");
+      fetchData(currentPage, pagination.defaultPageSize);
+    } catch (error) {
+      message.error("Lỗi khi xóa dữ liệu!");
+    }
+    setIsDeleteModalVisible(false);
   };
 
   const handleViewDetails = (record: Destination) => {
@@ -128,10 +129,6 @@ const DestinationCustom: () => JSX.Element = () => {
         });
         message.success("Cập nhật thành công!");
       } else {
-        if (!file) {
-          message.error("Ảnh là bắt buộc khi tạo mới!");
-          return;
-        }
         await axios.post(`${API_URL}/create`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
@@ -168,6 +165,22 @@ const DestinationCustom: () => JSX.Element = () => {
     },
   ];
 
+  form.setFieldsValue({
+    continentId: isEditMode
+      ? selectedRecord?.continentId
+      : continents.length > 0 ? continents[0].continentId : undefined,
+  });
+
+  useEffect(() => {
+    if (!isEditMode) {
+      form.setFieldsValue({
+        continentId: continents.length > 0 ? continents[0].continentId : undefined, // Set giá trị mặc định khi tạo mới
+      });
+    } else {
+      form.setFieldsValue({ continentId: selectedRecord?.continentId }); // Set giá trị từ dữ liệu cũ khi chỉnh sửa
+    }
+  }, [isEditMode, continents]);
+
   return (
     <div>
       <Space style={{ marginBottom: 16 }}>
@@ -180,8 +193,8 @@ const DestinationCustom: () => JSX.Element = () => {
           <Form.Item name="destination" label="Điểm đến" rules={[{ required: true, message: "Vui lòng nhập điểm đến!" }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="continentId" label="Châu lục" rules={[{ required: true, message: "Vui lòng chọn châu lục!" }]}>
-            <Select options={continents.map(c => ({ value: c.continentId, label: c.continentName }))} placeholder="Chọn châu lục" />
+          <Form.Item name="continentId" label="Tỉnh thành" rules={[{ required: true, message: "Vui lòng chọn tỉnh thành!" }]}>
+            <Select options={continents.map(c => ({ value: c.continentId, label: c.continentName}))} placeholder="Chọn tỉnh thành" />
           </Form.Item>
           <Form.Item name="description" label="Mô tả" rules={[{ required: true, message: "Vui lòng nhập Mô tả!" }]}>
             <Input.TextArea />
@@ -190,20 +203,56 @@ const DestinationCustom: () => JSX.Element = () => {
             <Switch />
           </Form.Item>
           {previewImage && <Image width={200} src={previewImage} />}
-          <Form.Item label="Hình ảnh">
-            <Upload beforeUpload={(file) => { setFile(file); setPreviewImage(URL.createObjectURL(file)); return false; }} showUploadList={false}>
-              <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
-            </Upload>
+          <Form.Item shouldUpdate>
+            {({ getFieldValue }) => (
+              <Form.Item
+                name="image"
+                label="Hình ảnh"
+                rules={[{ required: !previewImage, message: "Vui lòng chọn ảnh!" }]}
+              >
+                <Upload
+                  beforeUpload={(file) => {
+                    setFile(file);
+                    setPreviewImage(URL.createObjectURL(file));
+                    form.setFieldsValue({ image: file }); // Cập nhật giá trị form
+                    return false;
+                  }}
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
+                </Upload>
+              </Form.Item>
+            )}
           </Form.Item>
           <Button type="primary" htmlType="submit">Lưu</Button>
         </Form>
       </Modal>
       <Modal title="Chi tiết Điểm đến" open={isDetailModalVisible} onCancel={() => setIsDetailModalVisible(false)} footer={null}>
         <p><strong>Điểm đến:</strong> {selectedRecord?.destination}</p>
-        <p><strong>Châu lục:</strong> {selectedRecord?.continentId}</p>
+        <p><strong>Tỉnh thành:</strong> {selectedRecord?.continentId}</p>
         <p><strong>Mô tả:</strong> {selectedRecord?.description}</p>
         <p><strong>Hiển thị:</strong> {selectedRecord?.isShow ? "Có" : "Không"}</p>
         {selectedRecord?.imageUrl && <Image width={200} src={`${BASE_URL}${selectedRecord.imageUrl}`} />}
+      </Modal>
+      <Modal
+        title="Xác nhận xóa"
+        open={isDeleteModalVisible}
+        onCancel={() => setIsDeleteModalVisible(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setIsDeleteModalVisible(false)}>
+            Hủy
+          </Button>,
+          <Button
+            key="delete"
+            type="primary"
+            danger
+            onClick={async () => executeDelete() }
+          >
+            Xóa
+          </Button>,
+        ]}
+      >
+        <p>Bạn có chắc chắn muốn xóa điểm đến này?</p>
       </Modal>
     </div>
   );

@@ -5,9 +5,12 @@ import {useState, useEffect, JSX} from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import Card from "@mui/material/Card";
+import {API_INFO} from "@/constant/constant";
 
 const { RangePicker } = DatePicker;
-const API_URL = "http://202.92.7.92:3082/api/request";
+
+const BASE_URL = API_INFO.BASE_URL;
+const API_URL = `${BASE_URL}/api/request`;
 
 interface TripRequest {
   id: number;
@@ -156,22 +159,42 @@ const TripRequestCustom: () => JSX.Element = () => {
             onChange={handleTableChange}
         />
         <Modal
-            title="Chi tiết Trip Request"
-            open={isModalVisible}
-            onCancel={() => setIsModalVisible(false)}
-            footer={null}
+          title="Chi tiết Trip Request"
+          open={isModalVisible}
+          onCancel={() => setIsModalVisible(false)}
+          footer={null}
         >
           {selectedRecord && (
-              <Card>
-                <p><strong>ID:</strong> {selectedRecord.id}</p>
-                <p><strong>Họ:</strong> {selectedRecord.lastName}</p>
-                <p><strong>Tên:</strong> {selectedRecord.firstName}</p>
-                <p><strong>Email:</strong> {selectedRecord.email}</p>
-                <p><strong>SĐT:</strong> {selectedRecord.phoneNumber}</p>
-                <p><strong>Quốc gia:</strong> {selectedRecord.mainCountry}</p>
-                <p><strong>Ngày tạo:</strong> {selectedRecord.createdAt}</p>
-                <p><strong>Mô tả:</strong> {selectedRecord.description}</p>
-              </Card>
+            <Card>
+              <p><strong>ID:</strong> {selectedRecord.id}</p>
+              <p><strong>Họ:</strong> {selectedRecord.lastName}</p>
+              <p><strong>Tên:</strong> {selectedRecord.firstName}</p>
+              <p><strong>Email:</strong> {selectedRecord.email}</p>
+              <p><strong>SĐT:</strong> {selectedRecord.phoneNumber}</p>
+              <p><strong>Phương thức liên hệ:</strong> {selectedRecord.contactMethod}</p>
+
+              <p><strong>Quốc gia sinh sống:</strong> {selectedRecord.homeCountry}</p>
+              <p><strong>Điểm đến chính:</strong> {selectedRecord.mainCountry}</p>
+              <p><strong>Các quốc gia bổ sung:</strong> {selectedRecord.additionalCountries}</p>
+
+              <p><strong>Độ tuổi người đi cùng:</strong> {selectedRecord.companionsAges}</p>
+              <p><strong>Loại ngày đi:</strong> {selectedRecord.dateType}</p>
+              <p><strong>Ngày khởi hành:</strong> {dayjs(selectedRecord.startDate).format("DD/MM/YYYY")}</p>
+              <p><strong>Ngày kết thúc:</strong> {dayjs(selectedRecord.endDate).format("DD/MM/YYYY")}</p>
+              <p><strong>Tổng số ngày đi:</strong> {selectedRecord.totalDate}</p>
+
+              <p><strong>Loại chuyến đi:</strong> {selectedRecord.tripType}</p>
+              <p><strong>Loại chỗ ở:</strong> {selectedRecord.lodgingType}</p>
+              <p><strong>Ngân sách mỗi người:</strong> {selectedRecord.budgetPerPerson.toLocaleString()} VND</p>
+              <p><strong>Mức độ linh hoạt ngân sách:</strong> {selectedRecord.budgetStrictness}</p>
+
+              <p><strong>Chi tiết hoạt động mong muốn:</strong> {selectedRecord.activityDetail}</p>
+              <p><strong>Ghi chú khác:</strong> {selectedRecord.description}</p>
+
+              <p><strong>Thời điểm liên hệ:</strong> {dayjs(selectedRecord.whenDate).format("DD/MM/YYYY HH:mm")}</p>
+              <p><strong>Yêu cầu đồng thời:</strong> {selectedRecord.concurrent}</p>
+              <p><strong>Ngày tạo:</strong> {dayjs(selectedRecord.createdAt).format("DD/MM/YYYY HH:mm")}</p>
+            </Card>
           )}
         </Modal>
       </div>

@@ -1,5 +1,5 @@
 export const API_INFO = {
-    URL: "http://202.92.7.92:3082/api",
+    BASE_URL: "http://localhost:3082",
 };
 export const countries = [
     { value: "afghanistan", label: "Afghanistan" },

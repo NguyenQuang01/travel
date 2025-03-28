@@ -3,8 +3,10 @@
 import {Table, Input, Button, Modal, message, Space, Form, Card} from "antd";
 import {useState, JSX, useEffect} from "react";
 import axios from "axios";
+import {API_INFO} from "@/constant/constant";
 
-const API_URL = "http://202.92.7.92:3082/api/types/types";
+const BASE_URL = API_INFO.BASE_URL;
+const API_URL = `${BASE_URL}/api/types/types`;
 
 // Interface định nghĩa dữ liệu Type
 interface Type {
