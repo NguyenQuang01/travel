@@ -2,7 +2,7 @@
 import StepsComponent from "@/app/components/Steps";
 import useStore from "@/store/useStore";
 import { Container } from "@mui/material";
-import { Button, Col, Input, Row, message } from "antd";
+import { Button, Checkbox, Col, Input, Row, message } from "antd";
 import Image from "next/image";
 import { postFinish } from "../hook";
 import ButtonPrev from "@/app/components/ButtonPrev";
@@ -305,6 +305,33 @@ const BudgetForm = () => {
                                             />{" "}
                                         </Col>
                                     </Row>
+                                    <Checkbox.Group
+                                        style={{ width: "100%" }}
+                                        onChange={(value) =>
+                                            setTripData({
+                                                contactMethod: value.join(", "),
+                                            })
+                                        }
+                                        value={tripData.contactMethod.split(
+                                            ", "
+                                        )}
+                                    >
+                                        {[
+                                            "Email",
+                                            "Call Me",
+                                            "Text Me",
+                                            "WhatsApp",
+                                        ].map((contact) => (
+                                            <div
+                                                key={contact}
+                                                className="border-gray-300 rounded-4xl border p-2 px-4 mt-2"
+                                            >
+                                                <Checkbox value={contact}>
+                                                    {contact}
+                                                </Checkbox>
+                                            </div>
+                                        ))}
+                                    </Checkbox.Group>
                                 </div>
                             </div>
                         </div>

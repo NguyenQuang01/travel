@@ -30,7 +30,6 @@ interface TripData {
     totalDate: string;
     description: string;
     currency: string;
-    // createdAt: string;
 }
 
 interface CounterState {
