@@ -160,9 +160,9 @@ const DestinationCustom: () => JSX.Element = () => {
       key: "actions",
       render: (_: any, record: Destination) => (
         <Space>
+          <Button type="link" onClick={() => handleViewDetails(record)}>Xem</Button>
           <Button type="link" onClick={() => handleAddOrEdit(record)}>Sửa</Button>
           <Button type="link" danger onClick={() => handleDelete(record.id)}>Xóa</Button>
-          <Button type="link" onClick={() => handleViewDetails(record)}>Xem</Button>
         </Space>
       ),
     },

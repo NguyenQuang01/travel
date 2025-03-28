@@ -30,6 +30,7 @@ const TourCustom: () => JSX.Element = () => {
     total: 0,
   });
   const [selectedRecord, setSelectedRecord] = useState<Tour | null>(null);
+  const [isViewModalVisible, setIsViewModalVisible] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [form] = Form.useForm();
@@ -68,7 +69,7 @@ const TourCustom: () => JSX.Element = () => {
 
   const handleView = (record: Tour) => {
     setSelectedRecord(record);
-    setIsModalVisible(true);
+    setIsViewModalVisible(true);
   };
 
   const handleAddOrEdit = (record?: Tour) => {
@@ -150,6 +151,25 @@ const TourCustom: () => JSX.Element = () => {
           </Form.Item>
           <Button type="primary" htmlType="submit">Lưu</Button>
         </Form>
+      </Modal>
+      <Modal
+        title="Chi tiết Tour"
+        open={isViewModalVisible}
+        onCancel={() => setIsViewModalVisible(false)}
+        footer={null}
+      >
+        {selectedRecord && (
+          <Card>
+            <p><strong>ID:</strong> {selectedRecord.id}</p>
+            <p><strong>Tên tour:</strong> {selectedRecord.name}</p>
+            <p><strong>Loại hình:</strong> {selectedRecord.tripType}</p>
+            <p><strong>Thành phố bắt đầu:</strong> {selectedRecord.startCity}</p>
+            <p><strong>Thành phố kết thúc:</strong> {selectedRecord.endCity}</p>
+            <p><strong>Giá:</strong> {selectedRecord.price}</p>
+            <p><strong>Giá cũ:</strong> {selectedRecord.oldPrice}</p>
+            <p><strong>Thông tin tour:</strong> {selectedRecord.tripAbout}</p>
+          </Card>
+        )}
       </Modal>
     </div>
   );
