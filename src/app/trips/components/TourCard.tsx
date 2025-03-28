@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Container } from "@mui/material";
 import Image from "next/image";
+import generalImg from "@/app/assets/imgs/anhChung.jpeg";
 
 const TourCard = (props: any) => {
     const { data, review, star, img } = props;
@@ -27,7 +28,13 @@ const TourCard = (props: any) => {
                 <Col span={12}>
                     <div className="relative">
                         <Image
-                            src={`http://202.92.7.92:3082${img && img[0]?.url}`}
+                            src={
+                                img && img[0]?.url
+                                    ? `http://202.92.7.92:3082${
+                                          img && img[0]?.url
+                                      }`
+                                    : generalImg
+                            }
                             alt="Logo"
                             width={201}
                             height={44}
@@ -41,9 +48,13 @@ const TourCard = (props: any) => {
                     <Row gutter={[8, 8]}>
                         <Col span={24} className="h-[200px]">
                             <Image
-                                src={`http://202.92.7.92:3082${
+                                src={
                                     img && img[1]?.url
-                                }`}
+                                        ? `http://202.92.7.92:3082${
+                                              img && img[1]?.url
+                                          }`
+                                        : generalImg
+                                }
                                 alt="Logo"
                                 width={201}
                                 height={44}
@@ -69,9 +80,13 @@ const TourCard = (props: any) => {
                     <Row gutter={[8, 8]} className="h-[400px]">
                         <Col span={24} className="h-[200px]">
                             <Image
-                                src={`http://202.92.7.92:3082${
+                                src={
                                     img && img[2]?.url
-                                }`}
+                                        ? `http://202.92.7.92:3082${
+                                              img && img[2]?.url
+                                          }`
+                                        : generalImg
+                                }
                                 alt="Logo"
                                 width={201}
                                 height={44}
@@ -82,9 +97,13 @@ const TourCard = (props: any) => {
                         </Col>
                         <Col span={24} className="h-[200px]">
                             <Image
-                                src={`http://202.92.7.92:3082${
+                                src={
                                     img && img[3]?.url
-                                }`}
+                                        ? `http://202.92.7.92:3082${
+                                              img && img[3]?.url
+                                          }`
+                                        : generalImg
+                                }
                                 alt="Logo"
                                 width={201}
                                 height={44}

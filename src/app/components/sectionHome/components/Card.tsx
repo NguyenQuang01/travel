@@ -11,6 +11,7 @@ import { Box, Rating } from "@mui/material";
 import { StarTwoTone } from "@ant-design/icons";
 import Link from "next/link";
 import useStore from "@/store/useStore";
+import generalImg from "@/app/assets/imgs/anhChung.jpeg";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -98,7 +99,7 @@ export default function CardReview(prop: TourData) {
                     src={
                         prop?.images[0]?.url
                             ? `http://202.92.7.92:3082${prop?.images[0]?.url}`
-                            : "https://png.pngtree.com/png-clipart/20191120/original/pngtree-error-file-icon-vectors-png-image_5053766.jpg"
+                            : generalImg
                     }
                     alt="img"
                     width={200}

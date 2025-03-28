@@ -10,6 +10,8 @@ import Image from "next/image";
 import { Box, Rating } from "@mui/material";
 import { StarTwoTone } from "@ant-design/icons";
 import Link from "next/link";
+import generalImg from "@/app/assets/imgs/anhChung.jpeg";
+
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -40,7 +42,11 @@ export default function CardBlog(prop: Blog) {
         <Link href={"/guide/" + prop.title}>
             <div>
                 <Image
-                    src={`http://202.92.7.92:3082${prop.coverImage}`}
+                    src={
+                        prop.coverImage
+                            ? `http://202.92.7.92:3082${prop.coverImage}`
+                            : generalImg
+                    }
                     alt="img"
                     width={200}
                     height={200}

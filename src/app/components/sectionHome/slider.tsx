@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import Image from "next/image";
 import "./styles/slider.css";
 import Link from "next/link";
+import gereralImg from "@/app/assets/imgs/anhChung.jpeg";
 const imgStyle: React.CSSProperties = {
     width: "100%",
     height: "100%",
@@ -58,7 +59,11 @@ const Slider = (prop: { data: SliderItem[] }) => {
                                             {item.name}
                                         </h1> */}
                                             <Image
-                                                src={`http://202.92.7.92:3082${item.imageUrl}`}
+                                                src={
+                                                    item.imageUrl
+                                                        ? `http://202.92.7.92:3082${item.imageUrl}`
+                                                        : gereralImg
+                                                }
                                                 alt={item.name}
                                                 width={201}
                                                 height={44}

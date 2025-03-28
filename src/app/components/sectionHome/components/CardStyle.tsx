@@ -10,6 +10,8 @@ import Image from "next/image";
 import { Box, Rating } from "@mui/material";
 import { StarTwoTone } from "@ant-design/icons";
 import Link from "next/link";
+import generalImg from "@/app/assets/imgs/anhChung.jpeg";
+
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -39,7 +41,11 @@ export default function CardStyle(prop: CardData) {
         <Link href={"/guide/" + prop.destination}>
             <Card>
                 <Image
-                    src={`http://202.92.7.92:3082${prop.imageUrl}`}
+                    src={
+                        prop.imageUrl
+                            ? `http://202.92.7.92:3082${prop.imageUrl}`
+                            : generalImg
+                    }
                     alt="img"
                     width={200}
                     height={200}

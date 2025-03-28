@@ -29,6 +29,7 @@ import {
     getDestinations,
     getTrending,
 } from "./hook";
+import ButtonAnimated from "../ButtonAnimated";
 const pages = [
     {
         name: "Trending",
@@ -266,17 +267,17 @@ function HeaderClient() {
                 footer={null}
             >
                 <div className=" rounded-lg p-2  mx-auto mr-5">
-                    <div className="flex flex-wrap gap-5">
+                    <div className="grid grid-cols-3 gap-2">
                         {trending?.map((trip, index) => (
                             <h3
                                 key={index}
-                                className="space-y-1 text-gray-700 text-center whitespace-normal"
+                                className="space-y-1 text-gray-700 text-center"
                             >
                                 <Link href={"/guide/" + trip.name}>
-                                    {trip.name}
+                                    <ButtonAnimated>{trip.name}</ButtonAnimated>
                                 </Link>
                             </h3>
-                        ))}{" "}
+                        ))}
                     </div>
                 </div>
             </Modal>{" "}
@@ -292,7 +293,7 @@ function HeaderClient() {
                         {destinations.length > 0 &&
                             destinations?.map((section, index) => (
                                 <div key={index}>
-                                    <h3 className="font-bold text-lg mb-2">
+                                    <h3 className="font-bold text-lg mb-2 ml-5">
                                         {section.continent.continentName}
                                     </h3>
                                     <ul className="space-y-1 text-gray-700">
@@ -305,7 +306,10 @@ function HeaderClient() {
                                                             place.destination
                                                         }
                                                     >
-                                                        {place.destination}
+                                                        <ButtonAnimated>
+                                                            {" "}
+                                                            {place.destination}
+                                                        </ButtonAnimated>
                                                     </Link>
                                                 </li>
                                             )
@@ -325,39 +329,49 @@ function HeaderClient() {
             >
                 <div className=" rounded-lg p-2  mx-auto flex gap-10 justify-between mr-5">
                     <div>
-                        <h3 className="font-bold text-lg mb-2">Adventure</h3>
-                        <ul className="space-y-1 text-gray-700">
+                        <h3 className="font-bold text-lg mb-2 ml-5">
+                            Adventure
+                        </h3>
+                        <ul className="space-y-1 text-gray-700 ">
                             {activities?.map((activity, index) => (
                                 <li key={activity.id}>
                                     {" "}
                                     <Link href={"/guide/" + activity.activity}>
-                                        {activity.activity}
+                                        <ButtonAnimated>
+                                            {activity.activity}
+                                        </ButtonAnimated>
                                     </Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
                     <div>
-                        <h3 className="font-bold text-lg mb-2">Styles</h3>
+                        <h3 className="font-bold text-lg mb-2 ml-5">Styles</h3>
                         <ul className="space-y-1 text-gray-700">
                             {styles?.map((style, index) => (
                                 <li key={style.id}>
                                     {" "}
                                     <Link href={"/guide/" + style.name}>
-                                        {style.name}
+                                        <ButtonAnimated>
+                                            {style.name}
+                                        </ButtonAnimated>
                                     </Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
                     <div>
-                        <h3 className="font-bold text-lg mb-2">Interests</h3>
-                        <ul className="space-y-1 text-gray-700">
+                        <h3 className="font-bold text-lg mb-2 ml-5">
+                            Interests
+                        </h3>
+                        <ul className="space-y-1 text-gray-700 ">
                             {Interests?.map((interest, index) => (
                                 <li key={interest.id}>
                                     {" "}
                                     <Link href={"/guide/" + interest.name}>
-                                        {interest.name}
+                                        <ButtonAnimated>
+                                            {interest.name}
+                                        </ButtonAnimated>
                                     </Link>
                                 </li>
                             ))}
@@ -611,7 +625,7 @@ function HeaderClient() {
                                                 page.name ===
                                                     "Trip Themes & Styles" ||
                                                 page.name === "Trending"
-                                                    ? "3px solid #22947f"
+                                                    ? "3px solid var(--color-button-hover)"
                                                     : "",
                                             backgroundColor: "transparent",
                                         },
