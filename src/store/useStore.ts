@@ -41,6 +41,27 @@ interface CounterState {
     setTripData: (data: Partial<TripData>) => void;
 }
 
+interface TourOrder {
+    img: string;
+    name: string;
+    star: string;
+    review: string;
+    style: string;
+    price: string;
+    day: string;
+}
+
+interface CounterState {
+    steps: number;
+    tripData: TripData;
+    tourOder: TourOrder;
+    setTo0: () => void;
+    increase: () => void;
+    decrease: () => void;
+    setTripData: (data: Partial<TripData>) => void;
+    setTourOrder: (data: Partial<TourOrder>) => void;
+}
+
 const useStore = create<CounterState>((set) => ({
     steps:
         (typeof window !== "undefined" &&
@@ -73,6 +94,15 @@ const useStore = create<CounterState>((set) => ({
                 currency: "",
             })
     ),
+    tourOder: {
+        img: "",
+        name: "",
+        star: "",
+        review: "",
+        style: "",
+        price: "",
+        day: "",
+    },
     setTo0: () => set({ steps: 0 }),
     increase: () =>
         set((state) => {
@@ -91,6 +121,11 @@ const useStore = create<CounterState>((set) => ({
             const newTripData = { ...state.tripData, ...data };
             localStorage.setItem("tripData", JSON.stringify(newTripData));
             return { tripData: newTripData };
+        }),
+    setTourOrder: (data) =>
+        set((state) => {
+            const newTourOrder = { ...state.tourOder, ...data };
+            return { tourOder: newTourOrder };
         }),
 }));
 

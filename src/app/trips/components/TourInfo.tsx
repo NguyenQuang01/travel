@@ -3,6 +3,7 @@ import React from "react";
 import { Row, Col, Button, Typography } from "antd";
 import { Container } from "@mui/material";
 import ButtonGreen from "@/app/components/ButtonGreen";
+import Link from "next/link";
 
 const TourInfo = (props: any) => {
     const { price, oldPrice, tripType } = props;
@@ -85,7 +86,9 @@ const TourInfo = (props: any) => {
                                     </span>
                                 </div>
                             </div>
-                            <ButtonGreen name={"Reserve"} width="full" />
+                            <Link href={`/order-tour/${props.id}`}>
+                                <ButtonGreen name={"Reserve"} width="full" />
+                            </Link>
                         </div>
                     </Col>
                 </Row>

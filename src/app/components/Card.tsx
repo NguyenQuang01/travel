@@ -1,29 +1,17 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 import { Box, Rating } from "@mui/material";
 import { StarTwoTone } from "@ant-design/icons";
+import useStore from "@/store/useStore";
+
 import Link from "next/link";
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand: _expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-    }),
-    transform: expand ? "rotate(180deg)" : "rotate(0deg)",
-}));
 
 interface Image {
     id: number;
@@ -116,14 +104,24 @@ interface TourData {
 
 export default function CardReview(prop: any) {
     const [expanded, setExpanded] = useState(false);
-
+    const { setTourOrder } = useStore();
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-
+    const setOder = () => {
+        setTourOrder({
+            img: prop.data?.images[0].url,
+            name: prop.data.tourInfo.name,
+            star: prop.data.reviewSummary.avgOverall,
+            review: prop.data.reviewSummary.reviewCount,
+            style: prop.data.tourInfo.tripType,
+            price: prop.data.tourInfo.price,
+            day: prop.data.tourInfo.totalDay,
+        });
+    };
     return (
         <Card>
-            <Link href={`/trips/${prop.data.tourInfo.id}`}>
+            <Link href={`/trips/${prop.data.tourInfo.id}`} onClick={setOder}>
                 <Image
                     src={
                         prop.data?.images[0]
