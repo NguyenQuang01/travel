@@ -161,14 +161,30 @@ const ContinentCustom: () => JSX.Element = () => {
           <Form.Item name="continentName" label="Tên tỉnh thành" rules={[{ required: true, message: "Vui lòng nhập tên!" }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="description" label="Mô tả">
+          <Form.Item name="description" label="Mô tả" rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}>
             <Input.TextArea />
           </Form.Item>
           {previewImage && <Image width={200} src={previewImage} />}
-          <Form.Item label="Hình ảnh">
-            <Upload beforeUpload={(file) => { setFile(file); setPreviewImage(URL.createObjectURL(file)); return false; }} showUploadList={false}>
-              <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
-            </Upload>
+          <Form.Item shouldUpdate>
+            {({ getFieldValue }) => (
+              <Form.Item
+                name="image"
+                label="Hình ảnh"
+                rules={[{ required: !previewImage, message: "Vui lòng chọn ảnh!" }]}
+              >
+                <Upload
+                  beforeUpload={(file) => {
+                    setFile(file);
+                    setPreviewImage(URL.createObjectURL(file));
+                    form.setFieldsValue({ image: file }); // Cập nhật giá trị form
+                    return false;
+                  }}
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
+                </Upload>
+              </Form.Item>
+            )}
           </Form.Item>
           <Button type="primary" htmlType="submit">Lưu</Button>
         </Form>
