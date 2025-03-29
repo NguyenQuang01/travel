@@ -11,6 +11,7 @@ button {
     background: transparent;
     border: none;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .button {
@@ -23,28 +24,28 @@ button {
     justify-content: center;
     align-items: center;
     padding: 10px 20px;
-    border-radius: 9999rem;
     background: transparent;
     position: relative;
+    border-radius: 10px;
 
     & > .back {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: inherit;
         position: absolute;
         inset: 0;
         overflow: hidden;
         z-index: -1;
+        border-radius: 10px;
 
         &::before {
             content: "";
             width: 0;
             height: auto;
             aspect-ratio: 1;
-            border-radius: 50%;
             background: #502d6f;
             position: absolute;
+            border-radius: 10px;
         }
     }
 
