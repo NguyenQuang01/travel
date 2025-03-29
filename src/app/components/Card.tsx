@@ -9,6 +9,7 @@ import { StarTwoTone } from "@ant-design/icons";
 import useStore from "@/store/useStore";
 
 import Link from "next/link";
+import { apiImg } from "@/constant/constant";
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -125,7 +126,7 @@ export default function CardReview(prop: any) {
                 <Image
                     src={
                         prop.data?.images[0]
-                            ? `http://202.92.7.92:3082${prop.data?.images[0]}`
+                            ? `${apiImg}${prop.data?.images[0]}`
                             : "https://png.pngtree.com/png-clipart/20191120/original/pngtree-error-file-icon-vectors-png-image_5053766.jpg"
                     }
                     alt="img"

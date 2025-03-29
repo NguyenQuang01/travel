@@ -8,6 +8,7 @@ import {
 import { Container } from "@mui/material";
 import Image from "next/image";
 import generalImg from "@/app/assets/imgs/anhChung.jpeg";
+import { apiImg } from "@/constant/constant";
 
 const TourCard = (props: any) => {
     const { data, review, star, img } = props;
@@ -30,9 +31,7 @@ const TourCard = (props: any) => {
                         <Image
                             src={
                                 img && img[0]?.url
-                                    ? `http://202.92.7.92:3082${
-                                          img && img[0]?.url
-                                      }`
+                                    ? `${apiImg}${img && img[0]?.url}`
                                     : generalImg
                             }
                             alt="Logo"
@@ -50,9 +49,7 @@ const TourCard = (props: any) => {
                             <Image
                                 src={
                                     img && img[1]?.url
-                                        ? `http://202.92.7.92:3082${
-                                              img && img[1]?.url
-                                          }`
+                                        ? `${apiImg}${img && img[1]?.url}`
                                         : generalImg
                                 }
                                 alt="Logo"
@@ -82,9 +79,7 @@ const TourCard = (props: any) => {
                             <Image
                                 src={
                                     img && img[2]?.url
-                                        ? `http://202.92.7.92:3082${
-                                              img && img[2]?.url
-                                          }`
+                                        ? `${apiImg}${img && img[2]?.url}`
                                         : generalImg
                                 }
                                 alt="Logo"
@@ -99,9 +94,7 @@ const TourCard = (props: any) => {
                             <Image
                                 src={
                                     img && img[3]?.url
-                                        ? `http://202.92.7.92:3082${
-                                              img && img[3]?.url
-                                          }`
+                                        ? `${apiImg}${img && img[3]?.url}`
                                         : generalImg
                                 }
                                 alt="Logo"

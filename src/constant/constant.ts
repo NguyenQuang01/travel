@@ -1,5 +1,5 @@
 export const API_INFO = {
-    BASE_URL: "http://localhost:3082",
+    URL: "http://14.225.205.10:3082/api",
 };
 export const countries = [
     { value: "afghanistan", label: "Afghanistan" },
@@ -110,3 +110,4 @@ export const countries = [
     { value: "yemen", label: "Yemen" },
     { value: "zimbabwe", label: "Zimbabwe" },
 ];
+export const apiImg = "http://14.225.205.10:3082";
