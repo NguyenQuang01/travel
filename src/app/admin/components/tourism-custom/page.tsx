@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import { API_INFO } from "@/constant/constant";
 
 const BASE_URL = API_INFO.BASE_URL_ADMIN;
-const API_URL = `${BASE_URL}/api/tours`;
+const API_URL = `${BASE_URL}/api/tours/create`;
 
 interface Tour {
     id?: number;

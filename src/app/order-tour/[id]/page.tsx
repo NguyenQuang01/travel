@@ -20,7 +20,7 @@ import { StarTwoTone } from "@ant-design/icons";
 import useStore from "@/store/useStore";
 import generalImg from "@/app/assets/imgs/anhChung.jpeg";
 import ButtonGreen from "@/app/components/ButtonGreen";
-import { apiImg } from "@/constant/constant";
+import { API_INFO } from "@/constant/constant";
 const { Title, Text } = Typography;
 const { Option } = Select;
 
@@ -259,7 +259,7 @@ export default function OrderTour() {
                         <Image
                             src={
                                 tourOder?.img
-                                    ? `${apiImg}${tourOder?.img}`
+                                    ? `${API_INFO.BASE_URL_ADMIN}${tourOder?.img}`
                                     : generalImg
                             }
                             alt="img"

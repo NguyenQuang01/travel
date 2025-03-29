@@ -11,7 +11,7 @@ import { Box, Rating } from "@mui/material";
 import { StarTwoTone } from "@ant-design/icons";
 import Link from "next/link";
 import generalImg from "@/app/assets/imgs/anhChung.jpeg";
-import { apiImg } from "@/constant/constant";
+import { API_INFO } from "@/constant/constant";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -43,7 +43,9 @@ export default function CardStyle(prop: CardData) {
             <Card>
                 <Image
                     src={
-                        prop.imageUrl ? `${apiImg}${prop.imageUrl}` : generalImg
+                        prop.imageUrl
+                            ? `${API_INFO.BASE_URL_ADMIN}${prop.imageUrl}`
+                            : generalImg
                     }
                     alt="img"
                     width={200}

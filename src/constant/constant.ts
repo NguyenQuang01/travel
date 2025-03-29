@@ -1,4 +1,4 @@
-const SERVER_URL = "http://14.225.205.10:3082";
+const SERVER_URL = "https://www.be-travel.toditour.com";
 
 export const API_INFO = {
     BASE_URL_ADMIN: SERVER_URL,
@@ -113,4 +113,4 @@ export const countries = [
     { value: "yemen", label: "Yemen" },
     { value: "zimbabwe", label: "Zimbabwe" },
 ];
-export const apiImg = "http://14.225.205.10:3082";
+// export const API_INFO = "http://14.225.205.10:3082";
