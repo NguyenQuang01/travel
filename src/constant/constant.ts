@@ -1,5 +1,5 @@
 export const API_INFO = {
-    URL: "http://14.225.205.10:3082/api",
+    BASE_URL: "http://14.225.205.10:3082/api",
 };
 export const countries = [
     { value: "afghanistan", label: "Afghanistan" },

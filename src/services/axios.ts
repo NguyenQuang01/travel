@@ -3,7 +3,7 @@ import { API_INFO } from "@/constant/constant";
 
 // Create instance
 const apiConfig = axios.create({
-    baseURL: API_INFO.URL,
+    baseURL: API_INFO.BASE_URL,
     headers: {
         "Content-Type": "application/json",
     },

@@ -33,8 +33,8 @@ export default function TravelCompanions() {
         <Container className="my-10">
             {" "}
             <Row gutter={[16, 16]} className="mt-10">
+                <StepsComponent />
                 <Col span={16}>
-                    <StepsComponent />
                     <div className="flex items-start p-6 bg-white rounded-2xl shadow-lg  mt-10">
                         <Image
                             src="https://images.pexels.com/photos/19479799/pexels-photo-19479799/free-photo-of-canh-tay-dan-ba-hoa-d-ng.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load"
