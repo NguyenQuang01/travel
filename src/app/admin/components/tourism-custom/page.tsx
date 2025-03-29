@@ -1,6 +1,17 @@
 "use client";
 
-import { Table, Input, Button, Modal, message, Space, Form } from "antd";
+import {
+    Table,
+    Input,
+    Button,
+    Modal,
+    message,
+    Space,
+    Form,
+    Row,
+    Col,
+    InputNumber,
+} from "antd";
 import { useState, useEffect, JSX } from "react";
 import axios from "axios";
 import Card from "@mui/material/Card";
@@ -108,19 +119,20 @@ const TourCustom: () => JSX.Element = () => {
     };
 
     const handleSubmit = async (values: Tour) => {
-        try {
-            if (isEditMode && selectedRecord) {
-                await axios.put(`${API_URL}/${selectedRecord.id}`, values);
-                message.success("Cập nhật thành công!");
-            } else {
-                await axios.post(API_URL, values);
-                message.success("Thêm mới thành công!");
-            }
-            setIsModalVisible(false);
-            fetchData(currentPage, pagination.defaultPageSize);
-        } catch (error) {
-            message.error("Lỗi khi lưu dữ liệu!");
-        }
+        console.log("🚀 ~ handleSubmit ~ values:", values);
+        // try {
+        //     if (isEditMode && selectedRecord) {
+        //         await axios.put(`${API_URL}/${selectedRecord.id}`, values);
+        //         message.success("Cập nhật thành công!");
+        //     } else {
+        //         await axios.post(API_URL, values);
+        //         message.success("Thêm mới thành công!");
+        //     }
+        //     setIsModalVisible(false);
+        //     fetchData(currentPage, pagination.defaultPageSize);
+        // } catch (error) {
+        //     message.error("Lỗi khi lưu dữ liệu!");
+        // }
     };
 
     const columns = [
@@ -177,31 +189,230 @@ const TourCustom: () => JSX.Element = () => {
                 open={isModalVisible}
                 onCancel={() => setIsModalVisible(false)}
                 footer={null}
+                width={1200}
+                style={{
+                    maxHeight: "70vh",
+                    overflowY: "auto",
+                }}
             >
-                <Form form={form} onFinish={handleSubmit} layout="vertical">
-                    <Form.Item
-                        name="name"
-                        label="Tên tour"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Vui lòng nhập tên tour!",
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="tripType" label="Loại hình">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="startCity" label="Bắt đầu từ">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="endCity" label="Kết thúc tại">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="price" label="Giá">
-                        <Input />
+                <Form
+                    form={form}
+                    onFinish={handleSubmit}
+                    layout="vertical"
+                    className="w-full"
+                >
+                    <Row gutter={[16, 16]}>
+                        <Col span={12}>
+                            <Form.Item
+                                name={["request", "tour", "name"]}
+                                label="Tên tour"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Vui lòng nhập tên tour!",
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "tripId"]}
+                                label="Mã chuyến đi"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "tripType"]}
+                                label="Loại hình"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "lodgingLevel"]}
+                                label="Cấp độ chỗ ở"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "lodgingLevelNumber"]}
+                                label="Cấp độ chỗ ở (số)"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "physicalLevel"]}
+                                label="Mức độ thể chất"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={[
+                                    "request",
+                                    "tour",
+                                    "physicalLevelNumber",
+                                ]}
+                                label="Mức độ thể chất (số)"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item
+                                name={["request", "tour", "video"]}
+                                label="Video"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "totalDay"]}
+                                label="Tổng số ngày"
+                            >
+                                <InputNumber min={1} className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "startCity"]}
+                                label="Thành phố khởi hành"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "endCity"]}
+                                label="Thành phố kết thúc"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "tripPace"]}
+                                label="Nhịp độ chuyến đi"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "tour", "tripPaceNumber"]}
+                                label="Nhịp độ chuyến đi (số)"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    {/* Logistics */}
+                    <Row gutter={[16, 16]}>
+                        <Col span={12}>
+                            <Form.Item
+                                name={["request", "logistics", "accommodation"]}
+                                label="Chỗ ở"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={[
+                                    "request",
+                                    "logistics",
+                                    "transportation",
+                                ]}
+                                label="Phương tiện di chuyển"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "logistics", "guides"]}
+                                label="Hướng dẫn viên"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={[
+                                    "request",
+                                    "logistics",
+                                    "mealsIncludedBreakfast",
+                                ]}
+                                label="Bữa sáng bao gồm"
+                            >
+                                <InputNumber min={0} className="w-full" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item
+                                name={[
+                                    "request",
+                                    "logistics",
+                                    "travelInsurance",
+                                ]}
+                                label="Bảo hiểm du lịch"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={[
+                                    "request",
+                                    "logistics",
+                                    "visaRequirements",
+                                ]}
+                                label="Yêu cầu visa"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "logistics", "healthSafety"]}
+                                label="An toàn & sức khỏe"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={[
+                                    "request",
+                                    "logistics",
+                                    "mealsIncludedLunch",
+                                ]}
+                                label="Bữa trưa bao gồm"
+                            >
+                                <InputNumber min={0} className="w-full" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    {/* Các danh sách ID */}
+                    <Row gutter={[16, 16]}>
+                        <Col span={12}>
+                            <Form.Item
+                                name={["request", "activityIds"]}
+                                label="Danh sách hoạt động"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "destinationIds"]}
+                                label="Danh sách điểm đến"
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item
+                                name={["request", "interestIds"]}
+                                label="Danh sách sở thích"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "styleIds"]}
+                                label="Danh sách phong cách"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["request", "themeIds"]}
+                                label="Danh sách chủ đề"
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    {/* Hình ảnh */}
+                    <Form.Item name={["images"]} label="Danh sách hình ảnh">
+                        <Input.TextArea rows={3} />
                     </Form.Item>
                     <Button type="primary" htmlType="submit">
                         Lưu

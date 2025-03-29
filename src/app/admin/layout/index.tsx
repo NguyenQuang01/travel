@@ -20,65 +20,65 @@ const items: MenuItem[] = [
         key: "tourism",
         label: (
             <Link href="/admin/tourism" replace>
-                Tourism
+                Chi tiết Tour
             </Link>
         ),
     },
     {
-      key: "trip-request",
-      label: (
-        <Link href="/admin/trip-request" replace>
-          Yêu cầu chuyến đi
-        </Link>
-      ),
+        key: "trip-request",
+        label: (
+            <Link href="/admin/trip-request" replace>
+                Yêu cầu chuyến đi
+            </Link>
+        ),
     },
     {
-      key: "tour-reservation",
-      label: (
-        <Link href="/admin/tour-reservation" replace>
-          Đặt tour
-        </Link>
-      ),
+        key: "tour-reservation",
+        label: (
+            <Link href="/admin/tour-reservation" replace>
+                Đặt tour
+            </Link>
+        ),
     },
     {
-      key: "style",
-      label: (
-        <Link href="/admin/style" replace>
-          Style
-        </Link>
-      ),
+        key: "style",
+        label: (
+            <Link href="/admin/style" replace>
+                Style
+            </Link>
+        ),
     },
     {
-      key: "type",
-      label: (
-        <Link href="/admin/type" replace>
-          Loại
-        </Link>
-      ),
+        key: "type",
+        label: (
+            <Link href="/admin/type" replace>
+                Loại
+            </Link>
+        ),
     },
     {
-      key: "destination",
-      label: (
-        <Link href="/admin/destination" replace>
-          Điểm đến
-        </Link>
-      ),
+        key: "destination",
+        label: (
+            <Link href="/admin/destination" replace>
+                Điểm đến
+            </Link>
+        ),
     },
     {
-      key: "continent",
-      label: (
-        <Link href="/admin/continent" replace>
-          Tỉnh thành
-        </Link>
-      ),
+        key: "continent",
+        label: (
+            <Link href="/admin/continent" replace>
+                Tỉnh thành
+            </Link>
+        ),
     },
     {
-      key: "banner",
-      label: (
-        <Link href="/admin/banner" replace>
-          Banner
-        </Link>
-      ),
+        key: "banner",
+        label: (
+            <Link href="/admin/banner" replace>
+                Banner
+            </Link>
+        ),
     },
 ];
 const LayoutAdmin = ({ children }: any) => {

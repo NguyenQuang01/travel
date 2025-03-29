@@ -1,4 +1,5 @@
-const SERVER_URL = "http://localhost:3082";
+// const SERVER_URL = "http://localhost:3082";
+const SERVER_URL = "https://www.be-travel.toditour.com";
 
 export const API_INFO = {
     BASE_URL_ADMIN: SERVER_URL,
