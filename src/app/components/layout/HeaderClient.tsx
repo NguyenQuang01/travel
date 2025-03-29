@@ -288,7 +288,7 @@ function HeaderClient() {
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                width={650}
+                width='50%'
                 footer={null}
             >
                 <div className=" rounded-lg p-2  mx-auto  mr-5">
@@ -310,8 +310,7 @@ function HeaderClient() {
                                                         }
                                                     >
                                                         <ButtonAnimated>
-                                                            {" "}
-                                                            {place.destination}
+                                                            <span className="text-start">{place.destination}</span>
                                                         </ButtonAnimated>
                                                     </Link>
                                                 </li>
@@ -327,7 +326,7 @@ function HeaderClient() {
                 open={isModalOpenStyle}
                 onOk={handleOkStyle}
                 onCancel={handleCancelStyle}
-                width={650}
+                     width='50%'
                 footer={null}
             >
                 <div className=" rounded-lg p-2  mx-auto flex gap-10 justify-between mr-5">
@@ -341,7 +340,8 @@ function HeaderClient() {
                                     {" "}
                                     <Link href={"/guide/" + activity.activity}>
                                         <ButtonAnimated>
-                                            {activity.activity}
+                                            <span className="text-start"> {activity.activity}</span>
+                                           
                                         </ButtonAnimated>
                                     </Link>
                                 </li>
