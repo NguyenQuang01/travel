@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import {UploadOutlined} from "@ant-design/icons";
 import {API_INFO} from "@/constant/constant";
 
-const BASE_URL = API_INFO.BASE_URL;
+const BASE_URL = API_INFO.BASE_URL_ADMIN;
 const API_URL = `${BASE_URL}/api/styles`;
 // Interface định nghĩa dữ liệu Styles
 interface Style {

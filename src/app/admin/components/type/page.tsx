@@ -5,7 +5,7 @@ import {useState, JSX, useEffect} from "react";
 import axios from "axios";
 import {API_INFO} from "@/constant/constant";
 
-const BASE_URL = API_INFO.BASE_URL;
+const BASE_URL = API_INFO.BASE_URL_ADMIN;
 const API_URL = `${BASE_URL}/api/types/types`;
 
 // Interface định nghĩa dữ liệu Type

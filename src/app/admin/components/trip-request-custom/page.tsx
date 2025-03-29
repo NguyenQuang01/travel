@@ -9,7 +9,7 @@ import {API_INFO} from "@/constant/constant";
 
 const { RangePicker } = DatePicker;
 
-const BASE_URL = API_INFO.BASE_URL;
+const BASE_URL = API_INFO.BASE_URL_ADMIN;
 const API_URL = `${BASE_URL}/api/request`;
 
 interface TripRequest {

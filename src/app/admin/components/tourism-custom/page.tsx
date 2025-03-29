@@ -6,7 +6,7 @@ import axios from "axios";
 import Card from "@mui/material/Card";
 import { API_INFO } from "@/constant/constant";
 
-const BASE_URL = API_INFO.BASE_URL;
+const BASE_URL = API_INFO.BASE_URL_ADMIN;
 const API_URL = `${BASE_URL}/api/tours`;
 
 interface Tour {

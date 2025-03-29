@@ -1,5 +1,8 @@
+const SERVER_URL = "http://202.92.7.92:3082";
+
 export const API_INFO = {
-    BASE_URL: "http://14.225.205.10:3082/api",
+    BASE_URL_ADMIN: SERVER_URL,
+    BASE_URL: `${SERVER_URL}/api`,
 };
 export const countries = [
     { value: "afghanistan", label: "Afghanistan" },
