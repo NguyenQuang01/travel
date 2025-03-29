@@ -27,7 +27,15 @@ const BannerCustom: () => JSX.Element = () => {
       form.setFieldsValue({ ...response.data, imageList: response.data.images || [] });
 
       if (response.data.images) {
-        setPreviewImages(response.data.images.map((img: any) => `${BASE_URL}${img.imageUrl}`));
+        const imageUrls = response.data.images.map((img: any) => `${BASE_URL}${img.imageUrl}`);
+        setPreviewImages(imageUrls);
+
+        // Cập nhật files từ dữ liệu API bằng cách tạo File object giả
+        const existingFiles = response.data.images.map((img: any) => {
+          return new File([], img.imageUrl, { type: "image/jpeg" }); // hoặc thay đổi type phù hợp
+        });
+
+        setFiles(existingFiles);
       }
     } catch (error) {
       message.error("Lỗi khi tải banner!");
