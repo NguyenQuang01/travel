@@ -117,6 +117,7 @@ const StyleCustom: () => JSX.Element = () => {
       render: (image: string) =>
         image ? <Image width={50} src={`${BASE_URL}${image}`} /> : "Không có ảnh",
     },
+    { title: "Mô tả", dataIndex: "description", key: "description" },
     {
       title: "Hành động",
       key: "actions",

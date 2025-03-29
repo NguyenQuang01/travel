@@ -28,7 +28,7 @@ const items: MenuItem[] = [
       key: "trip-request",
       label: (
         <Link href="/admin/trip-request" replace>
-          Trip Request
+          Yêu cầu chuyến đi
         </Link>
       ),
     },
@@ -36,7 +36,7 @@ const items: MenuItem[] = [
       key: "tour-reservation",
       label: (
         <Link href="/admin/tour-reservation" replace>
-          Tour Reservation
+          Đặt tour
         </Link>
       ),
     },
@@ -52,7 +52,7 @@ const items: MenuItem[] = [
       key: "type",
       label: (
         <Link href="/admin/type" replace>
-          Type
+          Loại
         </Link>
       ),
     },
@@ -60,7 +60,7 @@ const items: MenuItem[] = [
       key: "destination",
       label: (
         <Link href="/admin/destination" replace>
-          Destination
+          Điểm đến
         </Link>
       ),
     },
@@ -68,7 +68,15 @@ const items: MenuItem[] = [
       key: "continent",
       label: (
         <Link href="/admin/continent" replace>
-          Continent
+          Tỉnh thành
+        </Link>
+      ),
+    },
+    {
+      key: "banner",
+      label: (
+        <Link href="/admin/banner" replace>
+          Banner
         </Link>
       ),
     },
