@@ -12,7 +12,7 @@ import { StarTwoTone } from "@ant-design/icons";
 import Link from "next/link";
 import useStore from "@/store/useStore";
 import generalImg from "@/app/assets/imgs/anhChung.jpeg";
-import { apiImg } from "@/constant/constant";
+import { API_INFO } from "@/constant/constant";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -99,7 +99,7 @@ export default function CardReview(prop: TourData) {
                 <Image
                     src={
                         prop?.images[0]?.url
-                            ? `${apiImg}${prop?.images[0]?.url}`
+                            ? `${API_INFO.BASE_URL}${prop?.images[0]?.url}`
                             : generalImg
                     }
                     alt="img"

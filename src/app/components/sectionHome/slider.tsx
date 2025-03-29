@@ -9,7 +9,7 @@ import Image from "next/image";
 import "./styles/slider.css";
 import Link from "next/link";
 import gereralImg from "@/app/assets/imgs/anhChung.jpeg";
-import { apiImg } from "@/constant/constant";
+import { API_INFO } from "@/constant/constant";
 const imgStyle: React.CSSProperties = {
     width: "100%",
     height: "100%",
@@ -62,7 +62,7 @@ const Slider = (prop: { data: SliderItem[] }) => {
                                             <Image
                                                 src={
                                                     item.imageUrl
-                                                        ? `${apiImg}${item.imageUrl}`
+                                                        ? `${API_INFO.BASE_URL}${item.imageUrl}`
                                                         : gereralImg
                                                 }
                                                 alt={item.name}
