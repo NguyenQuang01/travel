@@ -1,4 +1,4 @@
-const SERVER_URL = "http://202.92.7.92:3082";
+const SERVER_URL = "http://14.225.205.10:3082";
 
 export const API_INFO = {
     BASE_URL_ADMIN: SERVER_URL,

@@ -38,14 +38,20 @@ interface TripRequest {
   createdAt: string;
 }
 
+const today = new Date();
+const oneYearAgo = new Date();
+oneYearAgo.setFullYear(today.getFullYear() - 1);
+
+const formatDate = (date) => date.toISOString().split("T")[0];
+
 const TripRequestCustom: () => JSX.Element = () => {
   const [data, setData] = useState<TripRequest[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useState({
     name: "",
     phone: "",
-    from: "2023-01-01",
-    to: "2026-12-31",
+    from: formatDate(oneYearAgo),
+    to: formatDate(today),
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({
@@ -94,8 +100,8 @@ const TripRequestCustom: () => JSX.Element = () => {
   const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null, dateStrings: [string, string]) => {
     setSearchParams((prev) => ({
       ...prev,
-      from: dates?.[0] ? dateStrings[0] : "2023-01-01",
-      to: dates?.[1] ? dateStrings[1] : "2026-12-31",
+      from: dates?.[0] ? dateStrings[0] : searchParams.from,
+      to: dates?.[1] ? dateStrings[1] : searchParams.to,
     }));
   };
 
@@ -148,7 +154,7 @@ const TripRequestCustom: () => JSX.Element = () => {
         <Space style={{ marginBottom: 16 }}>
           <Input placeholder="Tìm theo tên" onChange={(e) => handleSearchChange("name", e.target.value)} />
           <Input placeholder="Tìm theo SĐT" onChange={(e) => handleSearchChange("phone", e.target.value)} />
-          <RangePicker onChange={handleDateChange} defaultValue={[dayjs("2023-01-01"), dayjs("2026-12-31")]} />
+          <RangePicker onChange={handleDateChange} defaultValue={[dayjs(searchParams.from), dayjs(searchParams.to)]} />
         </Space>
         <Table
             columns={columns}
