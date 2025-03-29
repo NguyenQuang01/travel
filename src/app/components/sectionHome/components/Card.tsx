@@ -99,7 +99,7 @@ export default function CardReview(prop: TourData) {
                 <Image
                     src={
                         prop?.images[0]?.url
-                            ? `${API_INFO.BASE_URL}${prop?.images[0]?.url}`
+                            ? `${API_INFO.BASE_URL_ADMIN}${prop?.images[0]?.url}`
                             : generalImg
                     }
                     alt="img"

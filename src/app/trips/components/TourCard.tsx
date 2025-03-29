@@ -31,7 +31,7 @@ const TourCard = (props: any) => {
                         <Image
                             src={
                                 img && img[0]?.url
-                                    ? `${API_INFO.BASE_URL}${
+                                    ? `${API_INFO.BASE_URL_ADMIN}${
                                           img && img[0]?.url
                                       }`
                                     : generalImg
@@ -51,7 +51,7 @@ const TourCard = (props: any) => {
                             <Image
                                 src={
                                     img && img[1]?.url
-                                        ? `${API_INFO.BASE_URL}${
+                                        ? `${API_INFO.BASE_URL_ADMIN}${
                                               img && img[1]?.url
                                           }`
                                         : generalImg
@@ -83,7 +83,7 @@ const TourCard = (props: any) => {
                             <Image
                                 src={
                                     img && img[2]?.url
-                                        ? `${API_INFO.BASE_URL}${
+                                        ? `${API_INFO.BASE_URL_ADMIN}${
                                               img && img[2]?.url
                                           }`
                                         : generalImg
@@ -100,7 +100,7 @@ const TourCard = (props: any) => {
                             <Image
                                 src={
                                     img && img[3]?.url
-                                        ? `${API_INFO.BASE_URL}${
+                                        ? `${API_INFO.BASE_URL_ADMIN}${
                                               img && img[3]?.url
                                           }`
                                         : generalImg

@@ -62,7 +62,7 @@ const Slider = (prop: { data: SliderItem[] }) => {
                                             <Image
                                                 src={
                                                     item.imageUrl
-                                                        ? `${API_INFO.BASE_URL}${item.imageUrl}`
+                                                        ? `${API_INFO.BASE_URL_ADMIN}${item.imageUrl}`
                                                         : gereralImg
                                                 }
                                                 alt={item.name}

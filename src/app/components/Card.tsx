@@ -126,7 +126,7 @@ export default function CardReview(prop: any) {
                 <Image
                     src={
                         prop.data?.images[0]
-                            ? `${API_INFO.BASE_URL}${prop.data?.images[0]}`
+                            ? `${API_INFO.BASE_URL_ADMIN}${prop.data?.images[0]}`
                             : "https://png.pngtree.com/png-clipart/20191120/original/pngtree-error-file-icon-vectors-png-image_5053766.jpg"
                     }
                     alt="img"

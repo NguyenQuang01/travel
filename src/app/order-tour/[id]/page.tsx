@@ -259,7 +259,7 @@ export default function OrderTour() {
                         <Image
                             src={
                                 tourOder?.img
-                                    ? `${API_INFO.BASE_URL}${tourOder?.img}`
+                                    ? `${API_INFO.BASE_URL_ADMIN}${tourOder?.img}`
                                     : generalImg
                             }
                             alt="img"

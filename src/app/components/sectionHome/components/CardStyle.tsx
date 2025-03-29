@@ -44,7 +44,7 @@ export default function CardStyle(prop: CardData) {
                 <Image
                     src={
                         prop.imageUrl
-                            ? `${API_INFO.BASE_URL}${prop.imageUrl}`
+                            ? `${API_INFO.BASE_URL_ADMIN}${prop.imageUrl}`
                             : generalImg
                     }
                     alt="img"

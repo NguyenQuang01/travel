@@ -45,7 +45,7 @@ export default function CardBlog(prop: Blog) {
                 <Image
                     src={
                         prop.coverImage
-                            ? `${API_INFO.BASE_URL}${prop.coverImage}`
+                            ? `${API_INFO.BASE_URL_ADMIN}${prop.coverImage}`
                             : generalImg
                     }
                     alt="img"
