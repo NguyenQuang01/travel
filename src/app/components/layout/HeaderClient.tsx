@@ -177,7 +177,7 @@ function HeaderClient() {
     const [Interests, setInterests] =
         useState<{ id: number; name: string }[]>();
 
-    const [trending, setTrending] = useState<Trip[]>();
+    const [trending, setTrending] = useState<Trip[]>([]);
     const [showCustomTripButton, setShowCustomTripButton] = useState(false);
     const getMenuActivities = async () => {
         const res: any = await getActivities();
@@ -188,7 +188,7 @@ function HeaderClient() {
     const getMenuStyles = async () => {
         const res: any = await getStyles();
         if (res) {
-            setStyles(res.data);
+            setStyles(res.data ?? []);
         }
     };
     const getMenuInterests = async () => {
@@ -206,7 +206,7 @@ function HeaderClient() {
     const getMenuTrending = async () => {
         const res: any = await getTrending();
         if (res) {
-            setTrending(res.data);
+            setTrending(res.data ?? []);
         }
     };
     useEffect(() => {
@@ -268,16 +268,19 @@ function HeaderClient() {
             >
                 <div className=" rounded-lg p-2  mx-auto mr-5">
                     <div className="grid grid-cols-3 gap-2">
-                        {trending?.map((trip, index) => (
-                            <h3
-                                key={index}
-                                className="space-y-1 text-gray-700 text-center"
-                            >
-                                <Link href={"/guide/" + trip.name}>
-                                    <ButtonAnimated>{trip.name}</ButtonAnimated>
-                                </Link>
-                            </h3>
-                        ))}
+                        {trending?.length > 0 &&
+                            trending?.map((trip: Trip, index: number) => (
+                                <h3
+                                    key={index}
+                                    className="space-y-1 text-gray-700 text-center"
+                                >
+                                    <Link href={"/guide/" + trip.name}>
+                                        <ButtonAnimated>
+                                            {trip.name}
+                                        </ButtonAnimated>
+                                    </Link>
+                                </h3>
+                            ))}
                     </div>
                 </div>
             </Modal>{" "}
@@ -333,7 +336,7 @@ function HeaderClient() {
                             Adventure
                         </h3>
                         <ul className="space-y-1 text-gray-700 ">
-                            {activities?.map((activity, index) => (
+                            {activities?.map((activity) => (
                                 <li key={activity.id}>
                                     {" "}
                                     <Link href={"/guide/" + activity.activity}>
