@@ -31,7 +31,7 @@ const StyleCustom: () => JSX.Element = () => {
   const [file, setFile] = useState<File | null>(null);
   const [selectedRecord, setSelectedRecord] = useState<Style | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [form] = Form.useForm();
 
   // Fetch dữ liệu
@@ -71,29 +71,39 @@ const StyleCustom: () => JSX.Element = () => {
     setIsModalVisible(true);
   };
 
-  // Hiển thị modal chỉnh sửa
-  const handleEdit = (record: Style) => {
-    form.setFieldsValue(record);
-    setSelectedRecord(record);
+  const handleAddOrEdit = (record?: Style) => {
+    setIsEditMode(!!record);
+    setSelectedRecord(record || null);
+    form.setFieldsValue(record || { name: "", id: 1, description: "" });
     setFile(null);
     setPreviewImage(record?.imageUrl ? `${BASE_URL}${record.imageUrl}` : null);
-    setIsEditModalVisible(true);
+    setIsModalVisible(true);
   };
 
-  // Xử lý cập nhật item
-  const handleUpdate = async (values: Style) => {
-    try {
-      const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("description", values.description);
-      if (file) formData.append("image", file);
 
-      await axios.put(`${API_URL}/${selectedRecord?.id}`, formData);
-      message.success("Cập nhật thành công!");
+  // Xử lý cập nhật item
+  const handleSubmit = async (values: Style) => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    if (file) formData.append("image", file);
+
+    try {
+      if (isEditMode && selectedRecord?.id) {
+        await axios.put(`${API_URL}/${selectedRecord.id}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        message.success("Cập nhật thành công!");
+      } else {
+        await axios.post(`${API_URL}/create`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        message.success("Thêm mới thành công!");
+      }
+      setIsModalVisible(false);
       fetchData();
-      setIsEditModalVisible(false);
     } catch (error) {
-      message.error("Lỗi khi cập nhật!");
+      message.error("Lỗi khi lưu dữ liệu!");
     }
   };
 
@@ -115,7 +125,7 @@ const StyleCustom: () => JSX.Element = () => {
           <Button type="link" onClick={() => handleView(record)}>
             Xem
           </Button>
-          <Button type="link" onClick={() => handleEdit(record)}>
+          <Button type="link" onClick={() => handleAddOrEdit(record)}>
             Sửa
           </Button>
           <Button type="link" danger onClick={() => handleDelete(record.id)}>
@@ -128,6 +138,9 @@ const StyleCustom: () => JSX.Element = () => {
 
   return (
     <div>
+      <Space style={{ marginBottom: 16 }}>
+        <Button type="primary" onClick={() => handleAddOrEdit()}>Thêm mới</Button>
+      </Space>
       <Table
         columns={columns}
         dataSource={data}
@@ -152,24 +165,35 @@ const StyleCustom: () => JSX.Element = () => {
         )}
       </Modal>
       {/* Modal chỉnh sửa */}
-      <Modal
-        title="Chỉnh sửa Style"
-        open={isEditModalVisible}
-        onCancel={() => setIsEditModalVisible(false)}
-        footer={null}
-      >
-        <Form form={form} layout="vertical" onFinish={handleUpdate}>
+      <Modal title={isEditMode ? "Chỉnh sửa Style" : "Thêm mới Style"} open={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={null}>
+        <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item name="name" label="Tên" rules={[{ required: true, message: "Vui lòng nhập tên!" }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="description" label="Mô tả">
+          <Form.Item name="description" label="Mô tả" rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}>
             <Input.TextArea />
           </Form.Item>
           {previewImage && <Image width={200} src={previewImage} />}
-          <Form.Item label="Hình ảnh">
-            <Upload beforeUpload={(file) => { setFile(file); setPreviewImage(URL.createObjectURL(file)); return false; }} showUploadList={false}>
-              <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
-            </Upload>
+          <Form.Item shouldUpdate>
+            {({ getFieldValue }) => (
+              <Form.Item
+                name="image"
+                label="Hình ảnh"
+                rules={[{ required: !previewImage, message: "Vui lòng chọn ảnh!" }]}
+              >
+                <Upload
+                  beforeUpload={(file) => {
+                    setFile(file);
+                    setPreviewImage(URL.createObjectURL(file));
+                    form.setFieldsValue({ image: file }); // Cập nhật giá trị form
+                    return false;
+                  }}
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
+                </Upload>
+              </Form.Item>
+            )}
           </Form.Item>
           <Button type="primary" htmlType="submit">Lưu</Button>
         </Form>

@@ -151,7 +151,7 @@ const TourReservationCustom: () => JSX.Element = () => {
         />
         {/* Modal xem chi tiết */}
         <Modal
-            title="Chi tiết Đặt Chỗ Tour"
+            title="Chi tiết đặt Chỗ Tour"
             open={isModalVisible}
             onCancel={() => setIsModalVisible(false)}
             footer={null}
