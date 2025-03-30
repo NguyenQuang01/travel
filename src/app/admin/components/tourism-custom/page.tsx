@@ -349,12 +349,12 @@ const TourCustom: () => JSX.Element = () => {
                 })
             );
 
-            // Kiểm tra và thêm ảnh nếu có
-            if (Array.isArray(values.images) && values.images.length > 0) {
-                values.images.forEach((file: File) => {
-                    formData.append("images", file);
-                });
-            }
+            // // Kiểm tra và thêm ảnh nếu có
+            // if (Array.isArray(values.images) && values.images.length > 0) {
+            //     values.images.forEach((file: File) => {
+            //         formData.append("images", file);
+            //     });
+            // }
 
             // Gửi request
 
@@ -458,6 +458,25 @@ const TourCustom: () => JSX.Element = () => {
                                 ]}
                             >
                                 <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "isTrending"]}
+                                label="Xu hướng"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Vui lòng chọn!",
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    style={{ width: "100%" }}
+                                    placeholder="Xu hướng"
+                                    options={[
+                                        { value: 0, label: "Không" },
+                                        { value: 1, label: "Có" },
+                                    ]}
+                                />
                             </Form.Item>
                             <Form.Item
                                 name={["tour", "tripId"]}
