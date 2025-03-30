@@ -24,7 +24,6 @@ import {
     getInterests,
     getStyleIds,
     getTypes,
-    getDetailTour,
 } from "@/app/admin/components/tourism-custom/hooks";
 import { UploadOutlined } from "@mui/icons-material";
 const BASE_URL = API_INFO.BASE_URL_ADMIN;
@@ -182,19 +181,20 @@ const TourCustom: () => JSX.Element = () => {
         setIsViewModalVisible(true);
     };
 
-    const handleAddOrEdit = async (record?: any) => {
+    const handleAddOrEdit = (record?: Tour) => {
         setIsEditMode(!!record);
         setSelectedRecord(record || null);
-
-        // Reset form first
-        form.resetFields();
-
-        if (record) {
-            const res: any = await getDetailTour(record?.id);
-            // If editing, set the form values from the record
-            form.setFieldsValue(res.data.tourData);
-        }
-
+        form.setFieldsValue(
+            record || {
+                name: "",
+                tripType: "",
+                startCity: "",
+                endCity: "",
+                price: "",
+                oldPrice: "",
+                tripAbout: "",
+            }
+        );
         setIsModalVisible(true);
     };
 
@@ -351,6 +351,7 @@ const TourCustom: () => JSX.Element = () => {
                                 label="Mã chuyến đi"
                             >
                                 <Select
+                                    mode="tags"
                                     style={{ width: "100%" }}
                                     placeholder="Tags Mode"
                                     options={types}
@@ -582,7 +583,7 @@ const TourCustom: () => JSX.Element = () => {
                                     Select Images
                                 </Button>
                             </Upload>
-                            {/* <div
+                            <div
                                 style={{
                                     display: "flex",
                                     flexWrap: "wrap",
@@ -592,12 +593,10 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 {form
                                     .getFieldValue("images")
-                                    ?.map((file: any, index: number) => (
+                                    ?.map((file: File, index: number) => (
                                         <img
                                             key={index}
-                                            src={`${API_INFO.BASE_URL_ADMIN}${
-                                                file && file?.url
-                                            }`}
+                                            src={URL.createObjectURL(file)}
                                             alt={`Preview ${index + 1}`}
                                             style={{
                                                 width: "200px",
@@ -606,7 +605,7 @@ const TourCustom: () => JSX.Element = () => {
                                             }}
                                         />
                                     ))}
-                            </div> */}
+                            </div>
                         </>
                     </Form.Item>
                     <Button type="primary" htmlType="submit">
