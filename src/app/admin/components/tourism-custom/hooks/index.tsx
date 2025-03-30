@@ -47,6 +47,15 @@ export const getTypes = async () => {
         throw error;
     }
 };
+export const getThemes = async () => {
+    try {
+        const response = await apiServices.get(`/themes`);
+        return response;
+    } catch (error) {
+        console.error("Search tours error:", error);
+        throw error;
+    }
+};
 
 export const getDetailTour = async (id: any) => {
     try {

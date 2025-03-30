@@ -25,8 +25,10 @@ import {
     getStyleIds,
     getTypes,
     getDetailTour,
+    getThemes,
 } from "@/app/admin/components/tourism-custom/hooks";
 import { UploadOutlined } from "@mui/icons-material";
+import TextArea from "antd/es/input/TextArea";
 const BASE_URL = API_INFO.BASE_URL_ADMIN;
 const API_URL = `${BASE_URL}/api/tours`;
 
@@ -69,24 +71,7 @@ const TourCustom: () => JSX.Element = () => {
     const [styleIds, setStyleIds] = useState([]);
     const [types, setTypes] = useState([]);
     const [idEdit, setIdEdit] = useState(0);
-    const [themeIds, setThemeIds] = useState([
-        {
-            value: "1",
-            label: "Khám phá",
-        },
-        {
-            value: " 2",
-            label: "Thư giãn",
-        },
-        {
-            value: "3",
-            label: "Mạo hiểm",
-        },
-        {
-            value: "4",
-            label: "Văn hóa",
-        },
-    ]);
+    const [themeIds, setThemeIds] = useState([]);
     const fetchData = async (page = currentPage, pageSize = 10) => {
         setLoading(true);
         try {
@@ -158,12 +143,23 @@ const TourCustom: () => JSX.Element = () => {
             setTypes(data);
         }
     };
+    const getDataThemes = async () => {
+        const res: any = await getThemes();
+        if (res && res.status === 200) {
+            const data = res.data.map((item: any) => ({
+                value: String(item.themeId),
+                label: item.name,
+            }));
+            setThemeIds(data);
+        }
+    };
     useEffect(() => {
         getDataActivities();
         getDataDestinations();
         getDataInterests();
         getDataStyleIds();
         getDataTypes();
+        getDataThemes();
     }, []);
     useEffect(() => {
         fetchData(1, pagination.defaultPageSize);
@@ -275,10 +271,6 @@ const TourCustom: () => JSX.Element = () => {
                 interestIds: values.interestIds?.map(Number).filter(Boolean),
                 styleIds: values.styleIds?.map(Number).filter(Boolean),
                 themeIds: values.themeIds?.map(Number).filter(Boolean),
-                themes: values.themeIds?.map((id: string) => {
-                    const theme = themeIds?.find((t) => t.value === id);
-                    return theme ? theme.label : "";
-                }),
             };
 
             // Append JSON request với type=application/json
@@ -334,10 +326,6 @@ const TourCustom: () => JSX.Element = () => {
                 interestIds: values.interestIds?.map(Number).filter(Boolean),
                 styleIds: values.styleIds?.map(Number).filter(Boolean),
                 themeIds: values.themeIds?.map(Number).filter(Boolean),
-                themes: values.themeIds?.map((id: string) => {
-                    const theme = themeIds?.find((t) => t.value === id);
-                    return theme ? theme.label : "";
-                }),
             };
 
             // Append JSON request với type=application/json
@@ -495,6 +483,18 @@ const TourCustom: () => JSX.Element = () => {
                                 <Input />
                             </Form.Item>
                             <Form.Item
+                                name={["tour", "attractions"]}
+                                label="Điểm tham quan"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "itineraryFocus"]}
+                                label="Trọng tâm lịch trình"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
                                 name={["tour", "lodgingLevel"]}
                                 label="Cấp độ chỗ ở"
                             >
@@ -517,10 +517,49 @@ const TourCustom: () => JSX.Element = () => {
                                 label="Mức độ thể chất (số)"
                             >
                                 <InputNumber className="w-full" />
+                            </Form.Item>{" "}
+                            <Form.Item
+                                name={["tour", "groupSize"]}
+                                label=" Kích thước nhóm"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "maxGroupSize"]}
+                                label=" Kích thước nhóm"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "minGroupSize"]}
+                                label="Số lượng nhóm tối thiểu"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "ageRange"]}
+                                label=" Độ tuổi phù hợp"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                            <Form.Item name={["tour", "price"]} label="Giá">
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "oldPrice"]}
+                                label="Giá cũ"
+                            >
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item name={["tour", "video"]} label="Video">
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "highlights"]}
+                                label="Điểm nổi bật của chuyến đi"
+                            >
                                 <Input />
                             </Form.Item>
                             <Form.Item
@@ -553,6 +592,41 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 <InputNumber className="w-full" />
                             </Form.Item>
+                            <Form.Item
+                                name={["tour", "flyAndTransport"]}
+                                label="Phương tiện di chuyển"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "destinationIds"]}
+                                label="Danh sách điểm đến"
+                            >
+                                <Select
+                                    mode="tags"
+                                    style={{ width: "100%" }}
+                                    placeholder="Tags Mode"
+                                    options={destinationIds}
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "tripAbout"]}
+                                label="Giới thiệu chuyến đi"
+                            >
+                                <TextArea rows={4} />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "itinerary"]}
+                                label="Lịch trình (cách nhau bằng dấu '-')"
+                            >
+                                <TextArea rows={4} />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "tripIncludes"]}
+                                label="Những gì được bao gồm trong chuyến đi"
+                            >
+                                <TextArea rows={4} />
+                            </Form.Item>
                         </Col>
                     </Row>
 
@@ -560,14 +634,20 @@ const TourCustom: () => JSX.Element = () => {
                     <Row gutter={[16, 16]}>
                         <Col span={12}>
                             <Form.Item
-                                name={["logistics", "accommodation"]}
-                                label="Chỗ ở"
+                                name={["tologisticsur", "ageMax"]}
+                                label=" Độ tuổi tối đa"
                             >
-                                <Input />
+                                <InputNumber className="w-full" />
+                            </Form.Item>{" "}
+                            <Form.Item
+                                name={["tologisticsur", "ageMin"]}
+                                label=" Độ tuổi tối thiểu"
+                            >
+                                <InputNumber className="w-full" />
                             </Form.Item>
                             <Form.Item
-                                name={["logistics", "transportation"]}
-                                label="Phương tiện di chuyển"
+                                name={["logistics", "accommodation"]}
+                                label="Chỗ ở"
                             >
                                 <Input />
                             </Form.Item>
@@ -582,12 +662,6 @@ const TourCustom: () => JSX.Element = () => {
                                 label="Bữa sáng"
                             >
                                 <InputNumber min={0} className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["logistics", "price"]}
-                                label="Giá"
-                            >
-                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -615,11 +689,24 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 <InputNumber min={0} className="w-full" />
                             </Form.Item>
+
                             <Form.Item
-                                name={["logistics", "oldPrice"]}
-                                label="Giá Cũ"
+                                name={["logistics", "logistics"]}
+                                label="Có vẻ là mô tả chung về logistics"
                             >
-                                <Input />
+                                <TextArea rows={4} />
+                            </Form.Item>
+                            <Form.Item
+                                name={["logistics", "cancellationPolicy"]}
+                                label="Chính sách hủy chuyến"
+                            >
+                                <TextArea rows={4} />
+                            </Form.Item>
+                            <Form.Item
+                                name={["logistics", "additionalInfo"]}
+                                label="Thông tin bổ sung"
+                            >
+                                <TextArea rows={4} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -636,17 +723,6 @@ const TourCustom: () => JSX.Element = () => {
                                     style={{ width: "100%" }}
                                     placeholder="Tags Mode"
                                     options={activityIds}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name={["destinationIds"]}
-                                label="Danh sách điểm đến"
-                            >
-                                <Select
-                                    mode="tags"
-                                    style={{ width: "100%" }}
-                                    placeholder="Tags Mode"
-                                    options={destinationIds}
                                 />
                             </Form.Item>
                         </Col>
