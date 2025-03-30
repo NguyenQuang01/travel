@@ -48,7 +48,7 @@ export const getTypes = async () => {
     }
 };
 
-export const getDetailTour = async (id: string) => {
+export const getDetailTour = async (id: any) => {
     try {
         const response = await apiServices.get(`/tours/getFull/${id}`);
         return response;

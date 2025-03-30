@@ -24,6 +24,7 @@ import {
     getInterests,
     getStyleIds,
     getTypes,
+    getDetailTour,
 } from "@/app/admin/components/tourism-custom/hooks";
 import { UploadOutlined } from "@mui/icons-material";
 const BASE_URL = API_INFO.BASE_URL_ADMIN;
@@ -67,6 +68,7 @@ const TourCustom: () => JSX.Element = () => {
     const [interestIds, setInterestIds] = useState([]);
     const [styleIds, setStyleIds] = useState([]);
     const [types, setTypes] = useState([]);
+    const [idEdit, setIdEdit] = useState(0);
     const [themeIds, setThemeIds] = useState([
         {
             value: "1",
@@ -181,27 +183,76 @@ const TourCustom: () => JSX.Element = () => {
         setIsViewModalVisible(true);
     };
 
-    const handleAddOrEdit = (record?: Tour) => {
-        setIsEditMode(!!record);
+    const handleAdd = (record?: Tour) => {
+        setIsEditMode(false);
         setSelectedRecord(record || null);
-        form.setFieldsValue(
-            record || {
-                name: "",
-                tripType: "",
-                startCity: "",
-                endCity: "",
-                price: "",
-                oldPrice: "",
-                tripAbout: "",
-            }
-        );
+        form.resetFields();
+        if (record) {
+            form.setFieldsValue(record);
+        } else {
+            form.setFieldsValue({
+                tour: {
+                    name: "",
+                    tripType: "",
+                    startCity: "",
+                    endCity: "",
+                    price: "",
+                    oldPrice: "",
+                    tripAbout: "",
+                },
+                logistics: {},
+                activityIds: [],
+                destinationIds: [],
+                interestIds: [],
+                styleIds: [],
+                themeIds: [],
+                images: [],
+            });
+        }
         setIsModalVisible(true);
+    };
+    const handleEdit = async (record: Tour) => {
+        setIsEditMode(false);
+        if (record?.id) {
+            setIdEdit(record.id);
+            const response: any = await getDetailTour(record?.id);
+            const data = response.data.tourData;
+
+            form.setFieldsValue({
+                tour: data.tour,
+                images: data.images.map((img: any) => ({
+                    uid: img.id,
+                    name: img.url.split("/").pop(),
+                    status: "done",
+                    url: `${API_INFO.BASE_URL_ADMIN}${img.url}`,
+                })),
+                logistics: data.logistics || {},
+                activityIds:
+                    data.activities?.map((activity: any) =>
+                        String(activity.id)
+                    ) || [],
+                destinationIds:
+                    data.destinations?.map((dest: any) => String(dest.id)) ||
+                    [],
+                interestIds:
+                    data.interest?.map((interest: any) =>
+                        String(interest.id)
+                    ) || [],
+                styleIds:
+                    data.styles?.map((style: any) => String(style.id)) || [],
+                themeIds:
+                    data.themes?.map((theme: any) => String(theme.id)) || [],
+            });
+            setSelectedRecord(data);
+            setIsEditMode(true);
+            setIsModalVisible(true);
+        }
     };
 
     const handleDelete = async (id: number) => {
         try {
             await axios.delete(`${API_URL}/tour/${id}`);
-            message.success("Xóa thành công!");
+
             fetchData(currentPage, pagination.defaultPageSize);
         } catch (error) {
             console.error("Lỗi khi xóa dữ liệu!", error);
@@ -209,6 +260,7 @@ const TourCustom: () => JSX.Element = () => {
     };
 
     const handleSubmit = async (values: any) => {
+        console.log("🚀 ~ handleSubmit ~ values:", idEdit);
         try {
             const formData = new FormData();
 
@@ -233,8 +285,9 @@ const TourCustom: () => JSX.Element = () => {
             };
 
             // Append JSON request với type=application/json
+            const namekeyFile = `${isEditMode ? "tourUpdateDTO" : "request"}`;
             formData.append(
-                "request",
+                namekeyFile,
                 new Blob([JSON.stringify(transformedValues)], {
                     type: "application/json",
                 })
@@ -248,14 +301,26 @@ const TourCustom: () => JSX.Element = () => {
             }
 
             // Gửi request
-            const response = await axios.post(`${API_URL}/create`, formData, {
-                headers: {
-                    Accept: "application/json",
-                    "Accept-Language":
-                        "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
-                    Connection: "keep-alive",
-                },
-            });
+            if (isEditMode) {
+                console.log(formData, "-----------------1");
+                await axios.put(`${API_URL}/update/${idEdit}`, formData, {
+                    headers: {
+                        Accept: "application/json",
+                        "Accept-Language":
+                            "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
+                        Connection: "keep-alive",
+                    },
+                });
+            } else {
+                await axios.post(`${API_URL}/create`, formData, {
+                    headers: {
+                        Accept: "application/json",
+                        "Accept-Language":
+                            "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
+                        Connection: "keep-alive",
+                    },
+                });
+            }
 
             message.success("Created successfully!");
             setIsModalVisible(false);
@@ -281,7 +346,7 @@ const TourCustom: () => JSX.Element = () => {
                     <Button type="link" onClick={() => handleView(record)}>
                         Xem
                     </Button>
-                    <Button type="link" onClick={() => handleAddOrEdit(record)}>
+                    <Button type="link" onClick={() => handleEdit(record)}>
                         Sửa
                     </Button>
                     <Button
@@ -303,7 +368,7 @@ const TourCustom: () => JSX.Element = () => {
                     placeholder="Tìm theo tên tour"
                     onChange={handleSearchChange}
                 />
-                <Button type="primary" onClick={() => handleAddOrEdit()}>
+                <Button type="primary" onClick={() => handleAdd()}>
                     Thêm mới
                 </Button>
             </Space>
@@ -351,7 +416,6 @@ const TourCustom: () => JSX.Element = () => {
                                 label="Mã chuyến đi"
                             >
                                 <Select
-                                    mode="tags"
                                     style={{ width: "100%" }}
                                     placeholder="Tags Mode"
                                     options={types}
@@ -593,18 +657,37 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 {form
                                     .getFieldValue("images")
-                                    ?.map((file: File, index: number) => (
-                                        <img
-                                            key={index}
-                                            src={URL.createObjectURL(file)}
-                                            alt={`Preview ${index + 1}`}
-                                            style={{
-                                                width: "200px",
-                                                height: "150px",
-                                                objectFit: "cover",
-                                            }}
-                                        />
-                                    ))}
+                                    ?.map((file: any, index: number) => {
+                                        if (file.url) {
+                                            return (
+                                                <img
+                                                    key={index}
+                                                    src={file.url}
+                                                    alt={`Preview ${
+                                                        index + 1
+                                                    }33`}
+                                                    style={{
+                                                        width: "200px",
+                                                        height: "150px",
+                                                        objectFit: "cover",
+                                                    }}
+                                                />
+                                            );
+                                        }
+                                        // Handle new file uploads
+                                        return (
+                                            <img
+                                                key={index}
+                                                src={URL.createObjectURL(file)}
+                                                alt={`Preview ${index + 1}`}
+                                                style={{
+                                                    width: "200px",
+                                                    height: "150px",
+                                                    objectFit: "cover",
+                                                }}
+                                            />
+                                        );
+                                    })}
                             </div>
                         </>
                     </Form.Item>
