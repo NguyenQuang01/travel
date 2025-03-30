@@ -7,7 +7,7 @@ interface ItineraryProps {
 }
 
 const Itinerary = ({ data }: ItineraryProps) => {
-    const itineraryItems = data.split(" - ").map((item, index) => ({
+    const itineraryItems = data?.split(" - ").map((item, index) => ({
         children: item,
         dot:
             index % 2 === 0 ? (
