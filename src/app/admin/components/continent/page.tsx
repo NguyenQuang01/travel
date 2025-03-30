@@ -97,7 +97,7 @@ const ContinentCustom: () => JSX.Element = () => {
 
     try {
       if (isEditMode && selectedRecord?.continentId) {
-        await axios.put(`${API_URL}/${selectedRecord.continentId}`, formData, {
+        await axios.put(`${API_URL}/update/${selectedRecord.continentId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         message.success("Cập nhật thành công!");

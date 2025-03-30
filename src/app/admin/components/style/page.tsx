@@ -31,6 +31,7 @@ const StyleCustom: () => JSX.Element = () => {
   const [file, setFile] = useState<File | null>(null);
   const [selectedRecord, setSelectedRecord] = useState<Style | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDetailModalVisible, setIsDetailModalVisible] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [form] = Form.useForm();
 
@@ -68,7 +69,7 @@ const StyleCustom: () => JSX.Element = () => {
   // Hiển thị modal xem chi tiết
   const handleView = (record: Style) => {
     setSelectedRecord(record);
-    setIsModalVisible(true);
+    setIsDetailModalVisible(true);
   };
 
   const handleAddOrEdit = (record?: Style) => {
@@ -198,6 +199,12 @@ const StyleCustom: () => JSX.Element = () => {
           </Form.Item>
           <Button type="primary" htmlType="submit">Lưu</Button>
         </Form>
+      </Modal>
+      <Modal title="Chi tiết Phong cách" open={isDetailModalVisible} onCancel={() => setIsDetailModalVisible(false)} footer={null}>
+        <p><strong>ID:</strong> {selectedRecord?.id}</p>
+        <p><strong>Tên style:</strong> {selectedRecord?.name}</p>
+        <p><strong>Mô tả:</strong> {selectedRecord?.description}</p>
+        {selectedRecord?.imageUrl && <Image width={200} src={`${BASE_URL}${selectedRecord.imageUrl}`} />}
       </Modal>
     </div>
   );
