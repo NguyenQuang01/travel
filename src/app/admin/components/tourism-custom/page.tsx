@@ -23,6 +23,7 @@ import {
     getDestinations,
     getInterests,
     getStyleIds,
+    getTypes,
 } from "@/app/admin/components/tourism-custom/hooks";
 import { UploadOutlined } from "@mui/icons-material";
 const BASE_URL = API_INFO.BASE_URL_ADMIN;
@@ -65,6 +66,7 @@ const TourCustom: () => JSX.Element = () => {
     const [destinationIds, setDestinationIds] = useState([]);
     const [interestIds, setInterestIds] = useState([]);
     const [styleIds, setStyleIds] = useState([]);
+    const [types, setTypes] = useState([]);
     const [themeIds, setThemeIds] = useState([
         {
             value: "1",
@@ -144,11 +146,22 @@ const TourCustom: () => JSX.Element = () => {
             setStyleIds(data);
         }
     };
+    const getDataTypes = async () => {
+        const res: any = await getTypes();
+        if (res && res.status === 200) {
+            const data = res.data.map((item: any) => ({
+                value: item.name,
+                label: item.name,
+            }));
+            setTypes(data);
+        }
+    };
     useEffect(() => {
         getDataActivities();
         getDataDestinations();
         getDataInterests();
         getDataStyleIds();
+        getDataTypes();
     }, []);
     useEffect(() => {
         fetchData(1, pagination.defaultPageSize);
@@ -168,26 +181,58 @@ const TourCustom: () => JSX.Element = () => {
         setIsViewModalVisible(true);
     };
 
-    const handleAddOrEdit = (record?: Tour) => {
+    const handleAddOrEdit = (record?: any) => {
         setIsEditMode(!!record);
         setSelectedRecord(record || null);
-        form.setFieldsValue(
-            record || {
-                name: "",
-                tripType: "",
-                startCity: "",
-                endCity: "",
-                price: "",
-                oldPrice: "",
-                tripAbout: "",
-            }
-        );
+
+        // Reset form first
+        form.resetFields();
+
+        if (record) {
+            // If editing, set the form values from the record
+            form.setFieldsValue({
+                tour: {
+                    name: record.name,
+                    tripId: record.tripId,
+                    tripType: record.tripType,
+                    lodgingLevel: record.lodgingLevel,
+                    lodgingLevelNumber: record.lodgingLevelNumber,
+                    physicalLevel: record.physicalLevel,
+                    physicalLevelNumber: record.physicalLevelNumber,
+                    video: record.video,
+                    totalDay: record.totalDay,
+                    startCity: record.startCity,
+                    endCity: record.endCity,
+                    tripPace: record.tripPace,
+                    tripPaceNumber: record.tripPaceNumber,
+                },
+                logistics: {
+                    price: record.price,
+                    oldPrice: record.oldPrice,
+                    accommodation: record.accommodation,
+                    transportation: record.transportation,
+                    guides: record.guides,
+                    mealsIncludedBreakfast: record.mealsIncludedBreakfast,
+                    mealsIncludedLunch: record.mealsIncludedLunch,
+                    travelInsurance: record.travelInsurance,
+                    visaRequirements: record.visaRequirements,
+                    healthSafety: record.healthSafety,
+                },
+                activityIds: record.activityIds,
+                destinationIds: record.destinationIds,
+                interestIds: record.interestIds,
+                styleIds: record.styleIds,
+                themeIds: record.themeIds,
+                images: record.images || [], // Added images field
+            });
+        }
+
         setIsModalVisible(true);
     };
 
     const handleDelete = async (id: number) => {
         try {
-            await axios.delete(`${API_URL}/${id}`);
+            await axios.delete(`${API_URL}/tour/${id}`);
             message.success("Xóa thành công!");
             fetchData(currentPage, pagination.defaultPageSize);
         } catch (error) {
@@ -199,37 +244,45 @@ const TourCustom: () => JSX.Element = () => {
         try {
             const formData = new FormData();
 
-            // Transform array values from string to number
+            // Chuyển đổi giá trị mảng sang số
             const transformedValues = {
                 tour: {
                     ...values.tour,
                     isTrending: 1,
                 },
                 logistics: values.logistics,
-                activityIds: values.activityIds?.map(Number),
-                destinationIds: values.destinationIds?.map(Number),
-                interestIds: values.interestIds?.map(Number),
-                styleIds: values.styleIds?.map(Number),
-                themeIds: values.themeIds?.map(Number),
+                activityIds: values.activityIds?.map(Number).filter(Boolean),
+                destinationIds: values.destinationIds
+                    ?.map(Number)
+                    .filter(Boolean),
+                interestIds: values.interestIds?.map(Number).filter(Boolean),
+                styleIds: values.styleIds?.map(Number).filter(Boolean),
+                themeIds: values.themeIds?.map(Number).filter(Boolean),
                 themes: values.themeIds?.map((id: string) => {
-                    const theme = themeIds.find((t) => t.value === id);
+                    const theme = themeIds?.find((t) => t.value === id);
                     return theme ? theme.label : "";
                 }),
             };
 
-            // Append JSON stringified request with correct format
-            formData.append("request", JSON.stringify(transformedValues));
+            // Append JSON request với type=application/json
+            formData.append(
+                "request",
+                new Blob([JSON.stringify(transformedValues)], {
+                    type: "application/json",
+                })
+            );
 
-            // Handle images if provided
-            if (values.images?.length > 0) {
+            // Kiểm tra và thêm ảnh nếu có
+            if (Array.isArray(values.images) && values.images.length > 0) {
                 values.images.forEach((file: File) => {
                     formData.append("images", file);
                 });
             }
 
+            // Gửi request
             const response = await axios.post(`${API_URL}/create`, formData, {
                 headers: {
-                    Accept: "application/json, text/plain, */*",
+                    Accept: "application/json",
                     "Accept-Language":
                         "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
                     Connection: "keep-alive",
@@ -329,7 +382,12 @@ const TourCustom: () => JSX.Element = () => {
                                 name={["tour", "tripId"]}
                                 label="Mã chuyến đi"
                             >
-                                <Input />
+                                <Select
+                                    mode="tags"
+                                    style={{ width: "100%" }}
+                                    placeholder="Tags Mode"
+                                    options={types}
+                                />
                             </Form.Item>
                             <Form.Item
                                 name={["tour", "tripType"]}
