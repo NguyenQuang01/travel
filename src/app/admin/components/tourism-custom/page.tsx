@@ -182,6 +182,7 @@ const TourCustom: () => JSX.Element = () => {
     };
 
     const handleAddOrEdit = (record?: any) => {
+        console.log("🚀 ~ handleAddOrEdit ~ record:", record);
         setIsEditMode(!!record);
         setSelectedRecord(record || null);
 

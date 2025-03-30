@@ -38,3 +38,12 @@ export const getStyleIds = async () => {
         throw error;
     }
 };
+export const getTypes = async () => {
+    try {
+        const response = await apiServices.get(`/types/types`);
+        return response;
+    } catch (error) {
+        console.error("Search tours error:", error);
+        throw error;
+    }
+};
