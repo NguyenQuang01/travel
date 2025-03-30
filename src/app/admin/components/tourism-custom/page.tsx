@@ -212,7 +212,6 @@ const TourCustom: () => JSX.Element = () => {
         setIsModalVisible(true);
     };
     const handleEdit = async (record: Tour) => {
-        setIsEditMode(false);
         if (record?.id) {
             setIdEdit(record.id);
             const response: any = await getDetailTour(record?.id);
@@ -258,9 +257,7 @@ const TourCustom: () => JSX.Element = () => {
             console.error("Lỗi khi xóa dữ liệu!", error);
         }
     };
-
-    const handleSubmit = async (values: any) => {
-        console.log("🚀 ~ handleSubmit ~ values:", idEdit);
+    const addTour = async (values: any) => {
         try {
             const formData = new FormData();
 
@@ -285,9 +282,9 @@ const TourCustom: () => JSX.Element = () => {
             };
 
             // Append JSON request với type=application/json
-            const namekeyFile = `${isEditMode ? "tourUpdateDTO" : "request"}`;
+
             formData.append(
-                namekeyFile,
+                "request",
                 new Blob([JSON.stringify(transformedValues)], {
                     type: "application/json",
                 })
@@ -301,26 +298,15 @@ const TourCustom: () => JSX.Element = () => {
             }
 
             // Gửi request
-            if (isEditMode) {
-                console.log(formData, "-----------------1");
-                await axios.put(`${API_URL}/update/${idEdit}`, formData, {
-                    headers: {
-                        Accept: "application/json",
-                        "Accept-Language":
-                            "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
-                        Connection: "keep-alive",
-                    },
-                });
-            } else {
-                await axios.post(`${API_URL}/create`, formData, {
-                    headers: {
-                        Accept: "application/json",
-                        "Accept-Language":
-                            "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
-                        Connection: "keep-alive",
-                    },
-                });
-            }
+
+            await axios.post(`${API_URL}/create`, formData, {
+                headers: {
+                    Accept: "application/json",
+                    "Accept-Language":
+                        "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
+                    Connection: "keep-alive",
+                },
+            });
 
             message.success("Created successfully!");
             setIsModalVisible(false);
@@ -329,6 +315,68 @@ const TourCustom: () => JSX.Element = () => {
             console.error("Error:", error);
             message.error("Lỗi khi lưu dữ liệu!");
         }
+    };
+    const editTour = async (values: any, tourId: number) => {
+        try {
+            const formData = new FormData();
+
+            // Chuyển đổi giá trị mảng sang số
+            const transformedValues = {
+                tour: {
+                    ...values.tour,
+                    isTrending: 1,
+                },
+                logistics: values.logistics,
+                activityIds: values.activityIds?.map(Number).filter(Boolean),
+                destinationIds: values.destinationIds
+                    ?.map(Number)
+                    .filter(Boolean),
+                interestIds: values.interestIds?.map(Number).filter(Boolean),
+                styleIds: values.styleIds?.map(Number).filter(Boolean),
+                themeIds: values.themeIds?.map(Number).filter(Boolean),
+                themes: values.themeIds?.map((id: string) => {
+                    const theme = themeIds?.find((t) => t.value === id);
+                    return theme ? theme.label : "";
+                }),
+            };
+
+            // Append JSON request với type=application/json
+
+            formData.append(
+                "tourUpdateDTO",
+                new Blob([JSON.stringify(transformedValues)], {
+                    type: "application/json",
+                })
+            );
+
+            // Kiểm tra và thêm ảnh nếu có
+            if (Array.isArray(values.images) && values.images.length > 0) {
+                values.images.forEach((file: File) => {
+                    formData.append("images", file);
+                });
+            }
+
+            // Gửi request
+
+            await axios.put(`${API_URL}/update/${tourId}`, formData, {
+                headers: {
+                    Accept: "application/json",
+                    "Accept-Language":
+                        "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
+                    Connection: "keep-alive",
+                },
+            });
+
+            message.success("Created successfully!");
+            setIsModalVisible(false);
+            fetchData(currentPage, pagination.defaultPageSize);
+        } catch (error) {
+            console.error("Error:", error);
+            message.error("Lỗi khi lưu dữ liệu!");
+        }
+    };
+    const handleSubmit = async (values: any) => {
+        isEditMode ? editTour(values, idEdit) : addTour(values);
     };
 
     const columns = [
