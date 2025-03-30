@@ -24,6 +24,7 @@ import {
     getInterests,
     getStyleIds,
     getTypes,
+    getDetailTour,
 } from "@/app/admin/components/tourism-custom/hooks";
 import { UploadOutlined } from "@mui/icons-material";
 const BASE_URL = API_INFO.BASE_URL_ADMIN;
@@ -181,8 +182,7 @@ const TourCustom: () => JSX.Element = () => {
         setIsViewModalVisible(true);
     };
 
-    const handleAddOrEdit = (record?: any) => {
-        console.log("🚀 ~ handleAddOrEdit ~ record:", record);
+    const handleAddOrEdit = async (record?: any) => {
         setIsEditMode(!!record);
         setSelectedRecord(record || null);
 
@@ -190,42 +190,9 @@ const TourCustom: () => JSX.Element = () => {
         form.resetFields();
 
         if (record) {
+            const res: any = await getDetailTour(record?.id);
             // If editing, set the form values from the record
-            form.setFieldsValue({
-                tour: {
-                    name: record.name,
-                    tripId: record.tripId,
-                    tripType: record.tripType,
-                    lodgingLevel: record.lodgingLevel,
-                    lodgingLevelNumber: record.lodgingLevelNumber,
-                    physicalLevel: record.physicalLevel,
-                    physicalLevelNumber: record.physicalLevelNumber,
-                    video: record.video,
-                    totalDay: record.totalDay,
-                    startCity: record.startCity,
-                    endCity: record.endCity,
-                    tripPace: record.tripPace,
-                    tripPaceNumber: record.tripPaceNumber,
-                },
-                logistics: {
-                    price: record.price,
-                    oldPrice: record.oldPrice,
-                    accommodation: record.accommodation,
-                    transportation: record.transportation,
-                    guides: record.guides,
-                    mealsIncludedBreakfast: record.mealsIncludedBreakfast,
-                    mealsIncludedLunch: record.mealsIncludedLunch,
-                    travelInsurance: record.travelInsurance,
-                    visaRequirements: record.visaRequirements,
-                    healthSafety: record.healthSafety,
-                },
-                activityIds: record.activityIds,
-                destinationIds: record.destinationIds,
-                interestIds: record.interestIds,
-                styleIds: record.styleIds,
-                themeIds: record.themeIds,
-                images: record.images || [], // Added images field
-            });
+            form.setFieldsValue(res.data.tourData);
         }
 
         setIsModalVisible(true);
@@ -615,7 +582,7 @@ const TourCustom: () => JSX.Element = () => {
                                     Select Images
                                 </Button>
                             </Upload>
-                            <div
+                            {/* <div
                                 style={{
                                     display: "flex",
                                     flexWrap: "wrap",
@@ -625,10 +592,12 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 {form
                                     .getFieldValue("images")
-                                    ?.map((file: File, index: number) => (
+                                    ?.map((file: any, index: number) => (
                                         <img
                                             key={index}
-                                            src={URL.createObjectURL(file)}
+                                            src={`${API_INFO.BASE_URL_ADMIN}${
+                                                file && file?.url
+                                            }`}
                                             alt={`Preview ${index + 1}`}
                                             style={{
                                                 width: "200px",
@@ -637,7 +606,7 @@ const TourCustom: () => JSX.Element = () => {
                                             }}
                                         />
                                     ))}
-                            </div>
+                            </div> */}
                         </>
                     </Form.Item>
                     <Button type="primary" htmlType="submit">
