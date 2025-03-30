@@ -384,7 +384,6 @@ const TourCustom: () => JSX.Element = () => {
                                 label="Mã chuyến đi"
                             >
                                 <Select
-                                    mode="tags"
                                     style={{ width: "100%" }}
                                     placeholder="Tags Mode"
                                     options={types}
