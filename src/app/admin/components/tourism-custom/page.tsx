@@ -327,7 +327,6 @@ const TourCustom: () => JSX.Element = () => {
             };
 
             // Append JSON request với type=application/json
-
             formData.append(
                 "tourUpdateDTO",
                 new Blob([JSON.stringify(transformedValues)], {
@@ -335,23 +334,19 @@ const TourCustom: () => JSX.Element = () => {
                 })
             );
 
-            // // Kiểm tra và thêm ảnh nếu có
-            // if (Array.isArray(values.images) && values.images.length > 0) {
-            //     values.images.forEach((file: File) => {
-            //         formData.append("images", file);
-            //     });
-            // }
+            // Kiểm tra và thêm ảnh nếu có
+            if (Array.isArray(values.images) && values.images.length > 0) {
+                const existingFiles = values.images.map((img: any) => {
+                    return new File([], img.imageUrl, { type: "image/jpeg" }); // hoặc thay đổi type phù hợp
+                });
+                existingFiles.forEach((file: any) =>
+                    formData.append("images", file)
+                );
+            }
 
             // Gửi request
 
-            await axios.put(`${API_URL}/update/${tourId}`, formData, {
-                headers: {
-                    Accept: "application/json",
-                    "Accept-Language":
-                        "vi,en;q=0.9,ja;q=0.8,zh-CN;q=0.7,zh;q=0.6",
-                    Connection: "keep-alive",
-                },
-            });
+            await axios.put(`${API_URL}/update/${tourId}`, formData);
 
             message.success("Created successfully!");
             setIsModalVisible(false);
