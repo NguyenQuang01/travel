@@ -337,7 +337,8 @@ const TourCustom: () => JSX.Element = () => {
             // Kiểm tra và thêm ảnh nếu có
             if (Array.isArray(values.images) && values.images.length > 0) {
                 const existingFiles = values.images.map((img: any) => {
-                    return new File([], img.imageUrl, { type: "image/jpeg" }); // hoặc thay đổi type phù hợp
+                    console.log("🚀 ~ existingFiles ~ img:", img);
+                    return new File([], img.url, { type: "image/jpeg" }); // hoặc thay đổi type phù hợp
                 });
                 existingFiles.forEach((file: any) =>
                     formData.append("images", file)
