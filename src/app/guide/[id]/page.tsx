@@ -64,7 +64,7 @@ interface ToursResponse {
 const TourTheme = () => {
     const params = useParams();
     const id = params.id; // Lấy id từ URL
-    const [data, setData] = useState<ToursResponse>();
+    const [data, setData] = useState<any>();
     const [theme, setTheme] = useState<string[]>();
     const travelOptions = [
         { name: "Design Custom Trip", color: "bg-red-500", icon: "💚" },
@@ -79,6 +79,7 @@ const TourTheme = () => {
         try {
             const response: any = await getToursSearch(String(id));
             setTheme(Object.keys(response.data.data));
+            console.log(response.data.data, "------------------1");
             setData(response.data.data);
         } catch (error) {
             console.error("Search tours error:", error);
@@ -258,7 +259,7 @@ const TourTheme = () => {
                                 {/* <SwiperSlide className="p-1"></SwiperSlide> */}
 
                                 {data &&
-                                    data[item].map((tour) => (
+                                    data[item].tours.map((tour: any) => (
                                         <SwiperSlide className="p-1">
                                             <CardReview data={tour} />
                                         </SwiperSlide>

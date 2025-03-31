@@ -334,26 +334,25 @@ const TourCustom: () => JSX.Element = () => {
                 })
             );
 
-            // Kiểm tra và thêm ảnh nếu có
+            // Kiểm tra và thêm ảnh nếu có (chỉ nhận File từ máy)
             if (Array.isArray(values.images) && values.images.length > 0) {
-                const existingFiles = values.images.map((img: any) => {
-                    console.log("🚀 ~ existingFiles ~ img:", img);
-                    return new File([], img.url, { type: "image/jpeg" }); // hoặc thay đổi type phù hợp
+                values.images.forEach((file: File) => {
+                    formData.append("images", file);
                 });
-                existingFiles.forEach((file: any) =>
-                    formData.append("images", file)
-                );
             }
 
-            // Gửi request
+            // Gửi request với headers phù hợp
+            await axios.put(`${API_URL}/update/${tourId}`, formData, {
+                headers: {
+                    Accept: "application/json",
+                },
+            });
 
-            await axios.put(`${API_URL}/update/${tourId}`, formData);
-
-            message.success("Created successfully!");
+            message.success("Cập nhật thành công!");
             setIsModalVisible(false);
             fetchData(currentPage, pagination.defaultPageSize);
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Lỗi:", error);
             message.error("Lỗi khi lưu dữ liệu!");
         }
     };
