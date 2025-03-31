@@ -325,7 +325,7 @@ const TourCustom: () => JSX.Element = () => {
                 styleIds: values.styleIds?.map(Number).filter(Boolean),
                 themeIds: values.themeIds?.map(Number).filter(Boolean),
             };
-
+            console.log(transformedValues, "----------------------1");
             // Append JSON request với type=application/json
             formData.append(
                 "tourUpdateDTO",
@@ -517,7 +517,7 @@ const TourCustom: () => JSX.Element = () => {
                                 <TextArea rows={4} />
                             </Form.Item>
                             <Form.Item
-                                name={["tour", "destinationIds"]}
+                                name={["destinationIds"]}
                                 label="Danh sách điểm đến"
                             >
                                 <Select
@@ -648,13 +648,13 @@ const TourCustom: () => JSX.Element = () => {
                         <Col span={12}>
                             {/* Giới hạn độ tuổi */}
                             <Form.Item
-                                name={["tologisticsur", "ageMin"]}
+                                name={["logistics", "ageMin"]}
                                 label="Độ tuổi tối thiểu"
                             >
                                 <InputNumber className="w-full" />
                             </Form.Item>
                             <Form.Item
-                                name={["tologisticsur", "ageMax"]}
+                                name={["logistics", "ageMax"]}
                                 label="Độ tuổi tối đa"
                             >
                                 <InputNumber className="w-full" />
@@ -806,12 +806,6 @@ const TourCustom: () => JSX.Element = () => {
                                     return false;
                                 }}
                                 fileList={form.getFieldValue("images") || []}
-                                onRemove={(file) => {
-                                    const files = form
-                                        .getFieldValue("images")
-                                        .filter((f: any) => f !== file);
-                                    form.setFieldsValue({ images: files });
-                                }}
                             >
                                 <Button icon={<UploadOutlined />}>
                                     Select Images
