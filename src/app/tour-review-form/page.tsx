@@ -35,7 +35,7 @@ export default function TripReviewForm() {
         }
     };
     return (
-        <Container className="mx-auto bg-white p-6 rounded-lg shadow-md">
+        <Container className="mx-auto bg-white p-6 rounded-lg shadow-md my-20">
             <Row gutter={[32, 32]}>
                 <Col span={8}>
                     <h2 className="text-xl font-semibold mb-4">
