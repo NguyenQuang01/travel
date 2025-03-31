@@ -274,7 +274,6 @@ const TourCustom: () => JSX.Element = () => {
             };
 
             // Append JSON request với type=application/json
-
             formData.append(
                 "request",
                 new Blob([JSON.stringify(transformedValues)], {
@@ -290,8 +289,7 @@ const TourCustom: () => JSX.Element = () => {
             }
 
             // Gửi request
-
-            await axios.post(`${API_URL}/create`, formData, {
+            const response = await axios.post(`${API_URL}/create`, formData, {
                 headers: {
                     Accept: "application/json",
                     "Accept-Language":
@@ -434,6 +432,7 @@ const TourCustom: () => JSX.Element = () => {
                     className="w-full"
                 >
                     <Row gutter={[16, 16]}>
+                        {/* Thông tin chung */}
                         <Col span={12}>
                             <Form.Item
                                 name={["tour", "name"]}
@@ -448,6 +447,16 @@ const TourCustom: () => JSX.Element = () => {
                                 <Input />
                             </Form.Item>
                             <Form.Item
+                                name={["tour", "tripId"]}
+                                label="Mã chuyến đi"
+                            >
+                                <Select
+                                    style={{ width: "100%" }}
+                                    placeholder="Chọn mã chuyến đi"
+                                    options={types}
+                                />
+                            </Form.Item>
+                            <Form.Item
                                 name={["tour", "isTrending"]}
                                 label="Xu hướng"
                                 rules={[
@@ -459,21 +468,11 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 <Select
                                     style={{ width: "100%" }}
-                                    placeholder="Xu hướng"
+                                    placeholder="Chọn xu hướng"
                                     options={[
                                         { value: 0, label: "Không" },
                                         { value: 1, label: "Có" },
                                     ]}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "tripId"]}
-                                label="Mã chuyến đi"
-                            >
-                                <Select
-                                    style={{ width: "100%" }}
-                                    placeholder="Tags Mode"
-                                    options={types}
                                 />
                             </Form.Item>
                             <Form.Item
@@ -482,6 +481,28 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 <Input />
                             </Form.Item>
+                            <Form.Item
+                                name={["tour", "totalDay"]}
+                                label="Tổng số ngày"
+                            >
+                                <InputNumber min={1} className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "startCity"]}
+                                label="Thành phố khởi hành"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "endCity"]}
+                                label="Thành phố kết thúc"
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+
+                        {/* Chi tiết lịch trình & địa điểm */}
+                        <Col span={12}>
                             <Form.Item
                                 name={["tour", "attractions"]}
                                 label="Điểm tham quan"
@@ -494,6 +515,27 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 <Input />
                             </Form.Item>
+                            <Form.Item
+                                name={["tour", "itinerary"]}
+                                label="Lịch trình (cách nhau bằng dấu '-')"
+                            >
+                                <TextArea rows={4} />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "destinationIds"]}
+                                label="Danh sách điểm đến"
+                            >
+                                <Select
+                                    mode="tags"
+                                    style={{ width: "100%" }}
+                                    placeholder="Nhập điểm đến"
+                                    options={destinationIds}
+                                />
+                            </Form.Item>
+                        </Col>
+
+                        {/* Thông tin về chuyến đi */}
+                        <Col span={12}>
                             <Form.Item
                                 name={["tour", "lodgingLevel"]}
                                 label="Cấp độ chỗ ở"
@@ -517,68 +559,6 @@ const TourCustom: () => JSX.Element = () => {
                                 label="Mức độ thể chất (số)"
                             >
                                 <InputNumber className="w-full" />
-                            </Form.Item>{" "}
-                            <Form.Item
-                                name={["tour", "groupSize"]}
-                                label=" Kích thước nhóm"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "maxGroupSize"]}
-                                label=" Kích thước nhóm"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "minGroupSize"]}
-                                label="Số lượng nhóm tối thiểu"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "ageRange"]}
-                                label=" Độ tuổi phù hợp"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item name={["tour", "price"]} label="Giá">
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "oldPrice"]}
-                                label="Giá cũ"
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name={["tour", "video"]} label="Video">
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "highlights"]}
-                                label="Điểm nổi bật của chuyến đi"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "totalDay"]}
-                                label="Tổng số ngày"
-                            >
-                                <InputNumber min={1} className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "startCity"]}
-                                label="Thành phố khởi hành"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "endCity"]}
-                                label="Thành phố kết thúc"
-                            >
-                                <Input />
                             </Form.Item>
                             <Form.Item
                                 name={["tour", "tripPace"]}
@@ -599,15 +579,10 @@ const TourCustom: () => JSX.Element = () => {
                                 <Input />
                             </Form.Item>
                             <Form.Item
-                                name={["tour", "destinationIds"]}
-                                label="Danh sách điểm đến"
+                                name={["tour", "highlights"]}
+                                label="Điểm nổi bật của chuyến đi"
                             >
-                                <Select
-                                    mode="tags"
-                                    style={{ width: "100%" }}
-                                    placeholder="Tags Mode"
-                                    options={destinationIds}
-                                />
+                                <Input />
                             </Form.Item>
                             <Form.Item
                                 name={["tour", "tripAbout"]}
@@ -615,11 +590,53 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 <TextArea rows={4} />
                             </Form.Item>
+                        </Col>
+
+                        {/* Quy mô & đối tượng */}
+                        <Col span={12}>
                             <Form.Item
-                                name={["tour", "itinerary"]}
-                                label="Lịch trình (cách nhau bằng dấu '-')"
+                                name={["tour", "groupSize"]}
+                                label="Kích thước nhóm"
                             >
-                                <TextArea rows={4} />
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "maxGroupSize"]}
+                                label="Kích thước nhóm tối đa"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "minGroupSize"]}
+                                label="Kích thước nhóm tối thiểu"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "ageRange"]}
+                                label="Độ tuổi phù hợp"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+                        </Col>
+
+                        {/* Giá cả */}
+                        <Col span={12}>
+                            <Form.Item name={["tour", "price"]} label="Giá">
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name={["tour", "oldPrice"]}
+                                label="Giá cũ"
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+
+                        {/* Khác */}
+                        <Col span={12}>
+                            <Form.Item name={["tour", "video"]} label="Video">
+                                <Input />
                             </Form.Item>
                             <Form.Item
                                 name={["tour", "tripIncludes"]}
@@ -632,19 +649,23 @@ const TourCustom: () => JSX.Element = () => {
 
                     {/* Logistics */}
                     <Row gutter={[16, 16]}>
+                        {/* Cột Trái */}
                         <Col span={12}>
-                            <Form.Item
-                                name={["tologisticsur", "ageMax"]}
-                                label=" Độ tuổi tối đa"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>{" "}
+                            {/* Giới hạn độ tuổi */}
                             <Form.Item
                                 name={["tologisticsur", "ageMin"]}
-                                label=" Độ tuổi tối thiểu"
+                                label="Độ tuổi tối thiểu"
                             >
                                 <InputNumber className="w-full" />
                             </Form.Item>
+                            <Form.Item
+                                name={["tologisticsur", "ageMax"]}
+                                label="Độ tuổi tối đa"
+                            >
+                                <InputNumber className="w-full" />
+                            </Form.Item>
+
+                            {/* Chỗ ở & Hướng dẫn viên */}
                             <Form.Item
                                 name={["logistics", "accommodation"]}
                                 label="Chỗ ở"
@@ -657,14 +678,25 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 <Input />
                             </Form.Item>
+
+                            {/* Bữa ăn */}
                             <Form.Item
                                 name={["logistics", "mealsIncludedBreakfast"]}
                                 label="Bữa sáng"
                             >
                                 <InputNumber min={0} className="w-full" />
                             </Form.Item>
+                            <Form.Item
+                                name={["logistics", "mealsIncludedLunch"]}
+                                label="Bữa trưa"
+                            >
+                                <InputNumber min={0} className="w-full" />
+                            </Form.Item>
                         </Col>
+
+                        {/* Cột Phải */}
                         <Col span={12}>
+                            {/* Bảo hiểm & Visa */}
                             <Form.Item
                                 name={["logistics", "travelInsurance"]}
                                 label="Bảo hiểm du lịch"
@@ -677,6 +709,8 @@ const TourCustom: () => JSX.Element = () => {
                             >
                                 <Input />
                             </Form.Item>
+
+                            {/* An toàn & Chính sách */}
                             <Form.Item
                                 name={["logistics", "healthSafety"]}
                                 label="An toàn & sức khỏe"
@@ -684,21 +718,16 @@ const TourCustom: () => JSX.Element = () => {
                                 <Input />
                             </Form.Item>
                             <Form.Item
-                                name={["logistics", "mealsIncludedLunch"]}
-                                label="Bữa trưa"
-                            >
-                                <InputNumber min={0} className="w-full" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name={["logistics", "logistics"]}
-                                label="Có vẻ là mô tả chung về logistics"
+                                name={["logistics", "cancellationPolicy"]}
+                                label="Chính sách hủy chuyến"
                             >
                                 <TextArea rows={4} />
                             </Form.Item>
+
+                            {/* Thông tin bổ sung */}
                             <Form.Item
-                                name={["logistics", "cancellationPolicy"]}
-                                label="Chính sách hủy chuyến"
+                                name={["logistics", "logistics"]}
+                                label="Có vẻ là mô tả chung về logistics"
                             >
                                 <TextArea rows={4} />
                             </Form.Item>
@@ -713,6 +742,7 @@ const TourCustom: () => JSX.Element = () => {
 
                     {/* Các danh sách ID */}
                     <Row gutter={[16, 16]}>
+                        {/* Cột Trái */}
                         <Col span={12}>
                             <Form.Item
                                 name={["activityIds"]}
@@ -725,8 +755,6 @@ const TourCustom: () => JSX.Element = () => {
                                     options={activityIds}
                                 />
                             </Form.Item>
-                        </Col>
-                        <Col span={12}>
                             <Form.Item
                                 name={["interestIds"]}
                                 label="Danh sách sở thích"
@@ -738,6 +766,10 @@ const TourCustom: () => JSX.Element = () => {
                                     options={interestIds}
                                 />
                             </Form.Item>
+                        </Col>
+
+                        {/* Cột Phải */}
+                        <Col span={12}>
                             <Form.Item
                                 name={["styleIds"]}
                                 label="Danh sách phong cách"

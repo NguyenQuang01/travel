@@ -40,7 +40,7 @@ interface Blog {
 
 export default function CardBlog(prop: Blog) {
     return (
-        <Link href={"/guide/" + prop.title}>
+        <Link href={"/blog/" + prop.id}>
             <div>
                 <Image
                     src={
