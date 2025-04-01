@@ -80,6 +80,14 @@ const items: MenuItem[] = [
             </Link>
         ),
     },
+    {
+        key: "blog",
+        label: (
+            <Link href="/admin/blog" replace>
+                Blog
+            </Link>
+        ),
+    },
 ];
 const LayoutAdmin = ({ children }: any) => {
     const [current, setCurrent] = useState("");
