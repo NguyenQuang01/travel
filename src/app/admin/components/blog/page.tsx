@@ -14,7 +14,12 @@ import {
 import { useState, JSX, useEffect } from "react";
 import axios from "axios";
 import { API_INFO } from "@/constant/constant";
+import dynamic from "next/dynamic";
+import useStore from "@/store/useStore";
 
+const TextEditor = dynamic(() => import("@/app/components/TextEditor"), {
+    ssr: false,
+});
 const BASE_URL = API_INFO.BASE_URL_ADMIN;
 const API_URL = `${BASE_URL}/api/blog`;
 
@@ -29,6 +34,8 @@ interface Blog {
 }
 
 const BlogCustom: () => JSX.Element = () => {
+    const { editor } = useStore();
+
     const [data, setData] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(false);
     const [pagination, setPagination] = useState({
@@ -93,18 +100,17 @@ const BlogCustom: () => JSX.Element = () => {
             >
                 <Input />
             </Form.Item>
-            <Form.Item
-                name="contentHtml"
-                label="Nội dung HTML"
-                rules={[{ required: true, message: "Vui lòng nhập nội dung!" }]}
-            >
-                <Input.TextArea rows={4} />
+            <Form.Item name="contentHtml" label="Nội dung HTML">
+                <TextEditor />
             </Form.Item>
             <Form.Item
                 name="publishDate"
-                label="Ngày xuất bản"
+                label="Publish Date"
                 rules={[
-                    { required: true, message: "Vui lòng chọn ngày xuất bản!" },
+                    {
+                        required: true,
+                        message: "Please select a publish date!",
+                    },
                 ]}
             >
                 <DatePicker />
@@ -128,6 +134,10 @@ const BlogCustom: () => JSX.Element = () => {
         </>
     );
 
+    const handleCreate = async (values: any) => {
+        values.contentHtml = editor;
+        console.log(values);
+    };
     return (
         <div>
             <Button
@@ -138,6 +148,7 @@ const BlogCustom: () => JSX.Element = () => {
             >
                 Thêm mới
             </Button>
+
             <Table
                 columns={columns}
                 dataSource={data}
@@ -209,11 +220,7 @@ const BlogCustom: () => JSX.Element = () => {
                 onCancel={() => setIsCreateModalVisible(false)}
                 onOk={() => form.submit()}
             >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    // onFinish={handleCreate}
-                >
+                <Form form={form} layout="vertical" onFinish={handleCreate}>
                     <FormContent />
                 </Form>
             </Modal>

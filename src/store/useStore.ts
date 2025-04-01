@@ -55,11 +55,13 @@ interface CounterState {
     steps: number;
     tripData: TripData;
     tourOder: TourOrder;
+    editor: string;
     setTo0: () => void;
     increase: () => void;
     decrease: () => void;
     setTripData: (data: Partial<TripData>) => void;
     setTourOrder: (data: Partial<TourOrder>) => void;
+    setEditor: (content: string) => void;
 }
 
 const useStore = create<CounterState>((set) => ({
@@ -103,6 +105,8 @@ const useStore = create<CounterState>((set) => ({
         price: "",
         day: "",
     },
+    editor: "",
+    setEditor: (content: any) => set({ editor: content }),
     setTo0: () => set({ steps: 0 }),
     increase: () =>
         set((state) => {
