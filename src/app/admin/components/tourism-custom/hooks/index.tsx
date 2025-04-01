@@ -59,7 +59,7 @@ export const getThemes = async () => {
 
 export const getDetailTour = async (id: any) => {
     try {
-        const response = await apiServices.get(`/tours/getFull/${id}`);
+        const response = await apiServices.get(`/tours/adminDetail/${id}`);
         return response;
     } catch (error) {
         console.error("Search tours error:", error);
