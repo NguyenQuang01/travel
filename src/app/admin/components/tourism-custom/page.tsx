@@ -445,11 +445,7 @@ const TourCustom: () => JSX.Element = () => {
                                 name={["tour", "tripId"]}
                                 label="Mã chuyến đi"
                             >
-                                <Select
-                                    style={{ width: "100%" }}
-                                    placeholder="Chọn mã chuyến đi"
-                                    options={types}
-                                />
+                                <Input />
                             </Form.Item>
                             <Form.Item
                                 name={["tour", "isTrending"]}
@@ -474,7 +470,11 @@ const TourCustom: () => JSX.Element = () => {
                                 name={["tour", "tripType"]}
                                 label="Loại hình"
                             >
-                                <Input />
+                                <Select
+                                    style={{ width: "100%" }}
+                                    placeholder="Chọn mã chuyến đi"
+                                    options={types}
+                                />
                             </Form.Item>
                             <Form.Item
                                 name={["tour", "totalDay"]}
