@@ -1,16 +1,18 @@
 "use client";
 import { Container } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "next/navigation";
 import { getBlog } from "./hook";
 
 const Blog = () => {
     const params = useParams();
     const id = params.id; // Lấy id từ URL
+    const [data, setData] = useState<any>();
+    console.log("🚀 ~ Blog ~ data:", data);
     const getDataBlog = async () => {
-        const response = await getBlog(String(id));
-        console.log("🚀 ~ getDataBlog ~ response:", response);
+        const response: any = await getBlog(String(id));
+        setData(response.data);
     };
     React.useEffect(() => {
         getDataBlog();
@@ -47,9 +49,15 @@ const Blog = () => {
                     </Container>
                 </div>
             </div>
-            <div className="bg-[#f8f7fd]">
-                <Container className="py-10 px-6">
-                    <div dangerouslySetInnerHTML={{ __html: "" }}></div>
+            <div className="bg-[#f8f7fd] p-2">
+                <Container className="py-5 px-6 bg-white mt-5 rounded-lg">
+                    <div className="my-10">
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: data?.contentHtml,
+                            }}
+                        ></div>
+                    </div>
                 </Container>
             </div>
         </div>

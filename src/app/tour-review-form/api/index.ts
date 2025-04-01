@@ -25,3 +25,13 @@ export const PostReview = async (payload: ReviewPayload) => {
         throw error;
     }
 };
+
+export const getToursAll = async () => {
+    try {
+        const response = await apiServices.get(`/tours/all`);
+        return response;
+    } catch (error) {
+        console.error("Save answer error:", error);
+        throw error;
+    }
+};

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select, Rate, Input, Button, Row, Col } from "antd";
 import { Container } from "@mui/material";
 import ButtonGreen from "../components/ButtonGreen";
-import { PostReview } from "./api";
+import { getToursAll, PostReview } from "./api";
 
 export default function TripReviewForm() {
+    const [tours, setTours] = useState([]);
     const [formData, setFormData] = useState({
         tourId: 0,
         companyName: "",
@@ -34,6 +35,22 @@ export default function TripReviewForm() {
             alert("Submit review failed");
         }
     };
+    const fetchTours = async () => {
+        const response: any = await getToursAll();
+        if (response.status === 200) {
+            setTours(
+                response.data.map((tour: any) => ({
+                    value: tour.id,
+                    label: tour.name,
+                }))
+            );
+        } else {
+            alert("Failed to fetch tours");
+        }
+    };
+    useEffect(() => {
+        fetchTours();
+    }, []);
     return (
         <Container className="mx-auto bg-white p-6 rounded-lg shadow-md my-20">
             <Row gutter={[32, 32]}>
@@ -58,13 +75,7 @@ export default function TripReviewForm() {
                             onChange={(value) =>
                                 handleInputChange("tourId", value)
                             }
-                            options={[
-                                { value: 1, label: "Spirit Tours" },
-                                {
-                                    value: 2,
-                                    label: "Spirit Tours Company Reviews",
-                                },
-                            ]}
+                            options={tours}
                         />
                     </div>
                     {/* Đánh giá chuyến đi */}
