@@ -152,7 +152,7 @@ const Details = (props: any) => {
                                     <Space wrap>
                                         {destinations.map((item: any) => (
                                             <Tag
-                                                key={item.continentId}
+                                                key={`${item.continentId}-${item.destination}`}
                                                 className="px-3 py-1 text-lg"
                                             >
                                                 {item.destination}
