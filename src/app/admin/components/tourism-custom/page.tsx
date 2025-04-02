@@ -337,7 +337,6 @@ const TourCustom: () => JSX.Element = () => {
                     return theme ? theme.label : "";
                 }),
             };
-            console.log(transformedValues, "----------------------1");
             // Append JSON request với type=application/json
             formData.append(
                 "tourUpdateDTO",
