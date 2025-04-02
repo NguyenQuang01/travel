@@ -271,6 +271,12 @@ const TourCustom: () => JSX.Element = () => {
                 interestIds: values.interestIds?.map(Number).filter(Boolean),
                 styleIds: values.styleIds?.map(Number).filter(Boolean),
                 themeIds: values.themeIds?.map(Number).filter(Boolean),
+                themes: values.themeIds?.map((id: string) => {
+                    const theme: any = themeIds?.find(
+                        (t: any) => t.value === id
+                    );
+                    return theme ? theme.label : "";
+                }),
             };
 
             // Append JSON request với type=application/json
@@ -324,6 +330,12 @@ const TourCustom: () => JSX.Element = () => {
                 interestIds: values.interestIds?.map(Number).filter(Boolean),
                 styleIds: values.styleIds?.map(Number).filter(Boolean),
                 themeIds: values.themeIds?.map(Number).filter(Boolean),
+                themes: values.themeIds?.map((id: string) => {
+                    const theme: any = themeIds?.find(
+                        (t: any) => t.value === id
+                    );
+                    return theme ? theme.label : "";
+                }),
             };
             console.log(transformedValues, "----------------------1");
             // Append JSON request với type=application/json
