@@ -15,7 +15,8 @@ import ButtonGreen from "@/app/components/ButtonGreen";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Loading from "@/app/components/Loading";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import TourCard from "../components/TourCard";
+
 interface ReviewSummary {
     avgTransportation: number;
     avgActivities: number;
@@ -66,6 +67,7 @@ const TourTheme = () => {
     const id = params.id; // Lấy id từ URL
     const [data, setData] = useState<any>();
     const [theme, setTheme] = useState<string[]>();
+    const [firstKey, setFirstKey] = useState<any>();
     const travelOptions = [
         { name: "Design Custom Trip", color: "bg-red-500", icon: "💚" },
         { name: "Group Tour", color: "bg-red-500", icon: "👥" },
@@ -79,8 +81,10 @@ const TourTheme = () => {
         try {
             const response: any = await getToursSearch(String(id));
             setTheme(Object.keys(response.data.data));
-            console.log(response.data.data, "------------------1");
             setData(response.data.data);
+            if (response.data.data) {
+                setFirstKey(Object.keys(response.data.data)[0]);
+            }
         } catch (error) {
             console.error("Search tours error:", error);
             throw error;
@@ -91,9 +95,9 @@ const TourTheme = () => {
     }, []);
     return data ? (
         <>
-            <div className="relative bg-black text-white pt-5  px-6 md:h-[532px]">
+            <div className="relative bg-black text-white pt-5  px-6 md:h-[432px]">
                 <Image
-                    src="https://images.pexels.com/photos/29515365/pexels-photo-29515365/free-photo-of-hoa-sen-r-c-r-trong-c-nh-quan-vi-t-nam-ng-p-tran-anh-n-ng.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    src="https://images.pexels.com/photos/25424413/pexels-photo-25424413/free-photo-of-xe-h-i-d-ng-d-ng-ph-giao-thong.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="Background"
                     fill
                     className="object-cover opacity-50"
@@ -225,110 +229,10 @@ const TourTheme = () => {
                 </Container>
             </div>
             <Container>
-                <div className=" items-center justify-center mt-20">
-                    {theme?.map((item, index) => (
-                        <div key={item} className="w-full mb-8">
-                            {index === 1 && (
-                                <div className="mt-5 mb-10">
-                                    <Banner />
-                                </div>
-                            )}
-                            <div className="flex items-end gap-3 mb-8">
-                                <div className="text-[2rem] font-bold text-gray-800 tracking-tight">
-                                    {item}
-                                </div>
-                                <Link href={`/trips-list/${item}`}>
-                                    <button className="flex items-center mb-2 gap-1 text-[#888] hover:text-[#888] transition-colors duration-200 font-medium">
-                                        See all {data[item].count} tours
-                                        <ArrowForwardIosIcon
-                                            className="w-2 h-2"
-                                            sx={{
-                                                height: "15px",
-                                                width: "15px",
-                                            }}
-                                        />
-                                    </button>
-                                </Link>
-                            </div>
-
-                            <Swiper
-                                modules={[Navigation, Pagination, Autoplay]}
-                                breakpoints={{
-                                    320: {
-                                        slidesPerView: 2,
-                                        spaceBetween: 5,
-                                    },
-                                    768: {
-                                        slidesPerView: 4,
-                                        spaceBetween: 30,
-                                    },
-                                }}
-                                navigation
-                                autoplay={{
-                                    delay: 3000,
-                                    disableOnInteraction: false,
-                                }}
-                                loop={true}
-                                className="h-full"
-                            >
-                                {/* <SwiperSlide className="p-1"></SwiperSlide> */}
-
-                                {data &&
-                                    data[item].tours.map((tour: any) => (
-                                        <SwiperSlide className="p-1">
-                                            <CardReview data={tour} />
-                                        </SwiperSlide>
-                                    ))}
-                            </Swiper>
-                            {index === 1 && (
-                                <div className="relative bg-black text-white pt-5 px-6 md:h-[300px] mt-20 rounded-lg">
-                                    <Image
-                                        src="https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                                        alt="Background"
-                                        fill
-                                        className="object-cover opacity-50 rounded-lg"
-                                        priority
-                                    />
-                                    <div className="mt-10">
-                                        <Row gutter={[16, 16]}>
-                                            <Col span={8}>
-                                                <div className="text-white font-roboto text-2xl font-bold leading-9 mr-4 mb-4">
-                                                    Want a tailor-made trip
-                                                    instead?
-                                                </div>
-                                            </Col>
-                                            <Col span={8}>
-                                                <div className="text-white font-roboto text-xl font-bold leading-[25px] inline">
-                                                    Your trip, your way, planned
-                                                    by an expert:
-                                                </div>
-                                                <ul className="list-disc pl-4 mt-3">
-                                                    <li className="text-white my-3 leading-6 text-left">
-                                                        You choose budget,
-                                                        destinations,
-                                                        activities, transport &
-                                                        lodging type
-                                                    </li>
-                                                    <li className="text-white leading-6 text-left">
-                                                        Expert designs the
-                                                        itinerary for you, and
-                                                        once approved, takes
-                                                        care of logistics
-                                                    </li>
-                                                </ul>
-                                            </Col>
-                                            <Col span={8}>
-                                                <div className="flex justify-end">
-                                                    {" "}
-                                                    <Link href="/client/my-custom-trip">
-                                                        <ButtonGreen name="Design custom trip" />
-                                                    </Link>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </div>
-                            )}
+                <div className="my-10">
+                    {data[firstKey]?.tours.map((item: TourData) => (
+                        <div className="mb-10" key={item.tourInfo.id}>
+                            <TourCard data={item} />
                         </div>
                     ))}
                 </div>
