@@ -236,7 +236,8 @@ const TourCustom: () => JSX.Element = () => {
                 styleIds:
                     data.styles?.map((style: any) => String(style.id)) || [],
                 themeIds:
-                    data.themes?.map((theme: any) => String(theme.id)) || [],
+                    data.themes?.map((theme: any) => String(theme.themeId)) ||
+                    [],
             });
             setSelectedRecord(data);
             setIsEditMode(true);
@@ -261,7 +262,6 @@ const TourCustom: () => JSX.Element = () => {
             const transformedValues = {
                 tour: {
                     ...values.tour,
-                    isTrending: 1,
                 },
                 logistics: values.logistics,
                 activityIds: values.activityIds?.map(Number).filter(Boolean),
@@ -293,7 +293,6 @@ const TourCustom: () => JSX.Element = () => {
                     formData.append("images", file);
                 });
             }
-
             // Gửi request
             const response = await axios.post(`${API_URL}/create`, formData, {
                 headers: {
@@ -320,9 +319,9 @@ const TourCustom: () => JSX.Element = () => {
             const transformedValues = {
                 tour: {
                     ...values.tour,
-                    isTrending: 1,
+                    id: tourId,
                 },
-                logistics: values.logistics,
+                logistics: { ...values.logistics, id: tourId },
                 activityIds: values.activityIds?.map(Number).filter(Boolean),
                 destinationIds: values.destinationIds
                     ?.map(Number)
@@ -351,6 +350,7 @@ const TourCustom: () => JSX.Element = () => {
                     formData.append("images", file);
                 });
             }
+            console.log("🚀 ~ handleEdit ~ data:", transformedValues);
 
             // Gửi request với headers phù hợp
             await axios.put(`${API_URL}/update/${tourId}`, formData, {

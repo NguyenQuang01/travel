@@ -16,6 +16,7 @@ import axios from "axios";
 import { API_INFO } from "@/constant/constant";
 import dynamic from "next/dynamic";
 import useStore from "@/store/useStore";
+import { createPost, getPosts, getPostById } from "./api";
 
 const TextEditor = dynamic(() => import("@/app/components/TextEditor"), {
     ssr: false,
@@ -34,7 +35,7 @@ interface Blog {
 }
 
 const BlogCustom: () => JSX.Element = () => {
-    const { editor } = useStore();
+    const { editor, setEditor } = useStore();
 
     const [data, setData] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(false);
@@ -54,13 +55,12 @@ const BlogCustom: () => JSX.Element = () => {
 
     const columns = [
         { title: "ID", dataIndex: "id", key: "id" },
-        { title: "Tiêu đề", dataIndex: "title", key: "title" },
         {
-            title: "Ảnh bìa",
-            dataIndex: "coverImage",
-            key: "coverImage",
-            render: (text: string) => (
-                <img src={text} alt="cover" style={{ width: 100 }} />
+            title: "Nội dung",
+            dataIndex: "contentHtml",
+            key: "contentHtml",
+            render: (html: string) => (
+                <div dangerouslySetInnerHTML={{ __html: html }} />
             ),
         },
         {
@@ -68,31 +68,60 @@ const BlogCustom: () => JSX.Element = () => {
             dataIndex: "publishDate",
             key: "publishDate",
         },
-        { title: "Loại", dataIndex: "types", key: "types" },
+        {
+            title: "Loại",
+            dataIndex: "types",
+            key: "types",
+        },
+        {
+            title: "Tên các loại",
+            dataIndex: "typeNames",
+            key: "typeNames",
+            render: (typeNames: string[] | null) =>
+                typeNames ? typeNames.join(", ") : "N/A",
+        },
         {
             title: "Hành động",
             key: "actions",
             render: (_: any, record: Blog) => (
                 <Space>
                     {/* <Button type="link" onClick={() => handleView(record)}>Xem</Button> */}
-                    {/* <Button type="link" onClick={() => handleEdit(record)}>Sửa</Button> */}
+                    <Button type="link" onClick={() => handleEdit(record)}>
+                        Sửa
+                    </Button>
                     {/* <Button type="link" danger onClick={() => handleDelete(record.id)}>Xóa</Button> */}
                 </Space>
             ),
         },
     ];
-
+    const handleEdit = async (record: Blog) => {
+        setSelectedRecord(record);
+        setIsEditModalVisible(true);
+        form.setFieldsValue({
+            data: {
+                title: record.title,
+                types: record.types,
+            },
+            cover: record.coverImage,
+        });
+        setEditor(record.contentHtml);
+        const res: any = await getPostById(record.id);
+        if (res.status === 200) {
+            setSelectedRecord(res.data);
+        }
+        // setIsModalVisible(true);
+    };
     const FormContent = () => (
         <>
             <Form.Item
-                name="title"
+                name={["data", "title"]}
                 label="Tiêu đề"
                 rules={[{ required: true, message: "Vui lòng nhập tiêu đề!" }]}
             >
                 <Input />
             </Form.Item>
             <Form.Item
-                name="coverImage"
+                name="cover"
                 label="Ảnh bìa URL"
                 rules={[
                     { required: true, message: "Vui lòng nhập URL ảnh bìa!" },
@@ -100,43 +129,37 @@ const BlogCustom: () => JSX.Element = () => {
             >
                 <Input />
             </Form.Item>
-            <Form.Item name="contentHtml" label="Nội dung HTML">
+            <Form.Item label="Nội dung HTML" name={["data", "content"]}>
                 <TextEditor />
             </Form.Item>
-            <Form.Item
-                name="publishDate"
-                label="Publish Date"
-                rules={[
-                    {
-                        required: true,
-                        message: "Please select a publish date!",
-                    },
-                ]}
-            >
-                <DatePicker />
-            </Form.Item>
-            <Form.Item
-                name="types"
-                label="Loại"
-                rules={[{ required: true, message: "Vui lòng nhập loại!" }]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                name="typeNames"
-                label="Tên các loại"
-                rules={[
-                    { required: true, message: "Vui lòng nhập tên các loại!" },
-                ]}
-            >
+
+            <Form.Item label="Loại" name={["data", "types"]}>
                 <Input />
             </Form.Item>
         </>
     );
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const fetchData = async (page: number = 0, size: number = 10) => {
+        const res: any = await getPosts(page, size);
+        if (res.status === 200) {
+            setData(res.data.content);
+            setPagination((prev) => ({
+                ...prev,
+                total: res.data.totalElements,
+            }));
+        }
+        setLoading(false);
+    };
 
     const handleCreate = async (values: any) => {
-        values.contentHtml = editor;
-        console.log(values);
+        values.data.content = editor;
+        const res: any = await createPost(values);
+        if (res.status === 200) {
+            message.success("Tạo mới thành công");
+            setIsCreateModalVisible(false);
+        }
     };
     return (
         <div>
@@ -195,7 +218,9 @@ const BlogCustom: () => JSX.Element = () => {
                         </p>
                         <p>
                             <strong>Tên các loại:</strong>{" "}
-                            {selectedRecord.typeNames.join(", ")}
+                            {selectedRecord.typeNames
+                                ? selectedRecord.typeNames.join(", ")
+                                : "N/A"}
                         </p>
                     </Card>
                 )}
