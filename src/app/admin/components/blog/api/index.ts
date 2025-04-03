@@ -3,11 +3,12 @@ import axios from "axios";
 import { API_INFO } from "@/constant/constant";
 
 export const createPost = async (postData: any) => {
+    console.log("🚀 ~ createPost ~ postData:", postData);
     try {
         const formData = new FormData();
-        // Change from "request" to match the curl command parameter name
+        // Match the curl command parameter structure
         formData.append(
-            "request",
+            "post",
             new Blob(
                 [
                     JSON.stringify({
@@ -38,7 +39,7 @@ export const createPost = async (postData: any) => {
         );
         return response;
     } catch (error) {
-        console.error("Save post error:", error);
+        console.error("Update post error:", error);
         throw error;
     }
 };

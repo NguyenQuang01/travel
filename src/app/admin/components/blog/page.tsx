@@ -141,46 +141,17 @@ const BlogCustom: () => JSX.Element = () => {
             </Form.Item>
             <Form.Item
                 name="cover"
-                label="Ảnh bìa"
+                label="Cover Image"
                 rules={[
                     {
                         required: true,
-                        message: "Vui lòng chọn ảnh hoặc nhập URL!",
+                        message: "Please select an image or enter URL!",
                     },
                 ]}
             >
-                <div>
-                    <Upload
-                        beforeUpload={(file) => {
-                            form.setFieldsValue({ image: file });
-                            const reader = new FileReader();
-                            reader.onload = (e) => {
-                                setPreviewImage(e.target?.result as string);
-                            };
-                            reader.readAsDataURL(file);
-                            return false;
-                        }}
-                        showUploadList={false}
-                    >
-                        <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
-                    </Upload>
-                    {(previewImage || form.getFieldValue("cover")) && (
-                        <img
-                            src={
-                                previewImage ||
-                                `${API_INFO.BASE_URL_ADMIN}${form.getFieldValue(
-                                    "cover"
-                                )}`
-                            }
-                            alt="preview"
-                            style={{
-                                marginTop: "10px",
-                                maxWidth: "200px",
-                                maxHeight: "200px",
-                            }}
-                        />
-                    )}
-                </div>
+                <Upload maxCount={1}>
+                    <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
+                </Upload>
             </Form.Item>
             <Form.Item label="Nội dung HTML" name={["data", "content"]}>
                 <TextEditor />
