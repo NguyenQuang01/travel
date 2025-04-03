@@ -71,6 +71,7 @@ const TourCustom: () => JSX.Element = () => {
     const [styleIds, setStyleIds] = useState([]);
     const [types, setTypes] = useState([]);
     const [idEdit, setIdEdit] = useState(0);
+    const [IdLogistics, setIdLogistics] = useState(0);
     const [themeIds, setThemeIds] = useState([]);
     const fetchData = async (page = currentPage, pageSize = 10) => {
         setLoading(true);
@@ -212,7 +213,7 @@ const TourCustom: () => JSX.Element = () => {
             setIdEdit(record.id);
             const response: any = await getDetailTour(record?.id);
             const data = response.data.tourData;
-
+            setIdLogistics(data.logistics?.id);
             form.setFieldsValue({
                 tour: data.tour,
                 images: data.images.map((img: any) => ({
@@ -321,7 +322,7 @@ const TourCustom: () => JSX.Element = () => {
                     ...values.tour,
                     id: tourId,
                 },
-                logistics: { ...values.logistics, id: tourId },
+                logistics: { ...values.logistics, id: IdLogistics },
                 activityIds: values.activityIds?.map(Number).filter(Boolean),
                 destinationIds: values.destinationIds
                     ?.map(Number)

@@ -1,20 +1,44 @@
 import apiServices from "@/services/axios";
+import axios from "axios";
+import { API_INFO } from "@/constant/constant";
 
-interface PostData {
-    data: {
-        title: string;
-        content: string;
-        types: string;
-    };
-    cover: string;
-}
-
-export const createPost = async (postData: PostData) => {
+export const createPost = async (postData: any) => {
     try {
-        const response = await apiServices.post("/posts/create", postData);
+        const formData = new FormData();
+        // Change from "request" to match the curl command parameter name
+        formData.append(
+            "request",
+            new Blob(
+                [
+                    JSON.stringify({
+                        title: postData.data.title,
+                        content: postData.data.content,
+                        types: postData.data.types,
+                        isShow: postData.data.isShow,
+                    }),
+                ],
+                {
+                    type: "application/json",
+                }
+            )
+        );
+
+        if (postData.cover) {
+            formData.append("cover", postData.cover.file);
+        }
+
+        const response = await axios.post(
+            `${API_INFO.BASE_URL}/posts/create`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
         return response;
     } catch (error) {
-        console.error("Save answer error:", error);
+        console.error("Save post error:", error);
         throw error;
     }
 };
@@ -35,6 +59,56 @@ export const getPostById = async (id: number) => {
         return response;
     } catch (error) {
         console.error("Get post error:", error);
+        throw error;
+    }
+};
+export const updatePost = async (postData: any, id: any) => {
+    console.log("🚀 ~ updatePost ~ postData:", postData);
+    try {
+        const formData = new FormData();
+        // Match the curl command parameter structure
+        formData.append(
+            "post",
+            new Blob(
+                [
+                    JSON.stringify({
+                        title: postData.data.title,
+                        content: postData.data.content,
+                        types: postData.data.types,
+                        isShow: postData.data.isShow,
+                    }),
+                ],
+                {
+                    type: "application/json",
+                }
+            )
+        );
+
+        if (postData.cover) {
+            formData.append("cover", postData.cover.file);
+        }
+
+        const response = await axios.put(
+            `${API_INFO.BASE_URL}/posts/${id}`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        return response;
+    } catch (error) {
+        console.error("Update post error:", error);
+        throw error;
+    }
+};
+export const deletePost = async (id: number) => {
+    try {
+        const response = await apiServices.delete(`/posts/${id}`);
+        return response;
+    } catch (error) {
+        console.error("Delete post error:", error);
         throw error;
     }
 };

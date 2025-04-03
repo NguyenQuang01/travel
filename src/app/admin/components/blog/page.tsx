@@ -10,13 +10,22 @@ import {
     Form,
     Card,
     DatePicker,
+    Upload,
+    Switch,
 } from "antd";
 import { useState, JSX, useEffect } from "react";
 import axios from "axios";
 import { API_INFO } from "@/constant/constant";
 import dynamic from "next/dynamic";
 import useStore from "@/store/useStore";
-import { createPost, getPosts, getPostById } from "./api";
+import {
+    createPost,
+    getPosts,
+    getPostById,
+    updatePost,
+    deletePost,
+} from "./api";
+import { UploadOutlined } from "@mui/icons-material";
 
 const TextEditor = dynamic(() => import("@/app/components/TextEditor"), {
     ssr: false,
@@ -30,6 +39,7 @@ interface Blog {
     coverImage: string;
     contentHtml: string;
     publishDate: string;
+    isShow: boolean;
     types: string;
     typeNames: string[];
 }
@@ -50,18 +60,20 @@ const BlogCustom: () => JSX.Element = () => {
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
     const [form] = Form.useForm();
+    const [file, setFile] = useState<File | null>(null);
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
 
     // ... fetchData, handleDelete, handleView functions remain similar ...
 
     const columns = [
         { title: "ID", dataIndex: "id", key: "id" },
         {
-            title: "Nội dung",
-            dataIndex: "contentHtml",
-            key: "contentHtml",
-            render: (html: string) => (
-                <div dangerouslySetInnerHTML={{ __html: html }} />
-            ),
+            title: "Tiêu đề",
+            dataIndex: "title",
+            key: "title",
+            // render: (html: string) => (
+            //     <div dangerouslySetInnerHTML={{ __html: html }} />
+            // ),
         },
         {
             title: "Ngày xuất bản",
@@ -89,7 +101,13 @@ const BlogCustom: () => JSX.Element = () => {
                     <Button type="link" onClick={() => handleEdit(record)}>
                         Sửa
                     </Button>
-                    {/* <Button type="link" danger onClick={() => handleDelete(record.id)}>Xóa</Button> */}
+                    <Button
+                        type="link"
+                        danger
+                        onClick={() => handleDelete(record.id)}
+                    >
+                        Xóa
+                    </Button>
                 </Space>
             ),
         },
@@ -101,6 +119,7 @@ const BlogCustom: () => JSX.Element = () => {
             data: {
                 title: record.title,
                 types: record.types,
+                isShow: record.isShow,
             },
             cover: record.coverImage,
         });
@@ -122,12 +141,46 @@ const BlogCustom: () => JSX.Element = () => {
             </Form.Item>
             <Form.Item
                 name="cover"
-                label="Ảnh bìa URL"
+                label="Ảnh bìa"
                 rules={[
-                    { required: true, message: "Vui lòng nhập URL ảnh bìa!" },
+                    {
+                        required: true,
+                        message: "Vui lòng chọn ảnh hoặc nhập URL!",
+                    },
                 ]}
             >
-                <Input />
+                <div>
+                    <Upload
+                        beforeUpload={(file) => {
+                            form.setFieldsValue({ image: file });
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                setPreviewImage(e.target?.result as string);
+                            };
+                            reader.readAsDataURL(file);
+                            return false;
+                        }}
+                        showUploadList={false}
+                    >
+                        <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
+                    </Upload>
+                    {(previewImage || form.getFieldValue("cover")) && (
+                        <img
+                            src={
+                                previewImage ||
+                                `${API_INFO.BASE_URL_ADMIN}${form.getFieldValue(
+                                    "cover"
+                                )}`
+                            }
+                            alt="preview"
+                            style={{
+                                marginTop: "10px",
+                                maxWidth: "200px",
+                                maxHeight: "200px",
+                            }}
+                        />
+                    )}
+                </div>
             </Form.Item>
             <Form.Item label="Nội dung HTML" name={["data", "content"]}>
                 <TextEditor />
@@ -135,6 +188,13 @@ const BlogCustom: () => JSX.Element = () => {
 
             <Form.Item label="Loại" name={["data", "types"]}>
                 <Input />
+            </Form.Item>
+            <Form.Item
+                label="Hiển thị"
+                name={["data", "isShow"]}
+                valuePropName="checked"
+            >
+                <Switch />
             </Form.Item>
         </>
     );
@@ -161,6 +221,22 @@ const BlogCustom: () => JSX.Element = () => {
             setIsCreateModalVisible(false);
         }
     };
+    const handleUpdate = async (values: any) => {
+        values.data.content = editor;
+        const res: any = await updatePost(values, selectedRecord?.id);
+        if (res.status === 200) {
+            message.success("Cập nhật thành công");
+            setIsEditModalVisible(false);
+            fetchData();
+        }
+    };
+    const handleDelete = async (id: number) => {
+        const res: any = await deletePost(id);
+        if (res.status === 200) {
+            message.success("Xóa thành công");
+            fetchData();
+        }
+    };
     return (
         <div>
             <Button
@@ -171,14 +247,16 @@ const BlogCustom: () => JSX.Element = () => {
             >
                 Thêm mới
             </Button>
+            <div className="h-[calc(100vh-200px)] overflow-scroll">
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    rowKey="id"
+                    loading={loading}
+                    pagination={pagination}
+                />
+            </div>
 
-            <Table
-                columns={columns}
-                dataSource={data}
-                rowKey="id"
-                loading={loading}
-                pagination={pagination}
-            />
             <Modal
                 title="Chi tiết Blog"
                 open={isModalVisible}
@@ -231,11 +309,7 @@ const BlogCustom: () => JSX.Element = () => {
                 onCancel={() => setIsEditModalVisible(false)}
                 onOk={() => form.submit()}
             >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    // onFinish={handleUpdate}
-                >
+                <Form form={form} layout="vertical" onFinish={handleUpdate}>
                     <FormContent />
                 </Form>
             </Modal>
