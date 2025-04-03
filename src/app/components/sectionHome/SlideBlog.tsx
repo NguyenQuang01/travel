@@ -7,6 +7,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./styles/SlideCard.css";
 import CardBlog from "./components/CardBlog";
+import ButtonGreen from "../ButtonGreen";
+import Link from "next/link";
 interface CardData {
     title: string;
     tourTypes: string;
@@ -109,6 +111,9 @@ const SlideBlog = (prop: { data: Blog[] }) => {
                         ))}
                     </Swiper>
                 </div>
+                <Link href="/blog-list">
+                    <ButtonGreen name={"Explore All"} />
+                </Link>
             </div>
         </div>
     );
