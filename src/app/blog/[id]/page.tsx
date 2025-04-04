@@ -34,7 +34,7 @@ const Blog = () => {
                     <Container className="flex justify-between items-center bg-white text-black py-10 px-6 mb-20 ">
                         <div>
                             <div className="text-[40px] font-bold mb-2">
-                                15 Top Bucket List Destinations
+                                {data?.title}
                             </div>
                             <div className="flex items-baseline text-[#333333] leading-6 mt-5">
                                 By Việt Nam
@@ -43,7 +43,7 @@ const Blog = () => {
                         <div>
                             <div>f,T</div>
                             <div className="text-[hsl(0,0%,20%)]  text-[18px] leading-[27px] text-right mt-5">
-                                September 29, 2014
+                                {data?.publishDate}
                             </div>
                         </div>
                     </Container>
