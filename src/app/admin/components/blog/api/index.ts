@@ -3,29 +3,29 @@ import axios from "axios";
 import { API_INFO } from "@/constant/constant";
 
 export const createPost = async (postData: any) => {
-    console.log("🚀 ~ createPost ~ postData:", postData);
     try {
         const formData = new FormData();
-        // Match the curl command parameter structure
+        
+        // Create a Blob with the post data
         formData.append(
-            "post",
+            'request',
             new Blob(
                 [
                     JSON.stringify({
                         title: postData.data.title,
                         content: postData.data.content,
                         types: postData.data.types,
-                        isShow: postData.data.isShow,
                     }),
                 ],
                 {
-                    type: "application/json",
+                    type: 'application/json',
                 }
             )
         );
 
+        // Append cover image if exists
         if (postData.cover) {
-            formData.append("cover", postData.cover.file);
+            formData.append('cover', postData.cover.file);
         }
 
         const response = await axios.post(
@@ -33,16 +33,16 @@ export const createPost = async (postData: any) => {
             formData,
             {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    'Content-Type': 'multipart/form-data',
                 },
             }
         );
         return response;
     } catch (error) {
-        console.error("Update post error:", error);
+        console.error('Create post error:', error);
         throw error;
     }
-};
+}
 export const getPosts = async (page: number = 0, size: number = 10) => {
     try {
         const response = await apiServices.get(
