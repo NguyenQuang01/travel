@@ -15,8 +15,10 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 export default function NewsGrid() {
   const [data, setData] = useState([]);
-  const getData = async () => {
-    const response: any = await getBlogPosts();
+  const [selectedItem, setSelectedItem] = useState("Recent Posts");
+
+  const getData = async (type: string = "") => {
+    const response: any = await getBlogPosts(type);
     setData(response?.data?.content);
     console.log(response?.data?.content);
   };
@@ -28,6 +30,40 @@ export default function NewsGrid() {
       <SliderBlog />
       <Box className="min-h-screen bg-gray-100 p-6 flex justify-center">
         <Container>
+          <div className="mb-8">
+            <nav>
+              <ul className="flex space-x-8 justify-center">
+                {[
+                  "Recent Posts",
+                  "Top 10 Lists",
+                  "Expert Reviews",
+                  "Popular Posts",
+                  "News",
+                  "Stories",
+                  "Guides & Tips",
+                ].map((item, index) => {
+                  return (
+                    <li key={index}>
+                      <span
+                        className={`py-4 px-2 inline-block text-gray-600 hover:text-gray-900 cursor-pointer
+                          ${
+                            selectedItem === item
+                              ? "border-b-2 border-green-500"
+                              : ""
+                          }`}
+                        onClick={() => {
+                          setSelectedItem(item);
+                          getData(item);
+                        }}
+                      >
+                        {item}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </div>
           <Masonry
             columns={4}
             spacing={2}
@@ -114,23 +150,37 @@ export default function NewsGrid() {
                       className="absolute inset-0"
                     />
                   </div>
-                  
+
                   <div className="space-y-6">
                     <div className="flex items-start space-x-4">
                       <div className="w-8 h-8 flex-shrink-0">
                         <SearchIcon sx={{ fontSize: 32 }} />
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold mb-2">Find your perfect trip</h3>
-                        <p className="text-gray-600">An epic selection of pre-planned trips on every continent, for every style. Thousands of itineraries from over 1,000 trusted travel companies.</p>
+                        <h3 className="text-xl font-semibold mb-2">
+                          Find your perfect trip
+                        </h3>
+                        <p className="text-gray-600">
+                          An epic selection of pre-planned trips on every
+                          continent, for every style. Thousands of itineraries
+                          from over 1,000 trusted travel companies.
+                        </p>
                       </div>
                     </div>
 
                     <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 flex-shrink-0"><AccessTimeIcon  sx={{ fontSize: 32 }}/></div>
+                      <div className="w-8 h-8 flex-shrink-0">
+                        <AccessTimeIcon sx={{ fontSize: 32 }} />
+                      </div>
                       <div>
-                        <h3 className="text-xl font-semibold mb-2"> Save time</h3>
-                        <p className="text-gray-600">Compare trips and tours from different companies side by side.</p>
+                        <h3 className="text-xl font-semibold mb-2">
+                          {" "}
+                          Save time
+                        </h3>
+                        <p className="text-gray-600">
+                          Compare trips and tours from different companies side
+                          by side.
+                        </p>
                       </div>
                     </div>
 
@@ -139,8 +189,13 @@ export default function NewsGrid() {
                         <MonetizationOnIcon sx={{ fontSize: 32 }} />
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold mb-2">Save money</h3>
-                        <p className="text-gray-600">Find the best deals and promotions across multiple tour operators.</p>
+                        <h3 className="text-xl font-semibold mb-2">
+                          Save money
+                        </h3>
+                        <p className="text-gray-600">
+                          Find the best deals and promotions across multiple
+                          tour operators.
+                        </p>
                       </div>
                     </div>
 
@@ -149,8 +204,13 @@ export default function NewsGrid() {
                         <StarOutlineIcon sx={{ fontSize: 32 }} />
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold mb-2">Travel confidently</h3>
-                        <p className="text-gray-600">Read verified reviews and get expert advice for your travel plans.</p>
+                        <h3 className="text-xl font-semibold mb-2">
+                          Travel confidently
+                        </h3>
+                        <p className="text-gray-600">
+                          Read verified reviews and get expert advice for your
+                          travel plans.
+                        </p>
                       </div>
                     </div>
                   </div>

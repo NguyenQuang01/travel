@@ -9,3 +9,15 @@ export const getHome = async () => {
         throw error;
     }
 };
+export const getToursSearch = async (keyword: string) => {
+   
+    try {
+        const response = await apiServices.get(
+            `/tours/search?keyword=${keyword}&page=0`
+        );
+        return response;
+    } catch (error) {
+        console.error("Search tours error:", error);
+        throw error;
+    }
+};

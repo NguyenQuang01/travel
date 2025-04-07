@@ -65,7 +65,6 @@ export const getPostById = async (id: number) => {
     }
 };
 export const updatePost = async (postData: any, id: any) => {
-    console.log("🚀 ~ updatePost ~ postData:", postData);
     try {
         const formData = new FormData();
         // Match the curl command parameter structure
@@ -77,7 +76,7 @@ export const updatePost = async (postData: any, id: any) => {
                         title: postData.data.title,
                         content: postData.data.content,
                         types: postData.data.types,
-                        isShow: postData.data.isShow,
+                        show: postData.data.show,
                     }),
                 ],
                 {

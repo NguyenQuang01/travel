@@ -1,17 +1,18 @@
 "use client";
 
 import {
-    Table,
-    Input,
-    Button,
-    Modal,
-    message,
-    Space,
-    Form,
-    Card,
-    DatePicker,
-    Upload,
-    Switch,
+  Table,
+  Input,
+  Button,
+  Modal,
+  message,
+  Space,
+  Form,
+  Card,
+  DatePicker,
+  Upload,
+  Switch,
+  Select,
 } from "antd";
 import { useState, JSX, useEffect } from "react";
 import axios from "axios";
@@ -19,16 +20,16 @@ import { API_INFO } from "@/constant/constant";
 import dynamic from "next/dynamic";
 import useStore from "@/store/useStore";
 import {
-    createPost,
-    getPosts,
-    getPostById,
-    updatePost,
-    deletePost,
+  createPost,
+  getPosts,
+  getPostById,
+  updatePost,
+  deletePost,
 } from "./api";
 import { UploadOutlined } from "@mui/icons-material";
 
 const TextEditor = dynamic(() => import("@/app/components/TextEditor"), {
-    ssr: false,
+  ssr: false,
 });
 const BASE_URL = API_INFO.BASE_URL_ADMIN;
 const API_URL = `${BASE_URL}/api/blog`;
@@ -162,7 +163,15 @@ const BlogCustom: () => JSX.Element = () => {
       </Form.Item>
 
       <Form.Item label="Loại" name={["data", "types"]}>
-        <Input />
+        <Select>
+          <Select.Option value="Recent Posts">Recent Posts</Select.Option>
+          <Select.Option value="Top 10 Lists">Top 10 Lists</Select.Option>
+          <Select.Option value="Expert Reviews">Expert Reviews</Select.Option>
+          <Select.Option value="Popular Posts">Popular Posts</Select.Option>
+          <Select.Option value="News">News</Select.Option>
+          <Select.Option value="Stories">Stories</Select.Option>
+          <Select.Option value="Guides & Tips">Guides & Tips</Select.Option>
+        </Select>
       </Form.Item>
       <Form.Item
         label="Hiển thị"
@@ -199,6 +208,7 @@ const BlogCustom: () => JSX.Element = () => {
   };
   const handleUpdate = async (values: any) => {
     values.data.content = editor;
+    values.data.cover = selectedImage;
     const res: any = await updatePost(values, selectedRecord?.id);
     if (res.status === 200) {
       message.success("Cập nhật thành công");
