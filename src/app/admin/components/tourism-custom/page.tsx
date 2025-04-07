@@ -404,612 +404,548 @@ const TourCustom: () => JSX.Element = () => {
     ];
 
     return (
-        <div>
-            <Space style={{ marginBottom: 16 }}>
-                <Input
-                    placeholder="Tìm theo tên tour"
-                    onChange={handleSearchChange}
-                />
-                <Button type="primary" onClick={() => handleAdd()}>
-                    Thêm mới
-                </Button>
-            </Space>
-            <Table
-                columns={columns}
-                dataSource={data}
-                rowKey="id"
-                loading={loading}
-                pagination={pagination}
-                onChange={handleTableChange}
-            />
-            <Modal
-                title={isEditMode ? "Chỉnh sửa Tour" : "Thêm mới Tour"}
-                open={isModalVisible}
-                onCancel={() => setIsModalVisible(false)}
-                footer={null}
-                width={1200}
-                style={{
-                    maxHeight: "70vh",
-                    overflowY: "auto",
-                }}
-            >
-                <Form
-                    form={form}
-                    onFinish={handleSubmit}
-                    layout="vertical"
-                    className="w-full"
+      <div>
+        <Space style={{ marginBottom: 16 }}>
+          <Input
+            placeholder="Tìm theo tên tour"
+            onChange={handleSearchChange}
+          />
+          <Button type="primary" onClick={() => handleAdd()}>
+            Thêm mới
+          </Button>
+        </Space>
+        <Table
+          columns={columns}
+          dataSource={data}
+          rowKey="id"
+          loading={loading}
+          pagination={pagination}
+          onChange={handleTableChange}
+        />
+        <Modal
+          title={isEditMode ? "Chỉnh sửa Tour" : "Thêm mới Tour"}
+          open={isModalVisible}
+          onCancel={() => setIsModalVisible(false)}
+          footer={null}
+          width={1200}
+          style={{
+            maxHeight: "70vh",
+            overflowY: "auto",
+          }}
+        >
+          <Form
+            form={form}
+            onFinish={handleSubmit}
+            layout="vertical"
+            className="w-full"
+          >
+            <Row gutter={[16, 16]}>
+              {/* Thông tin chung */}
+              <Col span={12}>
+                <Form.Item
+                  name={["tour", "name"]}
+                  label="Tên tour"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập tên tour!",
+                    },
+                  ]}
                 >
-                    <Row gutter={[16, 16]}>
-                        {/* Thông tin chung */}
-                        <Col span={12}>
-                            <Form.Item
-                                name={["tour", "name"]}
-                                label="Tên tour"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Vui lòng nhập tên tour!",
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "tripId"]}
-                                label="Mã chuyến đi"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "isTrending"]}
-                                label="Xu hướng"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Vui lòng chọn!",
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    style={{ width: "100%" }}
-                                    placeholder="Chọn xu hướng"
-                                    options={[
-                                        { value: 0, label: "Không" },
-                                        { value: 1, label: "Có" },
-                                    ]}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "tripType"]}
-                                label="Loại hình"
-                            >
-                                <Select
-                                    style={{ width: "100%" }}
-                                    placeholder="Chọn mã chuyến đi"
-                                    options={types}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "totalDay"]}
-                                label="Tổng số ngày"
-                            >
-                                <InputNumber min={1} className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "startCity"]}
-                                label="Thành phố khởi hành"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "endCity"]}
-                                label="Thành phố kết thúc"
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
+                  <Input />
+                </Form.Item>
+                <Form.Item name={["tour", "tripId"]} label="Mã chuyến đi">
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "isTrending"]}
+                  label="Xu hướng"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng chọn!",
+                    },
+                  ]}
+                >
+                  <Select
+                    style={{ width: "100%" }}
+                    placeholder="Chọn xu hướng"
+                    options={[
+                      { value: 0, label: "Không" },
+                      { value: 1, label: "Có" },
+                    ]}
+                  />
+                </Form.Item>
+                <Form.Item name={["tour", "tripType"]} label="Loại hình">
+                  <Select
+                    style={{ width: "100%" }}
+                    placeholder="Chọn mã chuyến đi"
+                    options={types}
+                  />
+                </Form.Item>
+                <Form.Item name={["tour", "totalDay"]} label="Tổng số ngày">
+                  <InputNumber min={1} className="w-full" />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "startCity"]}
+                  label="Thành phố khởi hành"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "endCity"]}
+                  label="Thành phố kết thúc"
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
 
-                        {/* Chi tiết lịch trình & địa điểm */}
-                        <Col span={12}>
-                            <Form.Item
-                                name={["tour", "attractions"]}
-                                label="Điểm tham quan"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "itineraryFocus"]}
-                                label="Trọng tâm lịch trình"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "itinerary"]}
-                                label="Lịch trình (cách nhau bằng dấu '-')"
-                            >
-                                <TextArea rows={4} />
-                            </Form.Item>
-                            <Form.Item
-                                name={["destinationIds"]}
-                                label="Danh sách điểm đến"
-                            >
-                                <Select
-                                    mode="tags"
-                                    style={{ width: "100%" }}
-                                    placeholder="Nhập điểm đến"
-                                    options={destinationIds}
-                                />
-                            </Form.Item>
-                        </Col>
+              {/* Chi tiết lịch trình & địa điểm */}
+              <Col span={12}>
+                <Form.Item
+                  name={["tour", "attractions"]}
+                  label="Điểm tham quan"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "itineraryFocus"]}
+                  label="Trọng tâm lịch trình"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "itinerary"]}
+                  label="Lịch trình (cách nhau bằng dấu '-')"
+                >
+                  <TextArea rows={10} />
+                </Form.Item>
+                <Form.Item name={["destinationIds"]} label="Danh sách điểm đến">
+                  <Select
+                    mode="tags"
+                    style={{ width: "100%" }}
+                    placeholder="Nhập điểm đến"
+                    options={destinationIds}
+                  />
+                </Form.Item>
+              </Col>
 
-                        {/* Thông tin về chuyến đi */}
-                        <Col span={12}>
-                            <Form.Item
-                                name={["tour", "lodgingLevel"]}
-                                label="Cấp độ chỗ ở"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "lodgingLevelNumber"]}
-                                label="Cấp độ chỗ ở (số)"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "physicalLevel"]}
-                                label="Mức độ thể chất"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "physicalLevelNumber"]}
-                                label="Mức độ thể chất (số)"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "tripPace"]}
-                                label="Nhịp độ chuyến đi"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "tripPaceNumber"]}
-                                label="Nhịp độ chuyến đi (số)"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "flyAndTransport"]}
-                                label="Phương tiện di chuyển"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "highlights"]}
-                                label="Điểm nổi bật của chuyến đi"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "tripAbout"]}
-                                label="Giới thiệu chuyến đi"
-                            >
-                                <TextArea rows={4} />
-                            </Form.Item>
-                        </Col>
+              {/* Thông tin về chuyến đi */}
+              <Col span={12}>
+                <Form.Item name={["tour", "lodgingLevel"]} label="Cấp độ chỗ ở">
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "lodgingLevelNumber"]}
+                  label="Cấp độ chỗ ở (số)"
+                >
+                  <InputNumber className="w-full" />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "physicalLevel"]}
+                  label="Mức độ thể chất"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "physicalLevelNumber"]}
+                  label="Mức độ thể chất (số)"
+                >
+                  <InputNumber className="w-full" />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "tripPace"]}
+                  label="Nhịp độ chuyến đi"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "tripPaceNumber"]}
+                  label="Nhịp độ chuyến đi (số)"
+                >
+                  <InputNumber className="w-full" />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "flyAndTransport"]}
+                  label="Phương tiện di chuyển"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "highlights"]}
+                  label="Điểm nổi bật của chuyến đi"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "tripAbout"]}
+                  label="Giới thiệu chuyến đi"
+                >
+                  <TextArea rows={4} />
+                </Form.Item>
+              </Col>
 
-                        {/* Quy mô & đối tượng */}
-                        <Col span={12}>
-                            <Form.Item
-                                name={["tour", "groupSize"]}
-                                label="Kích thước nhóm"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "maxGroupSize"]}
-                                label="Kích thước nhóm tối đa"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "minGroupSize"]}
-                                label="Kích thước nhóm tối thiểu"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "ageRange"]}
-                                label="Độ tuổi phù hợp"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                        </Col>
+              {/* Quy mô & đối tượng */}
+              <Col span={12}>
+                <Form.Item name={["tour", "groupSize"]} label="Kích thước nhóm">
+                  <InputNumber className="w-full" />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "maxGroupSize"]}
+                  label="Kích thước nhóm tối đa"
+                >
+                  <InputNumber className="w-full" />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "minGroupSize"]}
+                  label="Kích thước nhóm tối thiểu"
+                >
+                  <InputNumber className="w-full" />
+                </Form.Item>
+                <Form.Item name={["tour", "ageRange"]} label="Độ tuổi phù hợp">
+                  <InputNumber className="w-full" />
+                </Form.Item>
+              </Col>
 
-                        {/* Giá cả */}
-                        <Col span={12}>
-                            <Form.Item name={["tour", "price"]} label="Giá">
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "oldPrice"]}
-                                label="Giá cũ"
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
+              {/* Giá cả */}
+              <Col span={12}>
+                <Form.Item name={["tour", "price"]} label="Giá">
+                  <Input />
+                </Form.Item>
+                <Form.Item name={["tour", "oldPrice"]} label="Giá cũ">
+                  <Input />
+                </Form.Item>
+              </Col>
 
-                        {/* Khác */}
-                        <Col span={12}>
-                            <Form.Item name={["tour", "video"]} label="Video">
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["tour", "tripIncludes"]}
-                                label="Những gì được bao gồm trong chuyến đi"
-                            >
-                                <TextArea rows={4} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+              {/* Khác */}
+              <Col span={12}>
+                <Form.Item name={["tour", "video"]} label="Video">
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["tour", "tripIncludes"]}
+                  label="Những gì được bao gồm trong chuyến đi"
+                >
+                  <TextArea rows={4} />
+                </Form.Item>
+              </Col>
+            </Row>
 
-                    {/* Logistics */}
-                    <Row gutter={[16, 16]}>
-                        {/* Cột Trái */}
-                        <Col span={12}>
-                            {/* Giới hạn độ tuổi */}
-                            <Form.Item
-                                name={["logistics", "ageMin"]}
-                                label="Độ tuổi tối thiểu"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["logistics", "ageMax"]}
-                                label="Độ tuổi tối đa"
-                            >
-                                <InputNumber className="w-full" />
-                            </Form.Item>
+            {/* Logistics */}
+            <Row gutter={[16, 16]}>
+              {/* Cột Trái */}
+              <Col span={12}>
+                {/* Giới hạn độ tuổi */}
+                <Form.Item
+                  name={["logistics", "ageMin"]}
+                  label="Độ tuổi tối thiểu"
+                >
+                  <InputNumber className="w-full" />
+                </Form.Item>
+                <Form.Item
+                  name={["logistics", "ageMax"]}
+                  label="Độ tuổi tối đa"
+                >
+                  <InputNumber className="w-full" />
+                </Form.Item>
 
-                            {/* Chỗ ở & Hướng dẫn viên */}
-                            <Form.Item
-                                name={["logistics", "accommodation"]}
-                                label="Chỗ ở"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["logistics", "guides"]}
-                                label="Hướng dẫn viên"
-                            >
-                                <Input />
-                            </Form.Item>
+                {/* Chỗ ở & Hướng dẫn viên */}
+                <Form.Item name={["logistics", "accommodation"]} label="Chỗ ở">
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["logistics", "guides"]}
+                  label="Hướng dẫn viên"
+                >
+                  <Input />
+                </Form.Item>
 
-                            {/* Bữa ăn */}
-                            <Form.Item
-                                name={["logistics", "mealsIncludedBreakfast"]}
-                                label="Bữa sáng"
-                            >
-                                <InputNumber min={0} className="w-full" />
-                            </Form.Item>
-                            <Form.Item
-                                name={["logistics", "mealsIncludedLunch"]}
-                                label="Bữa trưa"
-                            >
-                                <InputNumber min={0} className="w-full" />
-                            </Form.Item>
-                        </Col>
+                {/* Bữa ăn */}
+                <Form.Item
+                  name={["logistics", "mealsIncludedBreakfast"]}
+                  label="Bữa sáng"
+                >
+                  <InputNumber min={0} className="w-full" />
+                </Form.Item>
+                <Form.Item
+                  name={["logistics", "mealsIncludedLunch"]}
+                  label="Bữa trưa"
+                >
+                  <InputNumber min={0} className="w-full" />
+                </Form.Item>
+              </Col>
 
-                        {/* Cột Phải */}
-                        <Col span={12}>
-                            {/* Bảo hiểm & Visa */}
-                            <Form.Item
-                                name={["logistics", "travelInsurance"]}
-                                label="Bảo hiểm du lịch"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["logistics", "visaRequirements"]}
-                                label="Yêu cầu visa"
-                            >
-                                <Input />
-                            </Form.Item>
+              {/* Cột Phải */}
+              <Col span={12}>
+                {/* Bảo hiểm & Visa */}
+                <Form.Item
+                  name={["logistics", "travelInsurance"]}
+                  label="Bảo hiểm du lịch"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["logistics", "visaRequirements"]}
+                  label="Yêu cầu visa"
+                >
+                  <Input />
+                </Form.Item>
 
-                            {/* An toàn & Chính sách */}
-                            <Form.Item
-                                name={["logistics", "healthSafety"]}
-                                label="An toàn & sức khỏe"
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name={["logistics", "cancellationPolicy"]}
-                                label="Chính sách hủy chuyến"
-                            >
-                                <TextArea rows={4} />
-                            </Form.Item>
+                {/* An toàn & Chính sách */}
+                <Form.Item
+                  name={["logistics", "healthSafety"]}
+                  label="An toàn & sức khỏe"
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["logistics", "cancellationPolicy"]}
+                  label="Chính sách hủy chuyến"
+                >
+                  <TextArea rows={4} />
+                </Form.Item>
 
-                            {/* Thông tin bổ sung */}
-                            <Form.Item
-                                name={["logistics", "logistics"]}
-                                label="Có vẻ là mô tả chung về logistics"
-                            >
-                                <TextArea rows={4} />
-                            </Form.Item>
-                            <Form.Item
-                                name={["logistics", "additionalInfo"]}
-                                label="Thông tin bổ sung"
-                            >
-                                <TextArea rows={4} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                {/* Thông tin bổ sung */}
+                <Form.Item
+                  name={["logistics", "logistics"]}
+                  label="Có vẻ là mô tả chung về logistics"
+                >
+                  <TextArea rows={4} />
+                </Form.Item>
+                <Form.Item
+                  name={["logistics", "additionalInfo"]}
+                  label="Thông tin bổ sung"
+                >
+                  <TextArea rows={4} />
+                </Form.Item>
+              </Col>
+            </Row>
 
-                    {/* Các danh sách ID */}
-                    <Row gutter={[16, 16]}>
-                        {/* Cột Trái */}
-                        <Col span={12}>
-                            <Form.Item
-                                name={["activityIds"]}
-                                label="Danh sách hoạt động"
-                            >
-                                <Select
-                                    mode="tags"
-                                    style={{ width: "100%" }}
-                                    placeholder="Tags Mode"
-                                    options={activityIds}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name={["interestIds"]}
-                                label="Danh sách sở thích"
-                            >
-                                <Select
-                                    mode="tags"
-                                    style={{ width: "100%" }}
-                                    placeholder="Tags Mode"
-                                    options={interestIds}
-                                />
-                            </Form.Item>
-                        </Col>
+            {/* Các danh sách ID */}
+            <Row gutter={[16, 16]}>
+              {/* Cột Trái */}
+              <Col span={12}>
+                <Form.Item name={["activityIds"]} label="Danh sách hoạt động">
+                  <Select
+                    mode="tags"
+                    style={{ width: "100%" }}
+                    placeholder="Tags Mode"
+                    options={activityIds}
+                  />
+                </Form.Item>
+                <Form.Item name={["interestIds"]} label="Danh sách sở thích">
+                  <Select
+                    mode="tags"
+                    style={{ width: "100%" }}
+                    placeholder="Tags Mode"
+                    options={interestIds}
+                  />
+                </Form.Item>
+              </Col>
 
-                        {/* Cột Phải */}
-                        <Col span={12}>
-                            <Form.Item
-                                name={["styleIds"]}
-                                label="Danh sách phong cách"
-                            >
-                                <Select
-                                    mode="tags"
-                                    style={{ width: "100%" }}
-                                    placeholder="Tags Mode"
-                                    options={styleIds}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name={["themeIds"]}
-                                label="Danh sách chủ đề"
-                            >
-                                <Select
-                                    mode="tags"
-                                    style={{ width: "100%" }}
-                                    placeholder="Tags Mode"
-                                    options={themeIds}
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+              {/* Cột Phải */}
+              <Col span={12}>
+                <Form.Item name={["styleIds"]} label="Danh sách phong cách">
+                  <Select
+                    mode="tags"
+                    style={{ width: "100%" }}
+                    placeholder="Tags Mode"
+                    options={styleIds}
+                  />
+                </Form.Item>
+                <Form.Item name={["themeIds"]} label="Danh sách chủ đề">
+                  <Select
+                    mode="tags"
+                    style={{ width: "100%" }}
+                    placeholder="Tags Mode"
+                    options={themeIds}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
 
-                    {/* Hình ảnh */}
-                    <Form.Item name={"images"} label="Images">
-                        <>
-                            <Upload
-                                multiple
-                                beforeUpload={(file) => {
-                                    setFile(file);
-                                    setPreviewImage(URL.createObjectURL(file));
-                                    const newFiles = [
-                                        ...(form.getFieldValue("images") || []),
-                                        file,
-                                    ];
-                                    form.setFieldsValue({ images: newFiles });
-                                    return false;
-                                }}
-                                fileList={form.getFieldValue("images") || []}
-                            >
-                                <Button icon={<UploadOutlined />}>
-                                    Select Images
-                                </Button>
-                            </Upload>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    gap: "8px",
-                                    marginTop: "16px",
-                                }}
-                            >
-                                {form
-                                    .getFieldValue("images")
-                                    ?.map((file: any, index: number) => {
-                                        if (file.url) {
-                                            return (
-                                                <img
-                                                    key={index}
-                                                    src={file.url}
-                                                    alt={`Preview ${
-                                                        index + 1
-                                                    }33`}
-                                                    style={{
-                                                        width: "200px",
-                                                        height: "150px",
-                                                        objectFit: "cover",
-                                                    }}
-                                                />
-                                            );
-                                        }
-                                        // Handle new file uploads
-                                        return (
-                                            <img
-                                                key={index}
-                                                src={URL.createObjectURL(file)}
-                                                alt={`Preview ${index + 1}`}
-                                                style={{
-                                                    width: "200px",
-                                                    height: "150px",
-                                                    objectFit: "cover",
-                                                }}
-                                            />
-                                        );
-                                    })}
-                            </div>
-                        </>
-                    </Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Lưu
-                    </Button>
-                </Form>
-            </Modal>
-            <Modal
-                title="Chi tiết Tour"
-                open={isViewModalVisible}
-                onCancel={() => setIsViewModalVisible(false)}
-                footer={null}
-            >
-                {selectedRecord && (
-                    <Card>
-                        <p>
-                            <strong>ID:</strong> {selectedRecord.id}
-                        </p>
-                        <p>
-                            <strong>Mã chuyến đi:</strong>{" "}
-                            {selectedRecord.tripId}
-                        </p>
-                        <p>
-                            <strong>Tên Tour:</strong> {selectedRecord.name}
-                        </p>
+            {/* Hình ảnh */}
+            <Form.Item name={"images"} label="Images">
+              <>
+                <Upload
+                  multiple
+                  beforeUpload={(file) => {
+                    setFile(file);
+                    setPreviewImage(URL.createObjectURL(file));
+                    const newFiles = [
+                      ...(form.getFieldValue("images") || []),
+                      file,
+                    ];
+                    form.setFieldsValue({ images: newFiles });
+                    return false;
+                  }}
+                  fileList={form.getFieldValue("images") || []}
+                >
+                  <Button icon={<UploadOutlined />}>Select Images</Button>
+                </Upload>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "8px",
+                    marginTop: "16px",
+                  }}
+                >
+                  {form
+                    .getFieldValue("images")
+                    ?.map((file: any, index: number) => {
+                      if (file.url) {
+                        return (
+                          <img
+                            key={index}
+                            src={file.url}
+                            alt={`Preview ${index + 1}33`}
+                            style={{
+                              width: "200px",
+                              height: "150px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        );
+                      }
+                      // Handle new file uploads
+                      return (
+                        <img
+                          key={index}
+                          src={URL.createObjectURL(file)}
+                          alt={`Preview ${index + 1}`}
+                          style={{
+                            width: "200px",
+                            height: "150px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      );
+                    })}
+                </div>
+              </>
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Lưu
+            </Button>
+          </Form>
+        </Modal>
+        <Modal
+          title="Chi tiết Tour"
+          open={isViewModalVisible}
+          onCancel={() => setIsViewModalVisible(false)}
+          footer={null}
+        >
+          {selectedRecord && (
+            <Card>
+              <p>
+                <strong>ID:</strong> {selectedRecord.id}
+              </p>
+              <p>
+                <strong>Mã chuyến đi:</strong> {selectedRecord.tripId}
+              </p>
+              <p>
+                <strong>Tên Tour:</strong> {selectedRecord.name}
+              </p>
 
-                        <p>
-                            <strong>Cấp độ lưu trú:</strong>{" "}
-                            {selectedRecord.lodgingLevel} (
-                            {selectedRecord.lodgingLevelNumber})
-                        </p>
-                        <p>
-                            <strong>Loại chuyến đi:</strong>{" "}
-                            {selectedRecord.tripType}
-                        </p>
-                        <p>
-                            <strong>Mức độ thể chất:</strong>{" "}
-                            {selectedRecord.physicalLevel} (
-                            {selectedRecord.physicalLevelNumber})
-                        </p>
-                        <p>
-                            <strong>Tốc độ chuyến đi:</strong>{" "}
-                            {selectedRecord.tripPace} (
-                            {selectedRecord.tripPaceNumber})
-                        </p>
+              <p>
+                <strong>Cấp độ lưu trú:</strong> {selectedRecord.lodgingLevel} (
+                {selectedRecord.lodgingLevelNumber})
+              </p>
+              <p>
+                <strong>Loại chuyến đi:</strong> {selectedRecord.tripType}
+              </p>
+              <p>
+                <strong>Mức độ thể chất:</strong> {selectedRecord.physicalLevel}{" "}
+                ({selectedRecord.physicalLevelNumber})
+              </p>
+              <p>
+                <strong>Tốc độ chuyến đi:</strong> {selectedRecord.tripPace} (
+                {selectedRecord.tripPaceNumber})
+              </p>
 
-                        <p>
-                            <strong>Số ngày đi:</strong>{" "}
-                            {selectedRecord.totalDay} ngày
-                        </p>
-                        <p>
-                            <strong>Thành phố khởi hành:</strong>{" "}
-                            {selectedRecord.startCity}
-                        </p>
-                        <p>
-                            <strong>Thành phố kết thúc:</strong>{" "}
-                            {selectedRecord.endCity}
-                        </p>
+              <p>
+                <strong>Số ngày đi:</strong> {selectedRecord.totalDay} ngày
+              </p>
+              <p>
+                <strong>Thành phố khởi hành:</strong> {selectedRecord.startCity}
+              </p>
+              <p>
+                <strong>Thành phố kết thúc:</strong> {selectedRecord.endCity}
+              </p>
 
-                        <p>
-                            <strong>Kích thước nhóm:</strong>{" "}
-                            {selectedRecord.groupSize}
-                        </p>
-                        <p>
-                            <strong>Độ tuổi tham gia:</strong>{" "}
-                            {selectedRecord.ageRange}
-                        </p>
-                        <p>
-                            <strong>Nhóm tối thiểu:</strong>{" "}
-                            {selectedRecord.minGroupSize} người
-                        </p>
-                        <p>
-                            <strong>Nhóm tối đa:</strong>{" "}
-                            {selectedRecord.maxGroupSize} người
-                        </p>
+              <p>
+                <strong>Kích thước nhóm:</strong> {selectedRecord.groupSize}
+              </p>
+              <p>
+                <strong>Độ tuổi tham gia:</strong> {selectedRecord.ageRange}
+              </p>
+              <p>
+                <strong>Nhóm tối thiểu:</strong> {selectedRecord.minGroupSize}{" "}
+                người
+              </p>
+              <p>
+                <strong>Nhóm tối đa:</strong> {selectedRecord.maxGroupSize}{" "}
+                người
+              </p>
 
-                        <p>
-                            <strong>Điểm tham quan:</strong>{" "}
-                            {selectedRecord.attractions}
-                        </p>
-                        <p>
-                            <strong>Điểm đến:</strong>{" "}
-                            {selectedRecord.destinations}
-                        </p>
+              <p>
+                <strong>Điểm tham quan:</strong> {selectedRecord.attractions}
+              </p>
+              <p>
+                <strong>Điểm đến:</strong> {selectedRecord.destinations}
+              </p>
 
-                        <p>
-                            <strong>Giá:</strong>{" "}
-                            {selectedRecord?.price?.toLocaleString()}
-                        </p>
-                        {selectedRecord.oldPrice && (
-                            <p>
-                                <strong>Giá cũ:</strong>{" "}
-                                <del>
-                                    {selectedRecord.oldPrice.toLocaleString()}{" "}
-                                    VND
-                                </del>
-                            </p>
-                        )}
+              <p>
+                <strong>Giá:</strong> {selectedRecord?.price?.toLocaleString()}
+              </p>
+              {selectedRecord.oldPrice && (
+                <p>
+                  <strong>Giá cũ:</strong>{" "}
+                  <del>{selectedRecord.oldPrice.toLocaleString()} VND</del>
+                </p>
+              )}
 
-                        <p>
-                            <strong>Điểm nổi bật:</strong>{" "}
-                            {selectedRecord.highlights}
-                        </p>
-                        <p>
-                            <strong>Giới thiệu chuyến đi:</strong>{" "}
-                            {selectedRecord.tripAbout}
-                        </p>
-                        <p>
-                            <strong>Vận chuyển & Di chuyển:</strong>{" "}
-                            {selectedRecord.flyAndTransport}
-                        </p>
+              <p>
+                <strong>Điểm nổi bật:</strong> {selectedRecord.highlights}
+              </p>
+              <p>
+                <strong>Giới thiệu chuyến đi:</strong>{" "}
+                {selectedRecord.tripAbout}
+              </p>
+              <p>
+                <strong>Vận chuyển & Di chuyển:</strong>{" "}
+                {selectedRecord.flyAndTransport}
+              </p>
 
-                        <p>
-                            <strong>Lịch trình:</strong>{" "}
-                            {selectedRecord.itinerary}
-                        </p>
-                        <p>
-                            <strong>Tiêu điểm lịch trình:</strong>{" "}
-                            {selectedRecord.itineraryFocus}
-                        </p>
-                        <p>
-                            <strong>Tour bao gồm:</strong>{" "}
-                            {selectedRecord.tripIncludes}
-                        </p>
+              <p>
+                <strong>Lịch trình:</strong> {selectedRecord.itinerary}
+              </p>
+              <p>
+                <strong>Tiêu điểm lịch trình:</strong>{" "}
+                {selectedRecord.itineraryFocus}
+              </p>
+              <p>
+                <strong>Tour bao gồm:</strong> {selectedRecord.tripIncludes}
+              </p>
 
-                        {selectedRecord.video && (
-                            <p>
-                                <strong>Video:</strong>{" "}
-                                <a href={selectedRecord.video} target="_blank">
-                                    Xem video
-                                </a>
-                            </p>
-                        )}
+              {selectedRecord.video && (
+                <p>
+                  <strong>Video:</strong>{" "}
+                  <a href={selectedRecord.video} target="_blank">
+                    Xem video
+                  </a>
+                </p>
+              )}
 
-                        <p>
-                            <strong>Xu hướng:</strong>{" "}
-                            {selectedRecord.isTrending
-                                ? "🔥 Đang hot"
-                                : "Bình thường"}
-                        </p>
-                    </Card>
-                )}
-            </Modal>
-        </div>
+              <p>
+                <strong>Xu hướng:</strong>{" "}
+                {selectedRecord.isTrending ? "🔥 Đang hot" : "Bình thường"}
+              </p>
+            </Card>
+          )}
+        </Modal>
+      </div>
     );
 };
 
