@@ -8,13 +8,14 @@ export const createPost = async (postData: any) => {
         
         // Create a Blob with the post data
         formData.append(
-            'request',
+            'post',
             new Blob(
                 [
                     JSON.stringify({
                         title: postData.data.title,
                         content: postData.data.content,
                         types: postData.data.types,
+                        show: postData.data.show,
                     }),
                 ],
                 {

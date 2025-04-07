@@ -291,6 +291,7 @@ const TourCustom: () => JSX.Element = () => {
             // Kiểm tra và thêm ảnh nếu có
             if (Array.isArray(values.images) && values.images.length > 0) {
                 values.images.forEach((file: File) => {
+                    console.log(file, "-----------------------------------2");
                     formData.append("images", file);
                 });
             }
