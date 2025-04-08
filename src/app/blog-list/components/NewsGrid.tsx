@@ -4,26 +4,30 @@ import { Card, Col, Row } from "antd";
 import Masonry from "@mui/lab/Masonry";
 import { Box, Container } from "@mui/material";
 import Image from "next/image";
-import { getBlogPosts } from "../api";
+import { getBlogPosts, getBlogPostsPopular } from "../api";
 import { useEffect, useState } from "react";
 import { API_INFO } from "@/constant/constant";
 import Link from "next/link";
 import SliderBlog from "@/app/components/slide/SlideBlog";
-import SearchIcon from '@mui/icons-material/Search';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import SearchIcon from "@mui/icons-material/Search";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
 export default function NewsGrid() {
   const [data, setData] = useState([]);
   const [selectedItem, setSelectedItem] = useState("Recent Posts");
-
+  const [dataPopular, setDataPopular] = useState([]);
   const getData = async (type: string = "") => {
     const response: any = await getBlogPosts(type);
     setData(response?.data?.content);
-    console.log(response?.data?.content);
+  };
+  const getDataPopular = async () => {
+    const response: any = await getBlogPostsPopular();
+    setDataPopular(response?.data?.content);
   };
   useEffect(() => {
     getData();
+    getDataPopular();
   }, []);
   return (
     <div>
@@ -104,7 +108,7 @@ export default function NewsGrid() {
               <Col span={16}>
                 {" "}
                 <div className="space-y-4">
-                  {data.slice(0, 5).map((item: any, index) => (
+                  {dataPopular.slice(0, 5).map((item: any, index) => (
                     <Link href={`/blog/${item.id}`} key={index}>
                       <div className="flex items-center space-x-4 hover:bg-gray-50 mb-5 rounded-lg transition-colors">
                         <Image
@@ -122,12 +126,15 @@ export default function NewsGrid() {
                       </div>
                     </Link>
                   ))}
-                  <Link
-                    href="/#"
+                  <div
+                    onClick={() => {
+                      setSelectedItem("Popular Posts");
+                      getData("Popular Posts");
+                    }}
                     className="text-blue-600 hover:underline block mt-4"
                   >
                     See all blog posts →
-                  </Link>
+                  </div>
                 </div>
               </Col>
             </Row>

@@ -94,152 +94,140 @@ const TourTheme = () => {
         getData();
     }, []);
     return data ? (
-        <>
-            <div className="relative bg-black text-white pt-5  px-6 md:h-[432px]">
-                <Image
-                    src="https://images.pexels.com/photos/25424413/pexels-photo-25424413/free-photo-of-xe-h-i-d-ng-d-ng-ph-giao-thong.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                    alt="Background"
-                    fill
-                    className="object-cover opacity-50"
-                    priority
-                />
-                {/* Background */}
-                <Container className="h-full">
-                    <div
-                        className="absolute inset-0 bg-cover bg-center opacity-50"
+      <>
+        <div className="relative bg-black text-white pt-5  px-6 md:h-[432px]">
+          <Image
+            src="https://images.pexels.com/photos/25424413/pexels-photo-25424413/free-photo-of-xe-h-i-d-ng-d-ng-ph-giao-thong.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Background"
+            fill
+            className="object-cover opacity-50"
+            priority
+          />
+          {/* Background */}
+          <Container className="h-full">
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-50"
+              style={{
+                backgroundImage: "url('/paris.jpg')", // Thay bằng ảnh phù hợp
+              }}
+            ></div>
+            <div className="relative z-10 flex flex-col h-full w-full justify-between ">
+              <div>
+                <h1
+                  className="text-3xl md:text-5xl font-semibold text-white"
+                  style={{
+                    fontSize: "30px",
+                    lineHeight: "36px",
+                    textShadow: "0px 3px 8px rgba(0, 0, 0, 0.3)",
+                  }}
+                >
+                  {decodeURIComponent(String(id))?.replace(/%20/g, " ")} Tours &
+                  Travel Packages 2025/2026
+                </h1>
+                <p className="mt-4 text-lg text-gray-200">
+                  Discover the beauty of Vietnam through our carefully curated
+                  tours. From bustling cities to peaceful countryside, ancient
+                  temples to pristine beaches, experience the rich culture and
+                  stunning landscapes of this Southeast Asian gem.
+                </p>
+              </div>
+              <div>
+                {" "}
+                <p className="mb-4 text-lg text-gray-200  ">
+                  Choose your trip style:
+                </p>
+                <Row gutter={[32, 0]} className="flex items-end">
+                  <Col span={5}>
+                    <Link
+                      href="/client/my-custom-trip"
+                      className="flex items-center justify-center"
+                    >
+                      <div
+                        className={`bg-[#1d9c53] text-white flex items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md hover:opacity-80 transition font-roboto leading-6 md:h-[116px] md:w-[162px] `}
                         style={{
-                            backgroundImage: "url('/paris.jpg')", // Thay bằng ảnh phù hợp
+                          color: "white",
+                          fontSize: "16px",
+                          fontWeight: 700,
+                          textAlign: "center",
+                          textTransform: "uppercase",
+                          marginBottom: "1.2rem",
+                          lineHeight: 1.3,
+                          position: "relative",
+                          zIndex: 1,
+                          display: "flex",
+                          alignItems: "center",
                         }}
-                    ></div>
-                    <div className="relative z-10 flex flex-col h-full w-full justify-between ">
-                        <div>
-                            <h1
-                                className="text-3xl md:text-5xl font-semibold text-white"
-                                style={{
-                                    fontSize: "30px",
-                                    lineHeight: "36px",
-                                    textShadow:
-                                        "0px 3px 8px rgba(0, 0, 0, 0.3)",
-                                }}
+                      >
+                        <div>DESIGN CUSTOM TRIP</div>
+                      </div>
+                    </Link>
+                  </Col>
+                  <Col span={18}>
+                    <div className="relative ">
+                      <Swiper
+                        modules={[Navigation, Pagination]}
+                        breakpoints={{
+                          320: {
+                            slidesPerView: 2,
+                            spaceBetween: 5,
+                          },
+                          768: {
+                            slidesPerView: 5,
+                            spaceBetween: 5,
+                          },
+                        }}
+                        navigation
+                        autoplay={{
+                          delay: 3000,
+                          disableOnInteraction: false,
+                        }}
+                        loop={true}
+                        className="  SwiperCustom"
+                      >
+                        {travelOptions.map((option, index) => (
+                          <SwiperSlide key={index} className="p-1 flex">
+                            <button
+                              key={option.name}
+                              className={`text-white items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md transition font-roboto leading-6 md:h-[116px] md:w-[162px]`}
+                              style={{
+                                backgroundColor: `#${Math.floor(
+                                  Math.random() * 16777215
+                                ).toString(16)}`,
+                                color: "white",
+                                fontSize: "16px",
+                                fontWeight: 700,
+                                textAlign: "center",
+                                textTransform: "uppercase",
+                                marginBottom: "1rem",
+                                lineHeight: 1.3,
+                                position: "relative",
+                                zIndex: 1,
+                              }}
                             >
-                                {decodeURIComponent(String(id))?.replace(
-                                    /%20/g,
-                                    " "
-                                )}{" "}
-                                Tours & Travel Packages 2025/2026
-                            </h1>
-                            <p className="mt-4 text-lg text-gray-200">
-                                Discover the beauty of Vietnam through our
-                                carefully curated tours. From bustling cities to
-                                peaceful countryside, ancient temples to
-                                pristine beaches, experience the rich culture
-                                and stunning landscapes of this Southeast Asian
-                                gem.
-                            </p>
-                        </div>
-                        <div>
-                            {" "}
-                            <p className="mb-4 text-lg text-gray-200  ">
-                                Choose your trip style:
-                            </p>
-                            <Row gutter={[32, 0]} className="flex items-end">
-                                <Col span={5}>
-                                    <div
-                                        className={`bg-[#1d9c53] text-white  items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md hover:opacity-80 transition font-roboto leading-6 md:h-[116px] md:w-[162px] `}
-                                        style={{
-                                            color: "white",
-                                            fontSize: "16px",
-                                            fontWeight: 700,
-                                            textAlign: "center",
-                                            textTransform: "uppercase",
-                                            marginBottom: "1.2rem",
-                                            lineHeight: 1.3,
-                                            position: "relative",
-                                            zIndex: 1,
-                                        }}
-                                    >
-                                        DESIGN CUSTOM TRIP
-                                    </div>
-                                </Col>
-                                <Col span={18}>
-                                    <div className="relative ">
-                                        <Swiper
-                                            modules={[Navigation, Pagination]}
-                                            breakpoints={{
-                                                320: {
-                                                    slidesPerView: 2,
-                                                    spaceBetween: 5,
-                                                },
-                                                768: {
-                                                    slidesPerView: 5,
-                                                    spaceBetween: 5,
-                                                },
-                                            }}
-                                            navigation
-                                            autoplay={{
-                                                delay: 3000,
-                                                disableOnInteraction: false,
-                                            }}
-                                            loop={true}
-                                            className="  SwiperCustom"
-                                        >
-                                            {travelOptions.map(
-                                                (option, index) => (
-                                                    <SwiperSlide
-                                                        key={index}
-                                                        className="p-1 flex"
-                                                    >
-                                                        <button
-                                                            key={option.name}
-                                                            className={`text-white items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md transition font-roboto leading-6 md:h-[116px] md:w-[162px]`}
-                                                            style={{
-                                                                backgroundColor: `#${Math.floor(
-                                                                    Math.random() *
-                                                                        16777215
-                                                                ).toString(
-                                                                    16
-                                                                )}`,
-                                                                color: "white",
-                                                                fontSize:
-                                                                    "16px",
-                                                                fontWeight: 700,
-                                                                textAlign:
-                                                                    "center",
-                                                                textTransform:
-                                                                    "uppercase",
-                                                                marginBottom:
-                                                                    "1rem",
-                                                                lineHeight: 1.3,
-                                                                position:
-                                                                    "relative",
-                                                                zIndex: 1,
-                                                            }}
-                                                        >
-                                                            {option.name}
-                                                        </button>
-                                                    </SwiperSlide>
-                                                )
-                                            )}
-                                        </Swiper>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </div>
+                              {option.name}
+                            </button>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
                     </div>
-                </Container>
+                  </Col>
+                </Row>
+              </div>
             </div>
-            <Container>
-                <div className="my-10">
-                    {data[firstKey]?.tours.map((item: TourData) => (
-                        <div className="mb-10" key={item.tourInfo.id}>
-                            <TourCard data={item} />
-                        </div>
-                    ))}
-                </div>
-            </Container>
-        </>
+          </Container>
+        </div>
+        <Container>
+          <div className="my-10">
+            {data[firstKey]?.tours.map((item: TourData) => (
+              <div className="mb-10" key={item.tourInfo.id}>
+                <TourCard data={item} />
+              </div>
+            ))}
+          </div>
+        </Container>
+      </>
     ) : (
-        <Loading />
+      <Loading />
     );
 };
 

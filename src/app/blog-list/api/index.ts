@@ -9,3 +9,12 @@ export const getBlogPosts = async (type:string='') => {
         throw error;
     }
 };
+export const getBlogPostsPopular = async () => {
+    try {
+        const response = await apiServices.get(`/posts?typeId=Popular Posts`);
+        return response;
+    } catch (error) {
+        console.error("Get blog posts error:", error);
+        throw error;
+    }
+};
