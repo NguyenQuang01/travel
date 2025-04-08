@@ -131,3 +131,26 @@ img {
         margin: 0px;
     }
 }
+#google_translate_element {
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    z-index: 9999;
+}
+
+.goog-te-gadget {
+    font-family: system-ui, -apple-system, sans-serif !important;
+}
+
+.goog-te-gadget-simple {
+    padding: 8px !important;
+    border-radius: 4px !important;
+    background-color: white !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    width: 160px!important;
+    display: flex !important;
+
+}
+.VIpgJd-ZVi9od-xl07Ob-lTBxed{
+    display:flex
+}
