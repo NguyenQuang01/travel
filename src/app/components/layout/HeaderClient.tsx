@@ -607,6 +607,9 @@ function HeaderClient() {
                 </Link>
               )}
             </Box>
+            <Box>
+              <div id="google_translate_element"></div>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>

@@ -132,7 +132,6 @@ img {
     }
 }
 #google_translate_element {
-    position: fixed;
     bottom: 20px;
     right: 40px;
     z-index: 9999;
