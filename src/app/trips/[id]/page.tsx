@@ -19,8 +19,7 @@ const TourDetail = () => {
     const getData = async () => {
         const res: any = await getToursDetail(String(id));
         if (res.status === 200) {
-            console.log(res.data.tourData, "---------------------1");
-            setData(res.data.tourData);
+          setData(res.data.tourData);
         }
 
         return;

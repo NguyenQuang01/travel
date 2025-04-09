@@ -171,6 +171,7 @@ const BlogCustom: () => JSX.Element = () => {
           <Select.Option value="News">News</Select.Option>
           <Select.Option value="Stories">Stories</Select.Option>
           <Select.Option value="Guides & Tips">Guides & Tips</Select.Option>
+          <Select.Option value="Gift Card">Gift Card</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item

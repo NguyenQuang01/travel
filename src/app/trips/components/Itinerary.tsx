@@ -7,15 +7,15 @@ interface ItineraryProps {
 }
 
 const Itinerary = ({ data }: ItineraryProps) => {
-    const itineraryItems = data?.split(" - ").map((item, index) => ({
-        children: item,
-        dot:
-            index % 2 === 0 ? (
-                <EnvironmentOutlined style={{ fontSize: "16px" }} />
-            ) : (
-                <ClockCircleOutlined style={{ fontSize: "16px" }} />
-            ),
-        color: index % 3 === 1 ? "green" : index % 3 === 2 ? "red" : undefined,
+    const itineraryItems = data?.split(/\s*-\s*/).map((item, index) => ({
+      children: item.trim(), // Trim whitespace from each item
+      dot:
+        index % 2 === 0 ? (
+          <EnvironmentOutlined style={{ fontSize: "16px" }} />
+        ) : (
+          <ClockCircleOutlined style={{ fontSize: "16px" }} />
+        ),
+      color: index % 3 === 1 ? "green" : index % 3 === 2 ? "red" : undefined,
     }));
     return (
         <div className="pt-10" id="Itinerary">

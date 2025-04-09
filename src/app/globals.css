@@ -153,3 +153,46 @@ img {
 .VIpgJd-ZVi9od-xl07Ob-lTBxed{
     display:flex
 }
+
+
+.dangerouslyInnerHTML h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.dangerouslyInnerHTML h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.9rem;
+}
+
+.dangerouslyInnerHTML h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 0.8rem;
+}
+
+.dangerouslyInnerHTML h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 0.7rem;
+}
+
+.dangerouslyInnerHTML h5 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 0.6rem;
+}
+
+.dangerouslyInnerHTML h6 {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}

@@ -54,7 +54,9 @@ const Blog = () => {
                 dangerouslySetInnerHTML={{
                   __html: data?.contentHtml,
                 }}
-                className="dangerouslyInnerHTML"
+                // Add a class to scope and isolate styles
+                className="content-wrapper dangerouslyInnerHTML"
+                // Use style to reset inherited styles
               ></div>
             </div>
           </Container>
