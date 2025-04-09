@@ -23,7 +23,7 @@ const Blog = () => {
           <div className="relative  text-white py-5  px-6 md:h-[432px]">
             {" "}
             <Image
-              src="https://images.pexels.com/photos/29515365/pexels-photo-29515365/free-photo-of-hoa-sen-r-c-r-trong-c-nh-quan-vi-t-nam-ng-p-tran-anh-n-ng.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              src="https://images.pexels.com/photos/1303080/pexels-photo-1303080.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
               alt="Background"
               fill
               className="object-cover "
