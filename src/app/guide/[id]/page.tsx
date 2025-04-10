@@ -120,7 +120,7 @@ const TourTheme = () => {
                   {decodeURIComponent(String(id))?.replace(/%20/g, " ")} Tours &
                   Travel Packages 2025/2026
                 </h1>
-                <p className="mt-4 text-lg text-gray-200">
+                <p className="mt-4 text-base md:text-lg text-gray-200">
                   Discover the beauty of Vietnam through our carefully curated
                   tours. From bustling cities to peaceful countryside, ancient
                   temples to pristine beaches, experience the rich culture and
@@ -136,24 +136,44 @@ const TourTheme = () => {
                   <Col span={5}>
                     <Link href="/client/my-custom-trip">
                       <div
-                        className={`bg-[#1d9c53] text-white flex items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md hover:opacity-80 transition font-roboto leading-6 md:h-[116px] md:w-[162px] `}
-                        style={{
-                          color: "white",
-                          fontSize: "16px",
-                          fontWeight: 700,
-                          textAlign: "center",
-                          textTransform: "uppercase",
-                          marginBottom: "1.2rem",
-                          lineHeight: 1.3,
-                          position: "relative",
-                          zIndex: 1,
-                        }}
+                        className={`
+                          bg-[#1d9c53] 
+                          text-white 
+                          flex 
+                          items-center 
+                          justify-center 
+                          gap-2 
+                          py-3 
+                          px-2.5 
+                          rounded-lg 
+                          shadow-md 
+                          hover:opacity-80 
+                          transition 
+                          font-roboto 
+                          text-sm
+                          font-bold
+                          uppercase
+                          text-center
+                          h-[80px] 
+                          w-[120px] 
+                          leading-5
+                          mb-4
+                          relative
+                          z-[1]
+                          md:text-base
+                          md:h-[116px] 
+                          md:w-[162px] 
+                          md:py-5 
+                          md:px-3.5 
+                          md:leading-6
+                          md:mb-5
+                        `}
                       >
                         DESIGN CUSTOM TRIP
                       </div>
                     </Link>
                   </Col>
-                  <Col span={18}>
+                  <Col span={17}>
                     <div className="relative ">
                       <Swiper
                         modules={[Navigation, Pagination]}
@@ -179,13 +199,13 @@ const TourTheme = () => {
                           <SwiperSlide key={index} className="p-1 flex">
                             <button
                               key={option.name}
-                              className={`text-white items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md transition font-roboto leading-6 md:h-[116px] md:w-[162px]`}
+                              className={`text-white items-center justify-center gap-2 py-5 px-3.5 rounded-lg shadow-md transition font-roboto leading-6 md:h-[116px] md:w-[152px] w-[110px] md:text-base text-sm h-[80px]`}
                               style={{
                                 backgroundColor: `#${Math.floor(
                                   Math.random() * 16777215
                                 ).toString(16)}`,
                                 color: "white",
-                                fontSize: "16px",
+
                                 fontWeight: 700,
                                 textAlign: "center",
                                 textTransform: "uppercase",
