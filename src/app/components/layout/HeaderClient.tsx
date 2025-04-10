@@ -31,87 +31,7 @@ import {
   getTrending,
 } from "./hook";
 import ButtonAnimated from "../ButtonAnimated";
-const pages = [
-  {
-    name: "Trending",
-    children: [
-      {
-        name: "Asia",
-        children: null,
-      },
-      {
-        name: "Europe",
-        children: null,
-      },
-      {
-        name: "Africa",
-        children: null,
-      },
-      {
-        name: "North America",
-        children: null,
-      },
-      {
-        name: "South America",
-        children: null,
-      },
-    ],
-  },
-  {
-    name: "Destinations",
-    children: [
-      {
-        name: "Asia",
-        children: ["Japan", "China", "Vietnam", "Thailand"],
-      },
-      {
-        name: "Europe",
-        children: null,
-      },
-      {
-        name: "Africa",
-        children: ["Egypt", "Kenya", "Morocco", "South Africa"],
-      },
-      {
-        name: "North America",
-        children: null,
-      },
-      {
-        name: "South America",
-        children: ["Brazil", "Argentina", "Peru", "Chile"],
-      },
-    ],
-  },
-  {
-    name: "Trip Themes & Styles",
-    children: [
-      {
-        name: "Adventure",
-        children: ["Hiking", "Climbing", "Water Sports", "Safari"],
-      },
-      {
-        name: "Cultural",
-        children: ["History", "Art", "Food", "Festivals"],
-      },
-      {
-        name: "Wildlife",
-        children: ["Bird Watching", "Marine Life", "Big Game", "Photography"],
-      },
-      {
-        name: "Luxury",
-        children: ["5-Star Hotels", "Private Tours", "Gourmet Dining"],
-      },
-      {
-        name: "Budget",
-        children: ["Backpacking", "Hostels", "Local Transport"],
-      },
-    ],
-  },
-  {
-    name: "Write a Review",
-    children: null,
-  },
-];
+
 interface Destination {
   id: number;
   destination: string;
@@ -157,6 +77,66 @@ interface Trip {
   oldPrice: string;
 }
 function HeaderClient() {
+  const [pages, setPages] = useState({
+    Trending: {
+      name: "Trending",
+      children: {
+        Asia: { name: "Asia", children: null },
+        Europe: { name: "Europe", children: null },
+        Africa: { name: "Africa", children: null },
+        "North America": { name: "North America", children: null },
+        "South America": { name: "South America", children: null },
+      },
+    },
+    Destinations: {
+      name: "Destinations",
+      children: {
+        Asia: {
+          name: "Asia",
+          children: ["Japan", "China", "Vietnam", "Thailand"],
+        },
+        Europe: { name: "Europe", children: null },
+        Africa: {
+          name: "Africa",
+          children: ["Egypt", "Kenya", "Morocco", "South Africa"],
+        },
+        "North America": { name: "North America", children: null },
+        "South America": {
+          name: "South America",
+          children: ["Brazil", "Argentina", "Peru", "Chile"],
+        },
+      },
+    },
+    "Trip Themes & Styles": {
+      name: "Trip Themes & Styles",
+      children: {
+        Adventure: {
+          name: "Adventure",
+          children: ["Hiking", "Climbing", "Water Sports", "Safari"],
+        },
+        Cultural: {
+          name: "Cultural",
+          children: ["History", "Art", "Food", "Festivals"],
+        },
+        Wildlife: {
+          name: "Wildlife",
+          children: ["Bird Watching", "Marine Life", "Big Game", "Photography"],
+        },
+        Luxury: {
+          name: "Luxury",
+          children: ["5-Star Hotels", "Private Tours", "Gourmet Dining"],
+        },
+        Budget: {
+          name: "Budget",
+          children: ["Backpacking", "Hostels", "Local Transport"],
+        },
+      },
+    },
+    "Write a Review": {
+      name: "Write a Review",
+      children: null,
+    },
+  });
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -459,7 +439,7 @@ function HeaderClient() {
                     </Button>
                   </Link>
 
-                  {pages.map((page, index) => (
+                  {Object.values(pages).map((page, index) => (
                     <div key={index}>
                       <ListItemButton
                         onClick={handleClick}
@@ -477,11 +457,11 @@ function HeaderClient() {
                           }}
                         />
 
-                        {page?.children &&
+                        {page.children &&
                           (open ? <ExpandLess /> : <ExpandMore />)}
                       </ListItemButton>
-                      {page?.children &&
-                        page?.children.map((item, index) => (
+                      {page.children &&
+                        Object.values(page.children).map((item, index) => (
                           <Collapse
                             in={open}
                             timeout="auto"
@@ -498,11 +478,11 @@ function HeaderClient() {
                                 }}
                               >
                                 <ListItemText primary={item.name} />
-                                {item?.children &&
+                                {item.children &&
                                   (open ? <ExpandLess /> : <ExpandMore />)}
                               </ListItemButton>
-                              {item?.children &&
-                                item?.children.map((i, index) => (
+                              {item.children &&
+                                item.children.map((child, index) => (
                                   <Collapse
                                     in={open}
                                     timeout="auto"
@@ -515,7 +495,7 @@ function HeaderClient() {
                                           pl: 9,
                                         }}
                                       >
-                                        <ListItemText primary={i} />
+                                        <ListItemText primary={child} />
                                       </ListItemButton>
                                     </List>
                                   </Collapse>
@@ -550,7 +530,7 @@ function HeaderClient() {
             </Box>
 
             <Box className="hidden md:flex flex-grow justify-center items-center">
-              {pages.map((page, index) => (
+              {Object.values(pages).map((page, index) => (
                 <Box
                   key={index}
                   onClick={() => handleCloseNavMenu(page)}
