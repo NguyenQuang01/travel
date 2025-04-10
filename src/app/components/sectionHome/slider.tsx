@@ -81,7 +81,7 @@ const Slider = (prop: { data: SliderItem[] }) => {
                           <h2 className="text-h2 text-start whitespace-nowrap overflow-hidden text-ellipsis">
                             {item.name}
                           </h2>
-                          <p className="text-p line-clamp-4 overflow-hidden text-ellipsis whitespace-normal h-26">
+                          <p className="text-p line-clamp-3 overflow-hidden text-ellipsis whitespace-normal md:h-20 h-12 md:text-sm text-xs">
                             {item.description || "No description available"}
                           </p>
                         </div>

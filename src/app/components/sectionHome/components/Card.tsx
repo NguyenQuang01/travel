@@ -94,87 +94,89 @@ export default function CardReview(prop: TourData) {
         });
     };
     return (
-        <Card>
-            <Link href={`/trips/${prop.tour.id}`} onClick={setOder}>
-                <Image
-                    src={
-                        prop?.images[0]?.url
-                            ? `${API_INFO.BASE_URL_ADMIN}${prop?.images[0]?.url}`
-                            : generalImg
-                    }
-                    alt="img"
-                    width={200}
-                    height={200}
-                    priority={true}
-                    loading="eager"
-                    className="w-full h-[173px] md:h-[290px] h-[200px] object-cover"
-                />
-                <Box className="p-2 md:p-[1rem] pb-0">
-                    <Box>
-                        <p className="text-sm md:text-base font-bold leading-[16px] truncate">
-                            {prop.tour.name}
-                        </p>
-                        <Box className="flex items-center my-2">
-                            <Box
-                                sx={{
-                                    height: "12px",
-                                    width: "12px",
-                                    background: "#000",
-                                    borderRadius: "10%",
-                                }}
-                                className=" mr-[8px]"
-                            ></Box>
-                            <p className="text-sm md:text-base truncate">
-                                {prop.tour?.tripType}
-                            </p>
-                        </Box>
-                    </Box>
-                    <Box className="flex justify-between">
-                        <Typography>{prop.tour.totalDay} Days</Typography>
-                        <div className="flex items-center">
-                            <p className="text-sm mr-2">From:</p>
-                            <span className="text-2xl">
-                                {" "}
-                                {prop.tour.oldPrice || 0}
-                            </span>
-                        </div>
-                    </Box>
-                </Box>{" "}
-            </Link>
-            <CardActions disableSpacing>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                    className="h-5"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
-            </CardActions>
+      <Card>
+        <Link href={`/trips/${prop.tour.id}`} onClick={setOder}>
+          <Image
+            src={
+              prop?.images[0]?.url
+                ? `${API_INFO.BASE_URL_ADMIN}${prop?.images[0]?.url}`
+                : generalImg
+            }
+            alt="img"
+            width={200}
+            height={200}
+            priority={true}
+            loading="eager"
+            className="w-full h-[173px] md:h-[290px] h-[200px] object-cover"
+          />
+          <Box className="p-2 md:p-[1rem] pb-0">
+            <Box>
+              <p className="text-sm md:text-base font-bold leading-[16px] truncate">
+                {prop.tour.name}
+              </p>
+              <Box className="flex items-center my-2">
+                <Box
+                  sx={{
+                    height: "12px",
+                    width: "12px",
+                    background: "#000",
+                    borderRadius: "10%",
+                  }}
+                  className=" mr-[8px]"
+                ></Box>
+                <p className="text-sm md:text-base truncate">
+                  {prop.tour?.tripType}
+                </p>
+              </Box>
+            </Box>
+            <Box className="flex justify-between items-center">
+              <Typography sx={{ fontSize: { xs: "0.75rem", md: "1rem" } }}>
+                {prop.tour.totalDay} Days
+              </Typography>
+              <div className="flex items-center">
+                <p className="md:text-sm text-xs md:mr-2 mr-1">From:</p>
+                <span className="md:text-2xl text-lg">
+                  {" "}
+                  {prop.tour.oldPrice || 0}
+                </span>
+              </div>
+            </Box>
+          </Box>{" "}
+        </Link>
+        <CardActions disableSpacing>
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+            className="h-5"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </CardActions>
 
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <Box className="flex justify-between p-[1rem] pt-0">
-                    <Box>
-                        <StarTwoTone twoToneColor="#FFD700" />{" "}
-                        {prop.review.avgOverall
-                            ? Number(prop.review.avgOverall).toFixed(1)
-                            : 5}{" "}
-                        / 5 Excellent
-                    </Box>
-                    <Box sx={{ pl: "10px" }}>
-                        <Typography
-                            sx={{
-                                color: "#888",
-                                fontSize: "14px",
-                                lineHeight: "21px",
-                            }}
-                        >
-                            {prop.review.reviewCount} Reviews
-                        </Typography>
-                    </Box>
-                </Box>
-            </Collapse>
-        </Card>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Box className="flex justify-between items-center p-[1rem] pt-0">
+            <Box className="text-xs md:text-base">
+              <StarTwoTone twoToneColor="#FFD700" />{" "}
+              {prop.review.avgOverall
+                ? Number(prop.review.avgOverall).toFixed(1)
+                : 5}{" "}
+              / 5 Excellent
+            </Box>
+            <Box sx={{ pl: "10px" }}>
+              <Typography
+                sx={{
+                  color: "#888",
+                  fontSize: "14px",
+                  lineHeight: "21px",
+                }}
+              >
+                {prop.review.reviewCount} Reviews
+              </Typography>
+            </Box>
+          </Box>
+        </Collapse>
+      </Card>
     );
 }

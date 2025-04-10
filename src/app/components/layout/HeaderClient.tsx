@@ -37,7 +37,7 @@ const pages = [
     children: [
       {
         name: "Asia",
-        children: ["Japan", "China", "Vietnam", "Thailand"],
+        children: null,
       },
       {
         name: "Europe",
@@ -45,7 +45,7 @@ const pages = [
       },
       {
         name: "Africa",
-        children: ["Egypt", "Kenya", "Morocco", "South Africa"],
+        children: null,
       },
       {
         name: "North America",
@@ -53,7 +53,7 @@ const pages = [
       },
       {
         name: "South America",
-        children: ["Brazil", "Argentina", "Peru", "Chile"],
+        children: null,
       },
     ],
   },
@@ -535,15 +535,18 @@ function HeaderClient() {
                 color: "black",
               }}
             >
-              <Image
-                src="https://client.travelstride.com/app/_next/static/media/travel_stride_logo.68fd2f6b.svg"
-                alt="Logo"
-                width={201}
-                height={44}
-                priority={true}
-                className="min-w-[12.6rem] h-[44px]"
-                loading="eager"
-              />
+              {" "}
+              <Link href="/">
+                <Image
+                  src={logo}
+                  alt="Logo"
+                  width={201}
+                  height={44}
+                  priority={true}
+                  className="min-w-[8.6rem] h-auto"
+                  loading="eager"
+                />
+              </Link>
             </Box>
 
             <Box className="hidden md:flex flex-grow justify-center items-center">

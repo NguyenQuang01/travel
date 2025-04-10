@@ -90,7 +90,6 @@ img {
     padding: 10px;
     visibility: hidden;
     opacity: 0;
-    font-size: 16px;
     color: #fff;
     overflow: hidden;
 }
@@ -107,6 +106,13 @@ img {
     position: initial !important;
 }
 @media screen and (max-width: 768px) {
+    .card:hover .intro {
+    height: 92px;
+}
+    .text-p{
+        font-size: 12px;
+        padding: 2px;
+    }
     .swiper-button-prev {
         left: -31px !important;
     }
