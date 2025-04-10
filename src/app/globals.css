@@ -106,9 +106,12 @@ img {
     position: initial !important;
 }
 @media screen and (max-width: 768px) {
+    .intro{
+        height:40px;
+    }
     .card:hover .intro {
-    height: 92px;
-}
+        height: 92px;
+    }
     .text-p{
         font-size: 12px;
         padding: 2px;
