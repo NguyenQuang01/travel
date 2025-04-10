@@ -22,6 +22,7 @@ import Link from "next/link";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Modal, Tooltip } from "antd";
 import ButtonGreen from "../ButtonGreen";
+import logo from "@/app/assets/imgs/TODITOUR-02.png";
 import {
   getActivities,
   getInterests,
@@ -380,12 +381,12 @@ function HeaderClient() {
             <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
               <Link href="/">
                 <Image
-                  src="https://client.travelstride.com/app/_next/static/media/travel_stride_logo.68fd2f6b.svg"
+                  src={logo}
                   alt="Logo"
                   width={201}
                   height={44}
                   priority={true}
-                  className="min-w-[12.6rem] h-[44px]"
+                  className="min-w-[14.6rem] h-[52px]"
                   loading="eager"
                 />
               </Link>
