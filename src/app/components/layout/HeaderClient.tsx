@@ -115,6 +115,7 @@ function HeaderClient() {
   );
   const [open, setOpen] = React.useState(true);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalDestinations, setIsModalDestinations] = React.useState(false);
   const [isModalTrending, setIsModalTrending] = React.useState(false);
   const [isModalOpenStyle, setIsModalOpenStyle] = React.useState(false);
 
@@ -246,7 +247,7 @@ function HeaderClient() {
 
   const handleCloseNavMenu = (page?: any) => {
     setAnchorElNav(null);
-    if (page.name === "Destinations") setIsModalOpen(true);
+    if (page.name === "Destinations") setIsModalDestinations(true);
     if (page.name === "Trip Themes & Styles") setIsModalOpenStyle(true);
     if (page.name === "Trending") setIsModalTrending(true);
   };
@@ -305,7 +306,7 @@ function HeaderClient() {
         </div>
       </Modal>{" "}
       <Modal
-        open={isModalOpen}
+        open={isModalDestinations}
         onOk={handleOk}
         onCancel={handleCancel}
         width="50%"

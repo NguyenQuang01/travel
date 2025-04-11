@@ -229,7 +229,7 @@ const TourTheme = () => {
                                 text-sm
                                 h-[80px]
                                 w-full
-                                max-w-[110px]
+                                max-w-[120px]
                                 mx-auto
                                 md:text-base 
                                 md:h-[116px] 
