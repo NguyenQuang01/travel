@@ -109,28 +109,7 @@ function HeaderClient() {
     },
     "Trip Themes & Styles": {
       name: "Trip Themes & Styles",
-      children: {
-        Adventure: {
-          name: "Adventure",
-          children: ["Hiking", "Climbing", "Water Sports", "Safari"],
-        },
-        Cultural: {
-          name: "Cultural",
-          children: ["History", "Art", "Food", "Festivals"],
-        },
-        Wildlife: {
-          name: "Wildlife",
-          children: ["Bird Watching", "Marine Life", "Big Game", "Photography"],
-        },
-        Luxury: {
-          name: "Luxury",
-          children: ["5-Star Hotels", "Private Tours", "Gourmet Dining"],
-        },
-        Budget: {
-          name: "Budget",
-          children: ["Backpacking", "Hostels", "Local Transport"],
-        },
-      },
+      children: {},
     },
     "Write a Review": {
       name: "Write a Review",
@@ -158,30 +137,93 @@ function HeaderClient() {
     const res: any = await getActivities();
     if (res) {
       setActivities(res.data);
+      setPages((pre) => ({
+        ...pre,
+        "Trip Themes & Styles": {
+          ...pre["Trip Themes & Styles"],
+          children: {
+            ...pre["Trip Themes & Styles"].children,
+            Adventure: {
+              name: "Adventure",
+              children: res.data.map((item: any) => item.activity),
+            },
+          },
+        },
+      }));
     }
   };
   const getMenuStyles = async () => {
     const res: any = await getStyles();
     if (res) {
       setStyles(res.data ?? []);
+      setPages((pre) => ({
+        ...pre,
+        "Trip Themes & Styles": {
+          ...pre["Trip Themes & Styles"],
+          children: {
+            ...pre["Trip Themes & Styles"].children,
+            Styles: {
+              name: "Styles",
+              children: res.data.map((item: any) => item.name),
+            },
+          },
+        },
+      }));
     }
   };
   const getMenuInterests = async () => {
     const res: any = await getInterests();
     if (res) {
       setInterests(res.data);
+      setPages((pre) => ({
+        ...pre,
+        "Trip Themes & Styles": {
+          ...pre["Trip Themes & Styles"],
+          children: {
+            ...pre["Trip Themes & Styles"].children,
+            Interests: {
+              name: "Interests",
+              children: res.data.map((item: any) => item.name),
+            },
+          },
+        },
+      }));
     }
   };
   const getMenuDestinations = async () => {
     const res: any = await getDestinations();
     if (res) {
       setDestinations(res.data);
+      setPages((pre: any) => {
+        const destinationsChildren: {
+          [key: string]: { name: string; children: string[] };
+        } = {};
+
+        res.data.forEach((region: DestinationData) => {
+          destinationsChildren[region.continent.continentName] = {
+            name: region.continent.continentName,
+            children: region.destinations.map((dest) => dest.destination),
+          };
+        });
+
+        return {
+          ...pre,
+          Destinations: {
+            name: "Destinations",
+            children: destinationsChildren,
+          },
+        };
+      });
     }
   };
   const getMenuTrending = async () => {
     const res: any = await getTrending();
     if (res) {
       setTrending(res.data ?? []);
+      setPages((pre) => ({
+        ...pre,
+        Trending: { name: "Trending", children: res.data },
+      }));
     }
   };
   useEffect(() => {
