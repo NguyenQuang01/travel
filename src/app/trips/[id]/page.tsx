@@ -28,40 +28,41 @@ const TourDetail = () => {
         getData();
     }, []);
     return (
-        <div>
-            {data ? (
-                <div>
-                    <TourCard
-                        data={data?.tour}
-                        review={data?.averageRatings.totalReviews}
-                        star={data?.averageRatings.overallRatingAvg}
-                        img={data?.images}
-                    />
-                    <TourInfo
-                        oldPrice={data?.tour.oldPrice}
-                        price={data?.tour.price}
-                        tripType={data?.tour.tripType}
-                    />
-                    <div className="bg-[#f8f7fd]">
-                        <Overview data={data?.tour} />
-                        <Details
-                            data={data?.tour}
-                            themes={data?.themes}
-                            destinations={data?.destinations}
-                            activities={data?.activities}
-                        />
-                        <Itinerary data={data?.tour.itinerary} />
-                        <Banner />
-                        <Ratings
-                            reviews={data?.reviews}
-                            averageRatings={data?.averageRatings}
-                        />
-                    </div>
-                </div>
-            ) : (
-                <Loading />
-            )}
-        </div>
+      <div>
+        {data ? (
+          <div>
+            <TourCard
+              data={data?.tour}
+              review={data?.averageRatings.totalReviews}
+              star={data?.averageRatings.overallRatingAvg}
+              img={data?.images}
+            />
+            <TourInfo
+              oldPrice={data?.tour.oldPrice}
+              price={data?.tour.price}
+              tripType={data?.tour.tripType}
+              id={data?.tour.id}
+            />
+            <div className="bg-[#f8f7fd]">
+              <Overview data={data?.tour} />
+              <Details
+                data={data?.tour}
+                themes={data?.themes}
+                destinations={data?.destinations}
+                activities={data?.activities}
+              />
+              <Itinerary data={data?.tour.itinerary} />
+              <Banner />
+              <Ratings
+                reviews={data?.reviews}
+                averageRatings={data?.averageRatings}
+              />
+            </div>
+          </div>
+        ) : (
+          <Loading />
+        )}
+      </div>
     );
 };
 

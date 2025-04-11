@@ -16,23 +16,25 @@ import {
 import { DownOutlined } from "@ant-design/icons";
 import { Container } from "@mui/material";
 import Link from "next/link";
+
 interface Review {
-    id: number;
-    tourId: number;
-    companyName: string;
-    nickname: string;
-    reviewSummary: string;
-    reviewContent: string;
-    overallRating: number;
-    valueRating: number;
-    guideRating: number;
-    activitiesRating: number;
-    lodgingRating: number;
-    transportationRating: number;
-    mealsRating: number;
-    travelDate: string;
-    createdAt: string;
+  id: number;
+  tourId: number;
+  companyName: string;
+  nickname: string;
+  reviewSummary: string;
+  reviewContent: string;
+  overallRating: number;
+  valueRating: number;
+  guideRating: number;
+  activitiesRating: number;
+  lodgingRating: number;
+  transportationRating: number;
+  mealsRating: number;
+  travelDate: string;
+  createdAt: string;
 }
+
 const { Title, Text } = Typography;
 
 const Ratings = (props: any) => {
@@ -46,199 +48,153 @@ const Ratings = (props: any) => {
     ]);
 
     const menu = (
-        <Menu
-            items={[
-                { key: "1", label: "Detailed Ratings" },
-                { key: "2", label: "Reviewer Comments" },
-            ]}
-        />
+      <Menu
+        items={[
+          { key: "1", label: "Detailed Ratings" },
+          { key: "2", label: "Reviewer Comments" },
+        ]}
+      />
     );
-    // const reviews = [
-    //     {
-    //         name: "John B",
-    //         date: "Sep 2024",
-    //         platform: "TravelStride",
-    //         title: "The Italy Grand Tour",
-    //         company: "Alma Italia",
-    //         comment:
-    //             "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
-    //     },
-    //     {
-    //         name: "John B",
-    //         date: "Sep 2024",
-    //         platform: "TravelStride",
-    //         title: "The Italy Grand Tour",
-    //         company: "Alma Italia",
-    //         comment:
-    //             "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
-    //     },
-    //     {
-    //         name: "John B",
-    //         date: "Sep 2024",
-    //         platform: "TravelStride",
-    //         title: "The Italy Grand Tour",
-    //         company: "Alma Italia",
-    //         comment:
-    //             "We had a great time. The trip was well organized by Alma Italia and the guides were excellent.",
-    //     },
-    // ];
 
     return (
-        <div className="py-10" id="Reviews">
-            <Container className=" bg-white py-10 rounded-lg">
-                <div className=" rounded-xl">
-                    <Row justify="space-between" align="middle">
-                        <Title level={4}>Alma Italia Reviews & Ratings</Title>
-                    </Row>
+      <div className="py-5 sm:py-10" id="Reviews">
+        <Container className="bg-white py-5 sm:py-10 rounded-lg px-4 sm:px-6">
+          <div className="rounded-xl">
+            <Row justify="space-between" align="middle">
+              <Title level={4} className="text-xl sm:text-2xl">
+                Alma Italia Reviews & Ratings
+              </Title>
+            </Row>
 
-                    <Row className="mt-4" gutter={[16, 16]}>
-                        <Col span={12}>
-                            <div className="flex items-end">
-                                <div className="w-full">
-                                    <Space>
-                                        <Rate
-                                            disabled
-                                            defaultValue={5}
-                                            className="text-yellow-500"
-                                        />
-                                        <Text className="font-semibold text-gray-600">
-                                            5/5
-                                        </Text>
-                                        <Text className="text-gray-500">
-                                            Excellent
-                                        </Text>
-                                    </Space>
-                                    <div className="cursor-pointer text-gray-600">
-                                        Ratings details
-                                        {/* <DownOutlined className="ml-1" /> */}
-                                    </div>
-                                    <Button className="block mt-3 border border-gray-500 rounded-lg hover:bg-gray-100">
-                                        Write a review
-                                    </Button>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col span={24}>
-                            <Row className="mt-4" gutter={[70, 16]}>
-                                <Col span={12}>
-                                    <Row
-                                        justify="space-between"
-                                        align="middle"
-                                        className="mb-2"
-                                    >
-                                        <Text>Excellent</Text>
-                                        <Progress
-                                            percent={averageRatings.rating5Star}
-                                            showInfo={false}
-                                            className="w-2/3"
-                                        />
-                                    </Row>{" "}
-                                    <Row
-                                        justify="space-between"
-                                        align="middle"
-                                        className="mb-2"
-                                    >
-                                        <Text>Great</Text>
-                                        <Progress
-                                            percent={averageRatings.rating4Star}
-                                            showInfo={false}
-                                            className="w-2/3"
-                                        />
-                                    </Row>{" "}
-                                    <Row
-                                        justify="space-between"
-                                        align="middle"
-                                        className="mb-2"
-                                    >
-                                        <Text>Average</Text>
-                                        <Progress
-                                            percent={averageRatings.rating3Star}
-                                            showInfo={false}
-                                            className="w-2/3"
-                                        />
-                                    </Row>{" "}
-                                    <Row
-                                        justify="space-between"
-                                        align="middle"
-                                        className="mb-2"
-                                    >
-                                        <Text>Disappointing</Text>
-                                        <Progress
-                                            percent={averageRatings.rating2Star}
-                                            showInfo={false}
-                                            className="w-2/3"
-                                        />
-                                    </Row>{" "}
-                                    <Row
-                                        justify="space-between"
-                                        align="middle"
-                                        className="mb-2"
-                                    >
-                                        <Text>Terrible</Text>
-                                        <Progress
-                                            percent={averageRatings.rating1Star}
-                                            showInfo={false}
-                                            className="w-2/3"
-                                        />
-                                    </Row>
-                                </Col>
-                                <Col span={12}>
-                                    {" "}
-                                    <div className="mt-6 pt-4">
-                                        {reviews?.map(
-                                            (review: Review, index: number) => (
-                                                <div
-                                                    key={index}
-                                                    className="flex mb-6"
-                                                >
-                                                    <div className="w-15">
-                                                        <div className="bg-gray-300 text-gray-700 mr-2 h-10 w-10 flex items-center justify-center rounded-full">
-                                                            {review.nickname[0]}
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <Text strong>
-                                                            {review.nickname}
-                                                        </Text>
-                                                        <Text className="text-gray-500 text-sm ml-2">
-                                                            {review.travelDate}{" "}
-                                                            | Written on Travel
-                                                        </Text>
-                                                        <div className="mt-1">
-                                                            <span className="text-black font-bold">
-                                                                {
-                                                                    review.reviewSummary
-                                                                }
-                                                            </span>{" "}
-                                                            <span color="#888">
-                                                                by{" "}
-                                                            </span>
-                                                            <span className="text-black font-bold">
-                                                                {
-                                                                    review.companyName
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                        <Text className="block mt-1">
-                                                            {
-                                                                review.reviewContent
-                                                            }
-                                                        </Text>
-                                                    </div>
-                                                </div>
-                                            )
-                                        )}
-                                    </div>
-                                </Col>
-                            </Row>
-
-                            {/* User Reviews */}
-                        </Col>
-                    </Row>
+            <Row className="mt-4" gutter={[16, 16]}>
+              <Col xs={24} sm={24} md={12}>
+                <div className="flex items-end">
+                  <div className="w-full">
+                    <Space wrap>
+                      <Rate
+                        disabled
+                        defaultValue={5}
+                        className="text-yellow-500 text-sm sm:text-base"
+                      />
+                      <Text className="font-semibold text-gray-600">5/5</Text>
+                      <Text className="text-gray-500">Excellent</Text>
+                    </Space>
+                    <div className="cursor-pointer text-gray-600">
+                      Ratings details
+                    </div>
+                    <Button className="block mt-3 border border-gray-500 rounded-lg hover:bg-gray-100 w-full sm:w-auto">
+                      Write a review
+                    </Button>
+                  </div>
                 </div>
-            </Container>
-        </div>
+              </Col>
+              <Col span={24}>
+                <Row className="mt-4" gutter={[16, 16]}>
+                  <Col xs={24} md={12}>
+                    <Row
+                      justify="space-between"
+                      align="middle"
+                      className="mb-2"
+                    >
+                      <Text className="w-24">Excellent</Text>
+                      <Progress
+                        percent={averageRatings.rating5Star}
+                        showInfo={false}
+                        className="flex-1"
+                      />
+                    </Row>
+                    <Row
+                      justify="space-between"
+                      align="middle"
+                      className="mb-2"
+                    >
+                      <Text className="w-24">Great</Text>
+                      <Progress
+                        percent={averageRatings.rating4Star}
+                        showInfo={false}
+                        className="flex-1"
+                      />
+                    </Row>
+                    <Row
+                      justify="space-between"
+                      align="middle"
+                      className="mb-2"
+                    >
+                      <Text className="w-24">Average</Text>
+                      <Progress
+                        percent={averageRatings.rating3Star}
+                        showInfo={false}
+                        className="flex-1"
+                      />
+                    </Row>
+                    <Row
+                      justify="space-between"
+                      align="middle"
+                      className="mb-2"
+                    >
+                      <Text className="w-24">Disappointing</Text>
+                      <Progress
+                        percent={averageRatings.rating2Star}
+                        showInfo={false}
+                        className="flex-1"
+                      />
+                    </Row>
+                    <Row
+                      justify="space-between"
+                      align="middle"
+                      className="mb-2"
+                    >
+                      <Text className="w-24">Terrible</Text>
+                      <Progress
+                        percent={averageRatings.rating1Star}
+                        showInfo={false}
+                        className="flex-1"
+                      />
+                    </Row>
+                  </Col>
+                  <Col xs={24} md={12}>
+                    <div className="mt-4 md:mt-6 pt-2 md:pt-4">
+                      {reviews?.map((review: Review, index: number) => (
+                        <div
+                          key={index}
+                          className="flex flex-col sm:flex-row mb-6 gap-4"
+                        >
+                          <div className="flex-shrink-0">
+                            <div className="bg-gray-300 text-gray-700 h-10 w-10 flex items-center justify-center rounded-full">
+                              {review.nickname[0]}
+                            </div>
+                          </div>
+
+                          <div className="flex-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                              <Text strong>{review.nickname}</Text>
+                              <Text className="text-gray-500 text-sm">
+                                {review.travelDate} | Written on Travel
+                              </Text>
+                            </div>
+                            <div className="mt-1">
+                              <span className="text-black font-bold">
+                                {review.reviewSummary}
+                              </span>{" "}
+                              <span className="text-gray-500">by </span>
+                              <span className="text-black font-bold">
+                                {review.companyName}
+                              </span>
+                            </div>
+                            <Text className="block mt-1 text-sm sm:text-base">
+                              {review.reviewContent}
+                            </Text>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </Container>
+      </div>
     );
 };
 
