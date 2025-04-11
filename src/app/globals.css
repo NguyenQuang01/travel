@@ -208,3 +208,9 @@ img {
     line-height: 1.5;
     margin-bottom: 0.5rem;
 }
+.css-1tktgsa-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
+    width: 100%!important;
+}
+.css-1qmg0sb-MuiList-root{
+    width: 100%!important;
+}

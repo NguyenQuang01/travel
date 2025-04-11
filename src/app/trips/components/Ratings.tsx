@@ -82,9 +82,11 @@ const Ratings = (props: any) => {
                     <div className="cursor-pointer text-gray-600">
                       Ratings details
                     </div>
-                    <Button className="block mt-3 border border-gray-500 rounded-lg hover:bg-gray-100 w-full sm:w-auto">
-                      Write a review
-                    </Button>
+                    <Link href={"/tour-review-form"}>
+                      <div className="inline-block mt-3 border border-gray-500 rounded-lg hover:bg-gray-100 w-full sm:w-auto p-2">
+                        Write a review
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </Col>
