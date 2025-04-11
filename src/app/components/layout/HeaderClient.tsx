@@ -138,6 +138,7 @@ function HeaderClient() {
           children: {
             ...pre["Trip Themes & Styles"].children,
             Adventure: {
+              key: "Adventure",
               name: "Adventure",
               children: res.data.map((item: any) => item.activity),
             },
@@ -157,6 +158,7 @@ function HeaderClient() {
           children: {
             ...pre["Trip Themes & Styles"].children,
             Styles: {
+              key: "Styles",
               name: "Styles",
               children: res.data.map((item: any) => item.name),
             },
@@ -176,6 +178,7 @@ function HeaderClient() {
           children: {
             ...pre["Trip Themes & Styles"].children,
             Interests: {
+              key: "Interests",
               name: "Interests",
               children: res.data.map((item: any) => item.name),
             },
@@ -203,6 +206,7 @@ function HeaderClient() {
         return {
           ...pre,
           Destinations: {
+            key: "Destinations",
             name: "Destinations",
             children: destinationsChildren,
           },
@@ -216,7 +220,11 @@ function HeaderClient() {
       setTrending(res.data ?? []);
       setPages((pre) => ({
         ...pre,
-        Trending: { name: "Trending", children: res.data },
+        Trending: {
+          key: "Trending",
+          name: "Trending",
+          children: res.data,
+        },
       }));
     }
   };
