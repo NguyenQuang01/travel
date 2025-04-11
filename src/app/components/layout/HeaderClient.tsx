@@ -80,13 +80,7 @@ function HeaderClient() {
   const [pages, setPages] = useState({
     Trending: {
       name: "Trending",
-      children: {
-        Asia: { name: "Asia", children: null },
-        Europe: { name: "Europe", children: null },
-        Africa: { name: "Africa", children: null },
-        "North America": { name: "North America", children: null },
-        "South America": { name: "South America", children: null },
-      },
+      children: {},
     },
     Destinations: {
       name: "Destinations",
@@ -413,6 +407,7 @@ function HeaderClient() {
                 />
               </Link>
             </Box>
+            {/* menu mobile */}
             <Box
               sx={{
                 flexGrow: 1,
@@ -519,7 +514,13 @@ function HeaderClient() {
                                   borderBottom: ".1rem solid #dadada",
                                 }}
                               >
-                                <ListItemText primary={item.name} />
+                                {page.name === "Trending" ? (
+                                  <Link href={"/guide/" + item.name}>
+                                    <ListItemText primary={item.name} />
+                                  </Link>
+                                ) : (
+                                  <ListItemText primary={item.name} />
+                                )}
                                 {item.children &&
                                   (open ? <ExpandLess /> : <ExpandMore />)}
                               </ListItemButton>
@@ -537,7 +538,9 @@ function HeaderClient() {
                                           pl: 9,
                                         }}
                                       >
-                                        <ListItemText primary={child} />
+                                        <Link href={"/guide/" + child}>
+                                          <ListItemText primary={child} />
+                                        </Link>
                                       </ListItemButton>
                                     </List>
                                   </Collapse>
@@ -550,6 +553,7 @@ function HeaderClient() {
                 </List>
               </Menu>
             </Box>
+            {/* logo mobile */}
             <Box
               sx={{
                 display: { xs: "flex", md: "none" },
@@ -570,7 +574,7 @@ function HeaderClient() {
                 />
               </Link>
             </Box>
-
+            {/* header Laptop */}
             <Box className="hidden md:flex flex-grow justify-center items-center">
               {Object.values(pages).map((page, index) => (
                 <Box
