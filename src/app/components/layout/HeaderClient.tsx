@@ -366,7 +366,7 @@ function HeaderClient() {
                   width={201}
                   height={44}
                   priority={true}
-                  className="min-w-[14.6rem] h-[52px]"
+                  className="w-auto h-[42px]"
                   loading="eager"
                 />
               </Link>
@@ -523,7 +523,7 @@ function HeaderClient() {
                   width={201}
                   height={44}
                   priority={true}
-                  className="min-w-[8.6rem] h-auto"
+                  className="w-auto h-[42px]"
                   loading="eager"
                 />
               </Link>

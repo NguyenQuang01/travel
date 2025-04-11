@@ -14,7 +14,7 @@ export default function Footer() {
               width={201}
               height={44}
               priority={true}
-              className="min-w-[16.6rem] h-[60px]"
+              className="w-auto h-[42px]"
               loading="eager"
             />
             <p className="mt-4 text-sm text-gray-600">
