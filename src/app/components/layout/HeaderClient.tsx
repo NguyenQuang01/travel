@@ -259,6 +259,9 @@ function HeaderClient() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const handleDestinations = () => {
+    setIsModalDestinations(false);
+  };
   const handleOkTrending = () => {
     setIsModalTrending(false);
   };
@@ -308,7 +311,7 @@ function HeaderClient() {
       <Modal
         open={isModalDestinations}
         onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={handleDestinations}
         width="50%"
         footer={null}
       >
