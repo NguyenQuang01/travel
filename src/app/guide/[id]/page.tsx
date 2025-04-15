@@ -66,28 +66,49 @@ const TourTheme = () => {
     const id = params.id; // Lấy id từ URL
     const [data, setData] = useState<any>();
     const [theme, setTheme] = useState<string[]>();
-    const travelOptions = [
-        { name: "Design Custom Trip", color: "bg-red-500", icon: "💚" },
-        { name: "Group Tour", color: "bg-red-500", icon: "👥" },
-        { name: "Private Guided", color: "bg-red-400", icon: "🎤" },
-        { name: "Small Group", color: "bg-red-600", icon: "👨‍👩‍👦" },
-        { name: "River Cruise", color: "bg-blue-500", icon: "🚢" },
-        { name: "Self-Guided", color: "bg-purple-600", icon: "📝" },
-        { name: "Small Ship Cruise", color: "bg-blue-700", icon: "🛳" },
-    ];
+    const [travelOptions, setTravelOptions] = useState<
+      {
+        id: number;
+        name: string;
+        imageUrl: string;
+        description: string;
+      }[]
+    >([]);
+
+    const fetchTravelStyles = async () => {
+      try {
+        const response = await fetch(
+          "https://www.be-travel.toditour.com/api/styles",
+          {
+            headers: {
+              Accept: "application/json",
+              Origin: window.location.origin,
+            },
+          }
+        );
+        const data = await response.json();
+        setTravelOptions(data);
+      } catch (error) {
+        console.error("Error fetching travel styles:", error);
+      }
+    };
+
+    useEffect(() => {
+      fetchTravelStyles();
+    }, []);
     const getData = async () => {
-        try {
-            const response: any = await getToursSearch(String(id));
-            setTheme(Object.keys(response.data.data));
-            console.log(response.data.data, "------------------1");
-            setData(response.data.data);
-        } catch (error) {
-            console.error("Search tours error:", error);
-            throw error;
-        }
+      try {
+        const response: any = await getToursSearch(String(id));
+        setTheme(Object.keys(response.data.data));
+        console.log(response.data.data, "------------------1");
+        setData(response.data.data);
+      } catch (error) {
+        console.error("Search tours error:", error);
+        throw error;
+      }
     };
     useEffect(() => {
-        getData();
+      getData();
     }, []);
     return data ? (
       <>
@@ -213,9 +234,10 @@ const TourTheme = () => {
                       >
                         {travelOptions.map((option, index) => (
                           <SwiperSlide key={index} className="p-1 flex">
-                            <button
-                              key={option.name}
-                              className={`
+                            <Link href={"/guide/" + option.name}>
+                              <button
+                                key={option.name}
+                                className={`
                                 text-white 
                                 items-center 
                                 justify-center 
@@ -235,22 +257,23 @@ const TourTheme = () => {
                                 md:h-[116px] 
                                 md:max-w-[152px]
                               `}
-                              style={{
-                                backgroundColor: `#${Math.floor(
-                                  Math.random() * 16777215
-                                ).toString(16)}`,
-                                color: "white",
-                                fontWeight: 700,
-                                textAlign: "center",
-                                textTransform: "uppercase",
-                                marginBottom: "1rem",
-                                lineHeight: 1.3,
-                                position: "relative",
-                                zIndex: 1,
-                              }}
-                            >
-                              {option.name}
-                            </button>
+                                style={{
+                                  backgroundColor: `#${Math.floor(
+                                    Math.random() * 16777215
+                                  ).toString(16)}`,
+                                  color: "white",
+                                  fontWeight: 700,
+                                  textAlign: "center",
+                                  textTransform: "uppercase",
+                                  marginBottom: "1rem",
+                                  lineHeight: 1.3,
+                                  position: "relative",
+                                  zIndex: 1,
+                                }}
+                              >
+                                {option.name}
+                              </button>
+                            </Link>
                           </SwiperSlide>
                         ))}
                       </Swiper>
