@@ -101,8 +101,8 @@ function HeaderClient() {
         },
       },
     },
-    "Trip Themes & Styles": {
-      name: "Trip Themes & Styles",
+    "Themes & Styles": {
+      name: "Themes & Styles",
       children: {},
     },
     "Write a Review": {
@@ -118,7 +118,10 @@ function HeaderClient() {
   const [isModalDestinations, setIsModalDestinations] = React.useState(false);
   const [isModalTrending, setIsModalTrending] = React.useState(false);
   const [isModalOpenStyle, setIsModalOpenStyle] = React.useState(false);
-
+  const [showAllActivities, setShowAllActivities] = useState(false);
+  const [showAllStyle, setShowAllStyle] = useState(false);
+  const [showAllInterests, setShowAllInterests] = useState(false);
+  const [showAllDestinations, setShowAllDestinations] = useState(false);
   const [destinations, setDestinations] = useState<DestinationData[]>([]);
 
   const [activities, setActivities] =
@@ -134,10 +137,10 @@ function HeaderClient() {
       setActivities(res.data);
       setPages((pre) => ({
         ...pre,
-        "Trip Themes & Styles": {
-          ...pre["Trip Themes & Styles"],
+        "Themes & Styles": {
+          ...pre["Themes & Styles"],
           children: {
-            ...pre["Trip Themes & Styles"].children,
+            ...pre["Themes & Styles"].children,
             Adventure: {
               key: "Adventure",
               name: "Adventure",
@@ -154,10 +157,10 @@ function HeaderClient() {
       setStyles(res.data ?? []);
       setPages((pre) => ({
         ...pre,
-        "Trip Themes & Styles": {
-          ...pre["Trip Themes & Styles"],
+        "Themes & Styles": {
+          ...pre["Themes & Styles"],
           children: {
-            ...pre["Trip Themes & Styles"].children,
+            ...pre["Themes & Styles"].children,
             Styles: {
               key: "Styles",
               name: "Styles",
@@ -174,10 +177,10 @@ function HeaderClient() {
       setInterests(res.data);
       setPages((pre) => ({
         ...pre,
-        "Trip Themes & Styles": {
-          ...pre["Trip Themes & Styles"],
+        "Themes & Styles": {
+          ...pre["Themes & Styles"],
           children: {
-            ...pre["Trip Themes & Styles"].children,
+            ...pre["Themes & Styles"].children,
             Interests: {
               key: "Interests",
               name: "Interests",
@@ -248,7 +251,7 @@ function HeaderClient() {
   const handleCloseNavMenu = (page?: any) => {
     setAnchorElNav(null);
     if (page.name === "Destinations") setIsModalDestinations(true);
-    if (page.name === "Trip Themes & Styles") setIsModalOpenStyle(true);
+    if (page.name === "Themes & Styles") setIsModalOpenStyle(true);
     if (page.name === "Trending") setIsModalTrending(true);
   };
 
@@ -324,17 +327,34 @@ function HeaderClient() {
                     {section.continent.continentName}
                   </h3>
                   <ul className="space-y-1 text-gray-700">
-                    {section.destinations.map((place, i) => (
-                      <li key={i}>
-                        <Link href={"/guide/" + place.destination}>
-                          <ButtonAnimated>
-                            <span className="text-start whitespace-nowrap overflow-hidden text-ellipsis">
-                              {place.destination}
-                            </span>
-                          </ButtonAnimated>
-                        </Link>
+                    {section.destinations
+                      .slice(
+                        0,
+                        showAllDestinations ? section.destinations.length : 5
+                      )
+                      .map((place, i) => (
+                        <li key={i}>
+                          <Link href={"/guide/" + place.destination}>
+                            <ButtonAnimated>
+                              <span className="text-start whitespace-nowrap overflow-hidden text-ellipsis">
+                                {place.destination}
+                              </span>
+                            </ButtonAnimated>
+                          </Link>
+                        </li>
+                      ))}
+                    {section.destinations.length > 5 && (
+                      <li>
+                        <span
+                          onClick={() =>
+                            setShowAllDestinations(!showAllDestinations)
+                          }
+                          className="text-start whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer text-blue-600 hover:text-blue-800 ml-[20px]"
+                        >
+                          {showAllDestinations ? "Show less" : "See all"}
+                        </span>
                       </li>
-                    ))}
+                    )}
                   </ul>
                 </div>
               ))}
@@ -351,54 +371,89 @@ function HeaderClient() {
         <div className=" rounded-lg p-2  mx-auto flex gap-10 justify-between mr-5">
           <div>
             <h3 className="font-bold text-lg mb-2 ml-5">Adventure</h3>
-            <ul className="space-y-1 text-gray-700 ">
-              {activities?.map((activity) => (
-                <li key={activity.id}>
-                  {" "}
-                  <Link href={"/guide/" + activity.activity}>
-                    <ButtonAnimated>
-                      <span className="text-start whitespace-nowrap overflow-hidden text-ellipsis">
-                        {activity.activity}
-                      </span>
-                    </ButtonAnimated>
-                  </Link>
+            <ul className="space-y-1 text-gray-700">
+              {activities
+                ?.slice(0, showAllActivities ? activities.length : 5)
+                .map((activity) => (
+                  <li key={activity.id}>
+                    <Link href={"/guide/" + activity.activity}>
+                      <ButtonAnimated>
+                        <span className="text-start whitespace-nowrap overflow-hidden text-ellipsis">
+                          {activity.activity}
+                        </span>
+                      </ButtonAnimated>
+                    </Link>
+                  </li>
+                ))}
+              {activities && activities.length > 5 && (
+                <li>
+                  <span
+                    onClick={() => setShowAllActivities(!showAllActivities)}
+                    className="text-start whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer text-blue-600 hover:text-blue-800 ml-[20px]"
+                  >
+                    {showAllActivities ? "Show less" : "See all"}
+                  </span>
                 </li>
-              ))}
+              )}
             </ul>
           </div>
           <div>
             <h3 className="font-bold text-lg mb-2 ml-5">Styles</h3>
             <ul className="space-y-1 text-gray-700">
-              {styles?.map((style, index) => (
-                <li key={style.id}>
-                  {" "}
-                  <Link href={"/guide/" + style.name}>
-                    <ButtonAnimated>
-                      <span className="text-start whitespace-nowrap overflow-hidden text-ellipsis">
-                        {style.name}
-                      </span>
-                    </ButtonAnimated>
-                  </Link>
+              {styles
+                ?.slice(0, showAllStyle ? styles.length : 5)
+                .map((style, index) => (
+                  <li key={style.id}>
+                    {" "}
+                    <Link href={"/guide/" + style.name}>
+                      <ButtonAnimated>
+                        <span className="text-start whitespace-nowrap overflow-hidden text-ellipsis">
+                          {style.name}
+                        </span>
+                      </ButtonAnimated>
+                    </Link>
+                  </li>
+                ))}
+              {styles && styles?.length > 5 && (
+                <li>
+                  <span
+                    onClick={() => setShowAllStyle(!showAllStyle)}
+                    className="text-start whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer text-blue-600 hover:text-blue-800 ml-[20px]"
+                  >
+                    {showAllStyle ? "Show less" : "See all"}
+                  </span>
                 </li>
-              ))}
+              )}
             </ul>
           </div>
           <div>
             <h3 className="font-bold text-lg mb-2 ml-5">Interests</h3>
             <ul className="space-y-1 text-gray-700 ">
-              {Interests?.map((interest, index) => (
-                <li key={interest.id}>
-                  {" "}
-                  <Link href={"/guide/" + interest.name}>
-                    <ButtonAnimated>
-                      {" "}
-                      <span className="text-start whitespace-nowrap overflow-hidden text-ellipsis">
-                        {interest.name}
-                      </span>
-                    </ButtonAnimated>
-                  </Link>
+              {Interests?.slice(0, showAllInterests ? Interests.length : 5).map(
+                (interest, index) => (
+                  <li key={interest.id}>
+                    {" "}
+                    <Link href={"/guide/" + interest.name}>
+                      <ButtonAnimated>
+                        {" "}
+                        <span className="text-start whitespace-nowrap overflow-hidden text-ellipsis">
+                          {interest.name}
+                        </span>
+                      </ButtonAnimated>
+                    </Link>
+                  </li>
+                )
+              )}
+              {Interests && Interests.length > 5 && (
+                <li>
+                  <span
+                    onClick={() => setShowAllInterests(!showAllInterests)}
+                    className="text-start whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer text-blue-600 hover:text-blue-800 ml-[20px]"
+                  >
+                    {showAllInterests ? "Show less" : "See all"}
+                  </span>
                 </li>
-              ))}
+              )}
             </ul>
           </div>
         </div>
@@ -605,14 +660,14 @@ function HeaderClient() {
                     fontWeight:
                       page.name === "Trending" ||
                       page.name === "Destinations" ||
-                      page.name === "Trip Themes & Styles"
+                      page.name === "Themes & Styles"
                         ? 600
                         : 500,
                     textTransform: "none",
                     "&:hover": {
                       borderBottom:
                         page.name === "Destinations" ||
-                        page.name === "Trip Themes & Styles" ||
+                        page.name === "Themes & Styles" ||
                         page.name === "Trending"
                           ? "3px solid var(--color-button-hover)"
                           : "",

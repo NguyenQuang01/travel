@@ -11,6 +11,9 @@ import Banner from "./components/sectionHome/Banner";
 import { getHome, getToursSearch } from "./hook";
 import Manage from "@/app/admin/design-my-trip/page";
 import Loading from "./components/Loading";
+import Image from "next/image";
+import iconZalo from "@/app/assets/imgs/zalo.png";
+import iconWhatapp from "@/app/assets/imgs/whatapp.png";
 
 export default function Home() {
   interface Image {
@@ -139,6 +142,28 @@ export default function Home() {
       <GiftCard />
       <SlideStyle data={data?.destinations ?? []} />
       <SlideBlog data={data?.pots ?? []} />
+      <div className="fixed bottom-5 right-4 z-50">
+        <a
+          href="https://wa.me/0345211156"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col gap-2 items-center justify-center w-14 h-14 rounded-full transition-colors duration-300 shadow-lg"
+        >
+          <Image
+            src={iconWhatapp}
+            alt="WhatsApp Contact"
+            className="w-12 h-12"
+          />
+        </a>
+        <a
+          href="https://zalo.me/0338383000"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col gap-2 items-center justify-center w-14 h-14 rounded-full transition-colors duration-300 shadow-lg"
+        >
+          <Image src={iconZalo} alt="Zalo Contact" className="w-8 h-8" />
+        </a>
+      </div>
     </div>
   ) : (
     <Loading />

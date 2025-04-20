@@ -12,109 +12,92 @@ import { CheckCircleTwoTone } from "@ant-design/icons";
 const Overview = (props: any) => {
     const { data } = props;
     return (
-        <div className="pt-10" id="Overview">
-            <Container className="bg-white py-10 rounded-lg">
-                <div className="text-[32px] font-semibold text-[hsl(0,0%,20%)] font-roboto leading-[48px] mr-4 mb-4">
-                    Overview
-                </div>
+      <div className="pt-10" id="Overview">
+        <Container className="bg-white py-10 rounded-lg">
+          <div className="grid grid-cols-12 gap-8">
+            {/* Left Column - Title */}
+            <div className="col-span-12 md:col-span-3">
+              <div className="text-[32px] font-semibold text-[hsl(0,0%,20%)] font-roboto leading-[48px]">
+                Overview
+              </div>
+            </div>
 
-                {/* Thông tin tổng quan */}
-                <Row gutter={[24, 16]} className="mt-4">
-                    {/* Cột 1: Trip Type */}
-                    <Col span={12}>
-                        <div className="text-gray-500">Trip type</div>
-                        <div className="flex items-center mt-1">
-                            <div className="w-4 h-4 bg-red-500 rounded-sm mr-2"></div>
-                            <div className="font-semibold">{data.tripType}</div>
-                        </div>
-                    </Col>
+            {/* Right Column - Content */}
+            <div className="col-span-12 md:col-span-9">
+              <Row gutter={[32, 24]}>
+                {/* Trip Type */}
+                <Col xs={24} md={12}>
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-gray-600">Trip type</div>
+                    </div>
+                    <div className="flex items-center mt-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-sm mr-2"></div>
+                      <span className="font-medium">{data.tripType}</span>
+                    </div>
+                  </div>
+                </Col>
 
-                    {/* Cột 2: Lodging level */}
-                    <Col span={12}>
-                        <div className="text-gray-500">
-                            Lodging level{" "}
-                            <Tooltip title="Luxury accommodations with 5-star hotels">
-                                <InfoCircleOutlined className="ml-1" />
-                            </Tooltip>
-                        </div>
-                        <div className="font-semibold mt-1">
-                            {data.lodgingLevel}
-                        </div>
-                        <div className="mt-2">
-                            <Rate allowHalf defaultValue={2.5} />
-                        </div>
-                    </Col>
+                {/* Lodging Level */}
+                <Col xs={24} md={12}>
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-gray-600">Lodging level</div>
+                    </div>
+                    <div className="mt-2">
+                      <div className="font-medium">{data.lodgingLevel}</div>
+                      <div className="flex items-center mt-1">
+                        <Rate disabled defaultValue={3} className="text-sm" />
+                      </div>
+                    </div>
+                  </div>
+                </Col>
 
-                    {/* Cột 3: Physical Level */}
-                    <Col span={12}>
-                        <div className="text-gray-500">
-                            Physical level{" "}
-                            <Tooltip title="Suitable for most people, little physical effort required">
-                                <InfoCircleOutlined className="ml-1" />
-                            </Tooltip>
-                        </div>
-                        <div className="font-semibold mt-1">
-                            {data.physicalLevel}
-                        </div>
-                        <div className="mt-2">
-                            {" "}
-                            <Rate
-                                character={<HeartOutlined />}
-                                allowHalf
-                                defaultValue={4}
-                            />
-                        </div>
-                    </Col>
+                {/* Physical Level */}
+                <Col xs={24} md={12}>
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-gray-600">Physical level</div>
+                    </div>
+                    <div className="mt-2">
+                      <div className="font-medium">{data.physicalLevel}</div>
+                      <div className="w-32 bg-gray-200 h-2 rounded-full mt-2">
+                        <div className="w-1/2 bg-blue-500 h-full rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
 
-                    {/* Cột 4: Trip Pace */}
-                    <Col span={12}>
-                        <div className="text-gray-500">Trip pace</div>
-                        <div className="font-semibold mt-1">
-                            {data.tripPace}
+                {/* Trip Pace */}
+                <Col xs={24} md={12}>
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-gray-600">Trip pace</div>
+                    </div>
+                    <div className="mt-2">
+                      <div className="font-medium">{data.tripPace}</div>
+                      <div className="flex items-center gap-1 mt-2">
+                        <div className="w-32 bg-gray-200 h-2 rounded-full mt-2">
+                          <div className="w-3/4 bg-blue-500 h-full rounded-full"></div>
                         </div>
-                        <div className="mt-2">
-                            {" "}
-                            <Rate
-                                character={<HeartOutlined />}
-                                allowHalf
-                                defaultValue={4.5}
-                            />
-                        </div>
-                    </Col>
-                </Row>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
 
-                <Divider />
+              <Divider className="my-8" />
 
-                {/* Highlights */}
-                <div className="text-xl font-bold mb-2">Highlights</div>
-                <ul className="text-gray-700 space-y-2">
-                    {[
-                        "Venice - Lose yourself in the labyrinth of alleyways and canals.",
-                        "Florence - Marvel at the grandeur of Renaissance architecture.",
-                        "Rome - The eternal city, a cinematic dream of history.",
-                        "Naples - A mix of history, glamour, and excitement.",
-                        "Capri & Amalfi Coast - A classic summer coastal retreat.",
-                    ].map((item, index) => (
-                        <li key={index} className="flex items-start">
-                            <div className="mr-2">
-                                <CheckCircleTwoTone twoToneColor="#52c41a" />
-                            </div>
-                            <div>{item}</div>
-                        </li>
-                    ))}
-                </ul>
-
-                <Divider />
-
-                {/* Nội dung mô tả */}
-                <div className="text-xl font-bold mb-2">
-                    What's this trip about?
-                </div>
-                <div className="text-[#888] leading-relaxed">
-                    {data.tripAbout}
-                </div>
-            </Container>
-        </div>
+              <div className="text-lg font-semibold mb-4">
+                What's this trip about?
+              </div>
+              <div className="text-gray-600 leading-relaxed">
+                {data.tripAbout}
+              </div>
+            </div>
+          </div>
+        </Container>
+      </div>
     );
 };
 

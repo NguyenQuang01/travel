@@ -26,27 +26,25 @@ const Itinerary = ({ data }: ItineraryProps) => {
     <div className={`pt-${isMobile ? "5" : "10"}`} id="Itinerary">
       <Container className="bg-white rounded-xl">
         <div className={`py-${isMobile ? "5" : "10"}`}>
-          <div
-            className={`
-                        text-[${
-                          isMobile ? "24px" : isTablet ? "28px" : "32px"
-                        }] 
-                        font-semibold 
-                        text-[hsl(0,0%,20%)] 
-                        font-roboto 
-                        leading-[${isMobile ? "36px" : "48px"}] 
-                        mr-4 
-                        mb-4
-                    `}
-          >
-            Itinerary
-          </div>
-          <div className={`ml-${isMobile ? "5" : isTablet ? "10" : "20"}`}>
-            <Timeline
-              mode={isMobile ? "left" : "alternate"}
-              items={itineraryItems}
-              className={isMobile ? "scale-90" : ""}
-            />
+          <div className="grid grid-cols-12 gap-8">
+            {/* Left Column - Title */}
+            <div className="col-span-12 md:col-span-3">
+              <div className="text-[32px] font-semibold text-[hsl(0,0%,20%)] font-roboto leading-[48px]">
+                Itinerary
+              </div>
+            </div>
+
+            {/* Right Column - Map and Timeline */}
+            <div className="col-span-12 md:col-span-9">
+              {/* Timeline */}
+              <div>
+                <Timeline
+                  mode={isMobile ? "left" : "left"}
+                  items={itineraryItems}
+                  className="ml-4"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </Container>

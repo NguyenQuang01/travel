@@ -30,7 +30,7 @@ const Slider = (prop: { data: SliderItem[] }) => {
           <p className="text-[1.8rem] font-bold text-shadow-md text-[#fff] text-center mb-[80px]">
             Choose your travel style
           </p>
-          <div className="mx-auto md:w-[70vw]  w-[83vw] max-w-[126rem] h-full relative md:-mb-[11.8rem] -mb-[14.8rem]">
+          <div className="mx-auto md:w-[70vw]  w-[83vw] max-w-[126rem] h-full relative md:-mb-[10.5rem] -mb-[14.8rem]">
             <Swiper
               modules={[Navigation, Pagination]}
               breakpoints={{

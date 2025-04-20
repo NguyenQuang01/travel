@@ -120,8 +120,8 @@ const Slider = (prop: { searchTour: any; dataSearch: any }) => {
           <div className="flex items-center justify-center ">
             {/* */}
             <Link href="client/my-custom-trip">
-              <div className="inline-block bg-[var(--color-button)] hover:bg-[#502d6f] transition-colors duration-300 rounded text-white fill-white font-roboto text-[25px] font-bold leading-6 mt-5 py-6 px-4 text-center">
-                Design custom trip
+              <div className="inline-block bg-[var(--color-button)] hover:bg-[#42973a] transition-colors duration-300 rounded text-white fill-white font-roboto text-[25px] font-bold leading-6 mt-5 py-6 px-4 text-center">
+                Design Custom Trip
               </div>
             </Link>
           </div>
