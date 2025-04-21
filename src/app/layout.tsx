@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {!isAdminRoute && <HeaderClient />}
-        {children}
+        <div className="md:mt-[72px]">{children}</div>
         {!isAdminRoute && <Footer />}
 
         {/* Google Translate Widget */}

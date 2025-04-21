@@ -458,9 +458,9 @@ function HeaderClient() {
           </div>
         </div>
       </Modal>
-      <AppBar position="static" sx={{ backgroundColor: "white" }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
         <Container maxWidth={false}>
-          <Toolbar disableGutters className="py-[15px] ">
+          <Toolbar disableGutters className="py-[15px]  ">
             <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
               <Link href="/">
                 <Image
@@ -642,7 +642,7 @@ function HeaderClient() {
               </Link>
             </Box>
             {/* header Laptop */}
-            <Box className="hidden md:flex flex-grow justify-center items-center">
+            <Box className="hidden md:flex flex-grow justify-center items-center ">
               {Object.values(pages).map((page, index) => (
                 <Box
                   key={index}
