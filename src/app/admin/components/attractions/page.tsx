@@ -1,6 +1,16 @@
 "use client";
 
-import { Table, Input, Button, Modal, message, Space, Form, Card } from "antd";
+import {
+  Table,
+  Input,
+  Button,
+  Modal,
+  message,
+  Space,
+  Form,
+  Card,
+  Select,
+} from "antd";
 import { useState, JSX, useEffect } from "react";
 import axios from "axios";
 import { API_INFO } from "@/constant/constant";
@@ -30,6 +40,21 @@ const Attractions: () => JSX.Element = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [form] = Form.useForm();
+  const [destinations, setDestinations] = useState<
+    { id: number; name: string; destination: string }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/destinations`);
+        setDestinations(response.data);
+      } catch (error) {
+        message.error("Error loading destinations!");
+      }
+    };
+    fetchDestinations();
+  }, []);
 
   const fetchData = async () => {
     setLoading(true);
@@ -85,7 +110,9 @@ const Attractions: () => JSX.Element = () => {
 
   const handleCreate = async (values: Type) => {
     try {
-      await axios.post(`${API_URL}?destinationId=${values.destinationId}&content=${values.content}`);
+      await axios.post(
+        `${API_URL}?destinationId=${values.destinationId}&content=${values.content}`
+      );
       message.success("Thêm mới thành công!");
       fetchData();
       setIsCreateModalVisible(false);
@@ -98,7 +125,11 @@ const Attractions: () => JSX.Element = () => {
   const columns = [
     { title: "ID", dataIndex: "id", key: "id" },
     { title: "Content", dataIndex: "content", key: "content" },
-    { title: "Destination Name", dataIndex: "destinationName", key: "destinationName" },
+    {
+      title: "Destination Name",
+      dataIndex: "destinationName",
+      key: "destinationName",
+    },
     {
       title: "Hành động",
       key: "actions",
@@ -170,7 +201,13 @@ const Attractions: () => JSX.Element = () => {
             label="Destination"
             rules={[{ required: true, message: "Vui lòng nhập destination!" }]}
           >
-            <Input />
+            <Select>
+              {destinations.map((destination) => (
+                <Select.Option key={destination.id} value={destination.id}>
+                  {destination.destination}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item
             name="content"
@@ -199,16 +236,21 @@ const Attractions: () => JSX.Element = () => {
             label="Destination"
             rules={[{ required: true, message: "Vui lòng nhập destination!" }]}
           >
-            <Input />
+            <Select>
+              {destinations.map((destination) => (
+                <Select.Option key={destination.id} value={destination.id}>
+                  {destination.destination}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item
             name="content"
-            label="Content"
+            label="Content (Nội dung cách nhau bằng dấu '-')"
             rules={[
               {
                 required: true,
-                message:
-                  "Vui lòng nhập Content(Nội dung cách nhau bằng dấu '-')",
+                message: "Vui lòng nhập Content",
               },
             ]}
           >
