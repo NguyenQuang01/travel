@@ -88,6 +88,15 @@ const items: MenuItem[] = [
       </Link>
     ),
   },
+
+  {
+    key: "Top Attractions",
+    label: (
+      <Link href="/admin/top-attractions" replace>
+        Top attractions
+      </Link>
+    ),
+  },
 ];
 const LayoutAdmin = ({ children }: any) => {
     const [current, setCurrent] = useState("");
