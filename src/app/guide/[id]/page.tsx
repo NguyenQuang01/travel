@@ -101,13 +101,7 @@ const TourTheme = () => {
   const fetchTravelStyles = async () => {
     try {
       const response = await fetch(
-        "https://www.be-travel.toditour.com/api/styles",
-        {
-          headers: {
-            Accept: "application/json",
-            Origin: window.location.origin,
-          },
-        }
+        `http://14.225.205.10:3082/api/styles/styles?destinationName=${id}`
       );
       const data = await response.json();
       setTravelOptions(data);
