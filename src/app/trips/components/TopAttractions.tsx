@@ -22,7 +22,7 @@ const TopAttractions = (prop: any) => {
             {/* Right Column - Map and Timeline */}
             <div className="col-span-12 md:col-span-9">
               <div className="list-disc pl-5 space-y-2">
-                {attractions[0].content
+                {attractions[0]?.content
                   .split("-")
                   .map((item: any, index: number) => (
                     <div className="flex items-center gap-2" key={index}>
