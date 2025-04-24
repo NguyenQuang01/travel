@@ -17,6 +17,7 @@ import Link from "next/link";
 import Loading from "@/app/components/Loading";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { getStyleColor } from "@/utils";
+import TopAttractions from "@/app/trips/components/TopAttractions";
 interface ReviewSummary {
   avgTransportation: number;
   avgActivities: number;
@@ -75,6 +76,27 @@ const TourTheme = () => {
       description: string;
     }[]
   >([]);
+  // Start of Selection
+  const [attractions, setAttractions] = useState<any[]>([]);
+
+  const fetchAttractions = async () => {
+    try {
+      const response = await fetch(
+        `http://14.225.205.10:3082/api/top-attractions/search-by-name?name=${id}`
+      );
+      const data = await response.json();
+      setAttractions(data.content || []);
+    } catch (error) {
+      console.error("Error fetching attractions:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchAttractions();
+    }
+  }, [id]);
+  // End of Selection
 
   const fetchTravelStyles = async () => {
     try {
@@ -101,7 +123,6 @@ const TourTheme = () => {
     try {
       const response: any = await getToursSearch(String(id));
       setTheme(Object.keys(response.data.data));
-      console.log(response.data.data, "------------------1");
       setData(response.data.data);
     } catch (error) {
       console.error("Search tours error:", error);
@@ -380,6 +401,7 @@ const TourTheme = () => {
             </div>
           ))}
         </div>
+        {attractions && <TopAttractions attractions={attractions} />}
       </Container>
     </>
   ) : (
